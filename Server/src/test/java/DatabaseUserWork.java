@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Scanner;
+
 public class DatabaseUserWork {
 
     private UserDAO userdataDao = null;
@@ -17,6 +19,19 @@ public class DatabaseUserWork {
         for (User user : userdataDao.findAll()) {
             System.out.println(user);
         }
+    }
+
+    @Test
+    public void createAdmin() { //права доступа ещё не настроены
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("name: ");
+        String name = scanner.next();
+        System.out.println("login: ");
+        String login = scanner.next();
+        System.out.println("password: ");
+        String password = scanner.next();
+        User user = new User(name, login, password, 1);
+        userdataDao.create(user);
     }
 
     @Test
