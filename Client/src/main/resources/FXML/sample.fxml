@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="filonenko.sales.controllers.Sample"
+            prefHeight="500.0" prefWidth="1000.0">
+    <MenuBar>
+        <Menu mnemonicParsing="false" text="Данные">
+            <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
+            <MenuItem fx:id="hardwareMenu" mnemonicParsing="false" text="Техника" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+            <MenuItem mnemonicParsing="false" text="Delete" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem mnemonicParsing="false" text="About" />
+        </Menu>
+    </MenuBar>
+    <Button fx:id="exit" layoutX="900.0" mnemonicParsing="false" text="Выход" />
+</AnchorPane>
