@@ -1,0 +1,64 @@
+package filonenko.sales.apps;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class MenuEventsHandler {
+
+    static Button log = null;
+
+    public static void eventHandlers(MenuItem usersMenu, MenuItem hardwareMenu, Button log) {
+        MenuEventsHandler.log = log;
+
+        usersMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+//                MenuEventsHandler.log.getScene();
+                Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
+//                stage.close();
+
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
+                Parent root = null;
+                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+//                stage = new Stage();
+//                stage.initModality(Modality.APPLICATION_MODAL);
+//                stage.setTitle("Окно пользователей");
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
+        });
+
+        hardwareMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("hardwareMenu event");
+            }
+        });
+
+        if(CurrentUser.getCurrentUser() == null) log.setText("Вход");
+        else log.setText("Выход");
+
+        log.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(CurrentUser.getCurrentUser() != null)  CurrentUser.setCurrentUser(null);
+//                MenuEventsHandler.log.getScene();
+                Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
+                Parent root = null;
+                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
+        });
+    }
+}

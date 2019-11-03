@@ -1,4 +1,4 @@
-package filonenko.sales.app;
+package filonenko.sales.apps;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/sample.fxml"));
         primaryStage.setTitle("Продажи компьютерной техники");
-        primaryStage.setScene(new Scene(root, 1000, 500));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 }

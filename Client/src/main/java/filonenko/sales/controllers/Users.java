@@ -1,6 +1,6 @@
 package filonenko.sales.controllers;
 
-import filonenko.sales.app.MenuEventsHandler;
+import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.entities.User;
 import filonenko.sales.services.UserService;
 import javafx.collections.FXCollections;
@@ -16,35 +16,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Users {
+
+    public Button log;
+    public MenuItem usersMenu;
+    public MenuItem hardwareMenu;
+
     public TableColumn<User, String> login;
     public TableColumn<User, String> name;
     public TableColumn<User, String> access;
     public TableView<User> table;
-    public Button exit;
     private ObservableList<User> users = FXCollections.observableArrayList();
     private List<Boolean> selected = new ArrayList<>();
-
-    public MenuItem usersMenu;
-    public MenuItem hardwareMenu;
 
     @FXML
     private void initialize() throws Exception {
         login.setSortable(false);
         name.setSortable(false);
         access.setSortable(false);
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, exit);
+        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log);
         thisEventHandlers();
 
-        //////
         List<User> userList = UserService.getAllUsers();
         login.setCellValueFactory(new PropertyValueFactory<User, String>("Login"));
         name.setCellValueFactory(new PropertyValueFactory<User, String>("Name"));
         access.setCellValueFactory(new PropertyValueFactory<User, String>("Access"));
         users.addAll(userList);
         table.setItems(users);
-        for(User user : userList)
+        for(User ignored : userList)
             selected.add(false);
-        ///////////////
     }
 
     private void thisEventHandlers() {

@@ -19,7 +19,7 @@ public class Server {
 
             InetAddress address = socket.getInetAddress();   //Получение адреса работы сервера
             ServerThread thread = new ServerThread(socket, address);    //Открытие нового потока работы с подключение (клиентом)
-            System.out.println("Новое подключение\nАдресс: " + address.getHostName());
+            System.out.println("New connection\nAddress: " + address.getHostName());
             thread.start(); //Запуск сервера (вызов метода run)
         }
     }

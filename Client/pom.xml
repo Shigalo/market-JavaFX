@@ -50,7 +50,7 @@
                         <archive>
                             <manifest>
                                 <addClasspath>true</addClasspath>
-                                <mainClass>filonenko.sales.app.Main</mainClass>
+                                <mainClass>filonenko.sales.apps.Main</mainClass>
                             </manifest>
                         </archive>
                     </configuration>

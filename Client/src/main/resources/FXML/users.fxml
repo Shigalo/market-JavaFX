@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
+
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="filonenko.sales.controllers.Users"
@@ -25,5 +26,5 @@
             <TableColumn fx:id="access" prefWidth="75.0" text="Доступ" />
         </columns>
     </TableView>
-    <Button fx:id="exit" layoutX="550.0" mnemonicParsing="false" text="Выход" />
+    <Button fx:id="log" layoutX="550.0" mnemonicParsing="false"/>
 </AnchorPane>
