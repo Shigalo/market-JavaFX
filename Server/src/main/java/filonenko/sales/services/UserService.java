@@ -15,8 +15,12 @@ public class UserService {
         return userList;
     }
 
-
     public static User login(User user) {
         return user = dao.login(user.getLogin(), user.getPassword());
+    }
+
+    public static User registration(User user) {
+        if(dao.findByLogin(user.getLogin()) != null) return null;
+        return dao.registration(user.getLogin(), user.getPassword(), user.getName());
     }
 }

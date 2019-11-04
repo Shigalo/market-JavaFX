@@ -37,12 +37,22 @@ public class ServerThread extends Thread {
 //                    case "0":  objectOutputStream.writeObject(UserDAO.getInstance().findAll().get(0)); break; //для теста
                     case "getAllUsers": getAllUsers(); break;
                     case "login": login(); break;
+                    case "registration": registration(); break;
                 }
             }
         } catch (IOException e) {
             System.out.println("Lost connection");} catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally { disconnect(); }
+    }
+
+    private void registration() throws IOException, ClassNotFoundException {
+        User user = (User)objectInputStream.readObject();
+        System.out.println("User login: " + user.getLogin());
+        user = UserService.registration(user);
+        if (user != null) System.out.println("Successful registration");
+        else System.out.println("Failed registration");
+        objectOutputStream.writeObject(user);
     }
 
     private void login() throws IOException, ClassNotFoundException {

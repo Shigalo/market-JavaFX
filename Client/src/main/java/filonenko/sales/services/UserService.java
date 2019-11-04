@@ -27,4 +27,13 @@ public class UserService {
             CurrentUser.setCurrentUser(user);
         } catch (Exception ignored) {}
     }
+
+    public static void registration(String login, String password, String name) {
+        try {
+            User user = new User(name, login, password, 0);
+            user = connection.registration(user);
+            if (user == null) return;
+            CurrentUser.setCurrentUser(user);
+        } catch (Exception ignored) {}
+    }
 }

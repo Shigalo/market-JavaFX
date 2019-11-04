@@ -24,6 +24,12 @@ public class UserDAO implements DAOInterface<User> {
         } catch (NoResultException e) { return null; }
     }
 
+    public User registration(String login, String password, String name) {
+        User newUser = new User(name, login, password, 0);
+        create(newUser);
+        return newUser;
+    }
+
     private final static class SingletonHolder {    //объект класса единственный для всего проекта
         private final static UserDAO INSTANCE = new UserDAO();
     }
@@ -79,6 +85,15 @@ public class UserDAO implements DAOInterface<User> {
         Query query = session.createQuery("from User where name = :name "); //Написание строки запроса (выбрать все из таблицы User, где имя = параметру)
         query.setParameter("name", new_name);    //Определение параметра, использованного в запросе
         return query.list();    //Выполнение запроса
+    }
+
+    public User findByLogin(String login) {  //Поиск записи по имени
+        try {
+            Session session = HibernateConnect.getSessionFactory().openSession();
+            Query query = session.createQuery("from User where login = :login "); //Написание строки запроса (выбрать все из таблицы User, где имя = параметру)
+            query.setParameter("login", login);    //Определение параметра, использованного в запросе
+            return (User) query.getSingleResult();    //Выполнение запроса
+        } catch (NoResultException e) { return null; }
     }
 
     public void deleteByName(String name) { //Удаление по имени

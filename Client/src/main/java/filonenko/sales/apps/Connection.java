@@ -40,6 +40,10 @@ public class Connection {
             for(User buf : UserService.getAllUsers()) { System.out.println(buf); }*/
         } catch (Exception e) { e.printStackTrace(); }
     }
+    public List<User> getUserList() throws IOException, ClassNotFoundException {
+        printStream.println("getAllUsers");
+        return (List<User>)objectInputStream.readObject();
+    }
 
     public User login(User user) throws IOException, ClassNotFoundException {
         printStream.println("login");
@@ -47,8 +51,9 @@ public class Connection {
         return (User)objectInputStream.readObject();
     }
 
-    public List<User> getUserList() throws IOException, ClassNotFoundException {
-        printStream.println("getAllUsers");
-        return (List<User>)objectInputStream.readObject();
+    public User registration(User user) throws IOException, ClassNotFoundException {
+        printStream.println("registration");
+        objectOutputStream.writeObject(user);
+        return (User)objectInputStream.readObject();
     }
 }
