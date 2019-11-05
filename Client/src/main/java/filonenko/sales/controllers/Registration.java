@@ -39,15 +39,19 @@ public class Registration {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Результат регистрации");
                 alert.setHeaderText(null);
-                UserService.registration(login.getText(), password.getText(), name.getText());
 
-                if (CurrentUser.getCurrentUser() != null) {
-                    alert.setContentText("Успешная регистрация\n" +
-                            "Вход в систему\n" +
-                            "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
-                } else {
-                    alert.setContentText("Логин не доступен!");
-                    login.setText("");
+                if (UserService.verification(login, password, passwordConfirm, name, alert)) {
+
+                    UserService.registration(login.getText(), password.getText(), name.getText());
+
+                    if (CurrentUser.getCurrentUser() != null) {
+                        alert.setContentText("Успешная регистрация\n" +
+                                "Вход в систему\n" +
+                                "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
+                    } else {
+                        alert.setContentText("Логин не доступен!");
+                        login.setText("");
+                    }
                 }
                 alert.showAndWait();
                 if (CurrentUser.getCurrentUser() != null) {
