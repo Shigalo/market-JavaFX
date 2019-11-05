@@ -3,6 +3,7 @@ package filonenko.sales.controllers;
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.services.UserService;
+import filonenko.sales.services.VerificationService;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +29,7 @@ public class Registration {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log);
+        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log, new Button());
         thisEventHandlers();
     }
 
@@ -40,31 +41,30 @@ public class Registration {
                 alert.setTitle("Результат регистрации");
                 alert.setHeaderText(null);
 
-                if (UserService.verification(login, password, passwordConfirm, name, alert)) {
-
+                if (VerificationService.fullVerification(login, password, passwordConfirm, name, alert)) {
                     UserService.registration(login.getText(), password.getText(), name.getText());
-
                     if (CurrentUser.getCurrentUser() != null) {
                         alert.setContentText("Успешная регистрация\n" +
                                 "Вход в систему\n" +
                                 "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
+                        alert.showAndWait();
+
+                        Stage stage = (Stage) registration.getScene().getWindow();
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
+                        Parent root = null;
+                        try {
+                            root = fxmlLoader.load();
+                        } catch (IOException ignored) {
+                        }
+                        stage.setScene(new Scene(root));
+                        stage.show();
                     } else {
                         alert.setContentText("Логин не доступен!");
                         login.setText("");
+                        alert.showAndWait();
                     }
                 }
-                alert.showAndWait();
-                if (CurrentUser.getCurrentUser() != null) {
-                    Stage stage = (Stage) registration.getScene().getWindow();
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
-                    Parent root = null;
-                    try {
-                        root = fxmlLoader.load();
-                    } catch (IOException ignored) {
-                    }
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                }
+                else alert.showAndWait();
             }
         });
 

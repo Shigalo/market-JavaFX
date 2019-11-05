@@ -20,6 +20,7 @@ public class Users {
     public Button log;
     public MenuItem usersMenu;
     public MenuItem hardwareMenu;
+    public Button profile;
 
     public TableColumn<User, String> login;
     public TableColumn<User, String> name;
@@ -30,10 +31,10 @@ public class Users {
 
     @FXML
     private void initialize() throws Exception {
+        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log, profile);
         login.setSortable(false);
         name.setSortable(false);
         access.setSortable(false);
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log);
         thisEventHandlers();
 
         List<User> userList = UserService.getAllUsers();

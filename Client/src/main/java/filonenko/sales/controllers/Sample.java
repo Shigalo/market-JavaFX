@@ -19,6 +19,7 @@ public class Sample {
     public Button log;
     public MenuItem usersMenu;
     public MenuItem hardwareMenu;
+    public Button profile;
 
     public TextField login;
     public PasswordField password;
@@ -27,7 +28,7 @@ public class Sample {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log);
+        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log, profile);
         thisEventHandlers();
     }
 
@@ -39,21 +40,23 @@ public class Sample {
                 alert.setTitle("Результат входа");
                 alert.setHeaderText(null);
                 UserService.login(login.getText(), password.getText());
+
                 if (CurrentUser.getCurrentUser() != null) {
                     alert.setContentText("Добро пожаловать " + CurrentUser.getCurrentUser().getName());
-                }
-                else {
-                    alert.setContentText("Пользователь не найден!");
-                    password.setText("");
-                }
-                alert.showAndWait();
-                if (CurrentUser.getCurrentUser() != null) {
+                    alert.showAndWait();
+
                     Stage stage = (Stage)log.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                     Parent root = null;
                     try { root = fxmlLoader.load(); } catch (IOException ignored){}
                     stage.setScene(new Scene(root));
                     stage.show();
+                }
+                else {
+                    alert.setContentText("Пользователь не найден!\n" +
+                            "Неверный логин или пароль.");
+                    password.setText("");
+                    alert.showAndWait();
                 }
             }
         });

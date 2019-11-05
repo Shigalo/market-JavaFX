@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -16,7 +17,7 @@ public class MenuEventsHandler {
 
     static Button log = null;
 
-    public static void eventHandlers(MenuItem usersMenu, MenuItem hardwareMenu, Button log) {
+    public static void eventHandlers(MenuItem usersMenu, MenuItem hardwareMenu, Button log, Button profile) {
         MenuEventsHandler.log = log;
 
         usersMenu.setOnAction(new EventHandler<ActionEvent>() {
@@ -44,8 +45,26 @@ public class MenuEventsHandler {
             }
         });
 
-        if(CurrentUser.getCurrentUser() == null) log.setText("Вход");
-        else log.setText("Выход");
+        if(CurrentUser.getCurrentUser() == null) {
+            log.setText("Вход");
+            profile.setVisible(false);
+        }
+        else {
+            log.setText("Выход");
+            profile.setVisible(true);
+
+            profile.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/profile.fxml"));
+                    Parent root = null;
+                    try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                }
+            });
+        }
 
         log.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override

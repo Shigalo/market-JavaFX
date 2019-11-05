@@ -5,14 +5,13 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.Sample">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.Profile">
     <MenuBar>
         <Menu mnemonicParsing="false" text="Данные">
             <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
@@ -24,6 +23,7 @@
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About" />
         </Menu>
+        <Menu mnemonicParsing="false" text="Help" />
     </MenuBar>
     <Button fx:id="log" layoutX="550.0" mnemonicParsing="false" />
     <Button fx:id="profile" layoutX="468.0" mnemonicParsing="false" text="Профиль" />
@@ -31,19 +31,22 @@
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+            <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
-            <Label prefHeight="45.0" prefWidth="141.0" text="Логин" />
-            <Label prefHeight="35.0" prefWidth="111.0" text="Пароль" GridPane.rowIndex="1" />
-            <TextField fx:id="login" GridPane.columnIndex="1" />
-            <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="45.0" prefWidth="141.0" text="Логин" GridPane.rowIndex="1" />
+            <Label fx:id="login" prefHeight="95.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label prefHeight="53.0" prefWidth="211.0" text="Имя" />
+            <Label fx:id="name" GridPane.columnIndex="1" />
+            <Button fx:id="use" mnemonicParsing="false" prefHeight="30.0" prefWidth="122.0" text="Изменить имя" GridPane.columnIndex="2" />
+            <Button fx:id="edit" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Изменит пароль" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         </children>
     </GridPane>
-    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="117.0" prefHeight="30.0" prefWidth="158.0" text="Вход в систему" textAlignment="CENTER" />
-    <Button fx:id="loginButton" layoutX="158.0" layoutY="237.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Войти" />
-    <Button fx:id="registration" layoutX="158.0" layoutY="274.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Регистрация" />
+    <Label fx:id="user" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="98.0" prefHeight="30.0" prefWidth="158.0" textAlignment="CENTER" />
 </AnchorPane>

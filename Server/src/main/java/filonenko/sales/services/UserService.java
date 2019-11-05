@@ -16,7 +16,7 @@ public class UserService {
     }
 
     public static User login(User user) {
-        return user = dao.login(user.getLogin(), user.getPassword());
+        return dao.login(user.getLogin(), user.getPassword());
     }
 
     public static User registration(User user) {
