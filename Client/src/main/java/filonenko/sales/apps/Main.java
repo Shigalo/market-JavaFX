@@ -36,3 +36,6 @@ public class Main extends Application {
                         alert.setHeaderText(null);
                         alert.setContentText("Данные не выбраны!");
                         alert.showAndWait();*/
+
+//                passwordConfirm.setPromptText("pass");
+//        passwordField.textProperty().addListener((observable, oldValue, newValue) -> saveButton.setDisable(newValue.trim().isEmpty()));

@@ -3,13 +3,17 @@ package filonenko.sales.controllers;
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.services.UserService;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import filonenko.sales.services.VerificationService;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Profile {
 
@@ -36,65 +40,82 @@ public class Profile {
     }
 
     private void thisEventHandlers() {
-        use.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                final Alert alert = new Alert(Alert.AlertType.NONE);
-                alert.setTitle("Изменение имени");
-                alert.setHeaderText(null);
-                final TextField nameField = new TextField();
-                alert.getDialogPane().setContent(nameField);
-                nameField.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        UserService.editName(nameField.getText());
-                        name.setText(CurrentUser.getCurrentUser().getName());
-                        alert.close();
-                    }
-                });
-                ButtonType buttonTypeOK = new ButtonType("OK", ButtonBar.ButtonData.YES);
-                alert.getDialogPane().getButtonTypes().add(new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE));
-                alert.getDialogPane().getButtonTypes().add(buttonTypeOK);
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.get() == buttonTypeOK) {
-                    UserService.editName(nameField.getText());
-                    name.setText(CurrentUser.getCurrentUser().getName());
-                }
-            }
+        use.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Изменение имени");
+            dialog.setHeaderText(null);
+            dialog.setContentText("Новое имя:");
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(newName -> {
+                UserService.editName(newName);
+                name.setText(CurrentUser.getCurrentUser().getName());
+            });
         });
 
-        edit.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                final Alert alert = new Alert(Alert.AlertType.NONE);
-                alert.setTitle("Изменение пароля");
-                alert.setHeaderText(null);
-                final PasswordField passwordField = new PasswordField();
-                alert.getDialogPane().setContent(passwordField);
-                final PasswordField passwordConfirm = new PasswordField();
-                alert.getDialogPane().setContent(passwordConfirm);
-                passwordField.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        UserService.editPassword(passwordField.getText(), passwordConfirm.getText());
-                        alert.close();
-                    }
-                });
-                passwordConfirm.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        UserService.editPassword(passwordField.getText(), passwordConfirm.getText());
-                        alert.close();
-                    }
-                });
-                ButtonType buttonTypeOK = new ButtonType("OK", ButtonBar.ButtonData.YES);
-                alert.getDialogPane().getButtonTypes().add(new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE));
-                alert.getDialogPane().getButtonTypes().add(buttonTypeOK);
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.get() == buttonTypeOK) {
-                    UserService.editPassword(passwordField.getText(), passwordConfirm.getText());
-                }
-            }
+        edit.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            while (!passwordDialog());
         });
+    }
+
+    private boolean passwordDialog() {
+        Dialog<Pair<PasswordField, PasswordField>> dialog = new Dialog<>();
+        dialog.setTitle("Изменение паролья");
+
+        AtomicBoolean res = new AtomicBoolean(false);
+        ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButtonType = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, cancelButtonType);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        PasswordField passwordField = new PasswordField();
+        PasswordField passwordConfirm = new PasswordField();
+
+        grid.add(new Label("Введите пароль:"), 0, 0);
+        grid.add(passwordField, 1, 0);
+        grid.add(new Label("Повторите пароль:"), 0, 1);
+        grid.add(passwordConfirm, 1, 1);
+
+        Node saveButton = dialog.getDialogPane().lookupButton(saveButtonType);
+        saveButton.setDisable(true);
+        dialog.getDialogPane().setContent(grid);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                return new Pair<>(passwordField, passwordConfirm);
+            }
+            if (dialogButton == cancelButtonType) {
+                res.set(true);
+            }
+            return null;
+        });
+
+        Optional<Pair<PasswordField, PasswordField>> result = dialog.showAndWait();
+
+        result.ifPresent(userPassword -> {
+            if(VerificationService.passwordVerification(userPassword.getKey(), new Alert(null))) {
+
+
+
+
+
+                System.out.println("good password"); ////Метод запроса
+
+
+
+
+
+                res.set(true);
+            }
+            else {
+                System.out.println("Bad");
+                res.set(false);
+            }
+
+        });
+        return res.get();
     }
 }
