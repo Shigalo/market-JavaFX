@@ -23,4 +23,8 @@ public class UserService {
         if(dao.findByLogin(user.getLogin()) != null) return null;
         return dao.registration(user.getLogin(), user.getPassword(), user.getName());
     }
+
+    public static User editName(User user, String newName) {
+        return dao.editName(user.getId(), newName);
+    }
 }

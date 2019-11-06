@@ -38,12 +38,23 @@ public class ServerThread extends Thread {
                     case "getAllUsers": getAllUsers(); break;
                     case "login": login(); break;
                     case "registration": registration(); break;
+                    case "editName": editName();
                 }
             }
         } catch (IOException e) {
             System.out.println("Lost connection");} catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally { disconnect(); }
+    }
+
+    private void editName() throws IOException, ClassNotFoundException {
+        User user = (User)objectInputStream.readObject();
+        String newName = inputStream.readLine();
+        System.out.println("New name: " + newName);
+        user = UserService.editName(user, newName);
+        if (user != null) System.out.println("Successful modification");
+        else System.out.println("Failed modification");
+        objectOutputStream.writeObject(user);
     }
 
     private void registration() throws IOException, ClassNotFoundException {

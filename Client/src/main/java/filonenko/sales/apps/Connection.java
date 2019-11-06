@@ -56,4 +56,11 @@ public class Connection {
         objectOutputStream.writeObject(user);
         return (User)objectInputStream.readObject();
     }
+
+    public User editName(User user, String newName) throws IOException, ClassNotFoundException {
+        printStream.println("editName");
+        objectOutputStream.writeObject(user);
+        printStream.println(newName);
+        return (User)objectInputStream.readObject();
+    }
 }

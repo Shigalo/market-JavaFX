@@ -3,16 +3,11 @@ package filonenko.sales.services;
 import filonenko.sales.apps.Connection;
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.entities.User;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Getter @Setter
 public class UserService {
@@ -40,5 +35,17 @@ public class UserService {
             if (user == null) return;
             CurrentUser.setCurrentUser(user);
         } catch (Exception ignored) {}
+    }
+
+    public static void editName(String newName) {
+        try {
+            User modifiedUser = connection.editName(CurrentUser.getCurrentUser(), newName);
+            CurrentUser.setCurrentUser(modifiedUser);
+        } catch (Exception ignored) {}
+    }
+
+    public static void editPassword(String password, String passwordConfirm) {
+        System.out.println(password);
+        System.out.println(passwordConfirm);
     }
 }

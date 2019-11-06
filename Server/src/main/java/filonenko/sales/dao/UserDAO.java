@@ -30,6 +30,18 @@ public class UserDAO implements DAOInterface<User> {
         return newUser;
     }
 
+
+    public User editName(Integer id, String newName) {
+        Session session = HibernateConnect.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        User user = findById(id).get();
+        user.setName(newName);
+        session.update(user);
+        tx1.commit();
+        session.close();
+        return user;    //Выполнение запроса
+    }
+
     private final static class SingletonHolder {    //объект класса единственный для всего проекта
         private final static UserDAO INSTANCE = new UserDAO();
     }
