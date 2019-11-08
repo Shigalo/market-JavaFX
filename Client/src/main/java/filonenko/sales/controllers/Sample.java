@@ -18,7 +18,7 @@ public class Sample {
 
     public Button log;
     public MenuItem usersMenu;
-    public MenuItem hardwareMenu;
+    public MenuItem productMenu;
     public Button profile;
 
     public TextField login;
@@ -28,7 +28,7 @@ public class Sample {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, profile);
         thisEventHandlers();
     }
 

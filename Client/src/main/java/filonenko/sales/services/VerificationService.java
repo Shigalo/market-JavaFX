@@ -48,7 +48,7 @@ public class VerificationService {
         return false;
     }
 
-    private static boolean passwordConfirm(PasswordField password, PasswordField passwordConfirm, Alert alert) {
+    public static boolean passwordConfirm(PasswordField password, PasswordField passwordConfirm, Alert alert) {
         if (password.getText().equals(passwordConfirm.getText())) return true;
         alert.setContentText("Ошибка подтверждения пароля!");
         passwordConfirm.setText("");

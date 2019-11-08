@@ -1,6 +1,8 @@
 package filonenko.sales.apps;
 
+import filonenko.sales.entities.Product;
 import filonenko.sales.entities.User;
+import javafx.scene.control.PasswordField;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,9 +17,7 @@ public class Connection {
     private static Connection instance = null;
 
     public static Connection getInstance() {
-        if(instance == null) {
-            instance = new Connection();
-        }
+        if(instance == null) { instance = new Connection(); }
         return instance;
     }
 
@@ -31,36 +31,38 @@ public class Connection {
             printStream = new PrintStream(socket.getOutputStream());
             objectInputStream = new ObjectInputStream(socket.getInputStream());
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            /*printStream.println("0");
-            User user = (User)objectInputStream.readObject();
-            System.out.println(user);*/
-
-            /*printStream.println("getAllUsers");
-            UserService.setUserList((ArrayList<User>)objectInputStream.readObject());
-            for(User buf : UserService.getAllUsers()) { System.out.println(buf); }*/
         } catch (Exception e) { e.printStackTrace(); }
     }
+
     public List<User> getUserList() throws IOException, ClassNotFoundException {
         printStream.println("getAllUsers");
         return (List<User>)objectInputStream.readObject();
     }
-
     public User login(User user) throws IOException, ClassNotFoundException {
         printStream.println("login");
         objectOutputStream.writeObject(user);
         return (User)objectInputStream.readObject();
     }
-
     public User registration(User user) throws IOException, ClassNotFoundException {
         printStream.println("registration");
         objectOutputStream.writeObject(user);
         return (User)objectInputStream.readObject();
     }
-
     public User editName(User user, String newName) throws IOException, ClassNotFoundException {
         printStream.println("editName");
         objectOutputStream.writeObject(user);
         printStream.println(newName);
         return (User)objectInputStream.readObject();
+    }
+    public User editPassword(User user, String newPassword) throws IOException, ClassNotFoundException {
+        printStream.println("editPassword");
+        objectOutputStream.writeObject(user);
+        printStream.println(newPassword);
+        return (User)objectInputStream.readObject();
+    }
+
+    public List<Product> getProductList() throws IOException, ClassNotFoundException {
+        printStream.println("getAllProducts");
+        return (List<Product>)objectInputStream.readObject();
     }
 }

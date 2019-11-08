@@ -19,7 +19,7 @@ public class Profile {
 
     public Button log;
     public MenuItem usersMenu;
-    public MenuItem hardwareMenu;
+    public MenuItem productMenu;
     public Button profile;
 
     public Label login;
@@ -29,8 +29,8 @@ public class Profile {
     public Button edit;
 
     @FXML
-    private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log, profile);
+    private void initialize() {
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, profile);
 
         login.setText(CurrentUser.getCurrentUser().getLogin());
         name.setText(CurrentUser.getCurrentUser().getName());
@@ -78,9 +78,6 @@ public class Profile {
         grid.add(passwordField, 1, 0);
         grid.add(new Label("Повторите пароль:"), 0, 1);
         grid.add(passwordConfirm, 1, 1);
-
-        Node saveButton = dialog.getDialogPane().lookupButton(saveButtonType);
-        saveButton.setDisable(true);
         dialog.getDialogPane().setContent(grid);
 
         dialog.setResultConverter(dialogButton -> {
@@ -96,25 +93,11 @@ public class Profile {
         Optional<Pair<PasswordField, PasswordField>> result = dialog.showAndWait();
 
         result.ifPresent(userPassword -> {
-            if(VerificationService.passwordVerification(userPassword.getKey(), new Alert(null))) {
-
-
-
-
-
-                System.out.println("good password"); ////Метод запроса
-
-
-
-
-
-                res.set(true);
-            }
-            else {
-                System.out.println("Bad");
-                res.set(false);
-            }
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Результат смены пароля");
+            alert.setHeaderText(null);
+            res.set(UserService.editPassword(userPassword.getKey(), userPassword.getValue(), alert));
+            alert.showAndWait();
         });
         return res.get();
     }

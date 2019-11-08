@@ -27,4 +27,8 @@ public class UserService {
     public static User editName(User user, String newName) {
         return dao.editName(user.getId(), newName);
     }
+
+    public static User editPassword(User user, String newPassword) {
+        return dao.editPassword(user.getId(), newPassword);
+    }
 }

@@ -14,6 +14,14 @@ import java.util.Optional;
 //Класс взаимодействия класса-сущности User и запросов в БД
 public class UserDAO implements DAOInterface<User> {
 
+    private final static class SingletonHolder {    //объект класса единственный для всего проекта
+        private final static UserDAO INSTANCE = new UserDAO();
+    }
+
+    public static UserDAO getInstance() {   //Получение доступа к классу
+        return SingletonHolder.INSTANCE;
+    }
+
     public User login(String login, String password) {
         try {
             Session session = HibernateConnect.getSessionFactory().openSession();
@@ -42,12 +50,15 @@ public class UserDAO implements DAOInterface<User> {
         return user;    //Выполнение запроса
     }
 
-    private final static class SingletonHolder {    //объект класса единственный для всего проекта
-        private final static UserDAO INSTANCE = new UserDAO();
-    }
-
-    public static UserDAO getInstance() {   //Получение доступа к классу
-        return SingletonHolder.INSTANCE;
+    public User editPassword(Integer id, String newPassword) {
+        Session session = HibernateConnect.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        User user = findById(id).get();
+        user.setPassword(newPassword);
+        session.update(user);
+        tx1.commit();
+        session.close();
+        return user;    //Выполнение запроса
     }
 
     public List<User> findAll() {   //метод получения всех данных из таблицы

@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Data //Автоматическая генерация get и set методов для всех полей класса (плагин Lombok), некоторых конструкторов, методов toString(), equals(), hashCode()
 @Entity //Аннотация для hibernate - класс является сущностью
-public class User implements Serializable {
+public class Product implements Serializable {
 
     @Id //Аннотация hibernate - поле является первичным ключом
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Аннотация hibernate - значения поля генерируется автоматически (аналог Auto Incerment)
@@ -18,17 +18,15 @@ public class User implements Serializable {
 
     //Остальные поля таблицы (String ~ varchar; Integer ~ int)
     private String name;
-    private String login;
-    private String password;
-    private Integer access;
+    private String firm;
+    //хз какие хар-ки.....
 
-    public User(String name, String login, String password, Integer access) {
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.access = access;
+
+    public Product() {
     }
 
-    public User() {
+    public Product(String name, String firm) {
+        this.name = name;
+        this.firm = firm;
     }
 }

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class Registration {
 
     public MenuItem usersMenu;
-    public MenuItem hardwareMenu;
+    public MenuItem productMenu;
     public TextField name;
     public TextField login;
     public PasswordField password;
@@ -29,7 +29,7 @@ public class Registration {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, hardwareMenu, log, new Button());
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, new Button());
         thisEventHandlers();
     }
 

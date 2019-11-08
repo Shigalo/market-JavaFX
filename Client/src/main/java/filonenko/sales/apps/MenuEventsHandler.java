@@ -17,7 +17,7 @@ public class MenuEventsHandler {
 
     static Button log = null;
 
-    public static void eventHandlers(MenuItem usersMenu, MenuItem hardwareMenu, Button log, Button profile) {
+    public static void eventHandlers(MenuItem usersMenu, MenuItem productMenu, Button log, Button profile) {
         MenuEventsHandler.log = log;
 
         usersMenu.setOnAction(new EventHandler<ActionEvent>() {
@@ -38,10 +38,15 @@ public class MenuEventsHandler {
             }
         });
 
-        hardwareMenu.setOnAction(new EventHandler<ActionEvent>() {
+        productMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("hardwareMenu event");
+                Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/products.fxml"));
+                Parent root = null;
+                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                stage.setScene(new Scene(root));
+                stage.show();
             }
         });
 

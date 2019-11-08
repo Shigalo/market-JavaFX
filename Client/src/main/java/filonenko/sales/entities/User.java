@@ -1,12 +1,11 @@
 package filonenko.sales.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
 
-@Getter @Setter //Автоматическая генерация get и set методов для всех полей класса (плагин Lombok)
+@Data
 public class User implements Serializable {
     private Integer id;
 
@@ -24,16 +23,5 @@ public class User implements Serializable {
     }
 
     public User() {
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", access=" + access +
-                '}';
     }
 }

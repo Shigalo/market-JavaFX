@@ -3,6 +3,8 @@ package filonenko.sales.services;
 import filonenko.sales.apps.Connection;
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.entities.User;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,8 +46,21 @@ public class UserService {
         } catch (Exception ignored) {}
     }
 
-    public static void editPassword(String password, String passwordConfirm) {
-        System.out.println(password);
-        System.out.println(passwordConfirm);
+    public static boolean editPassword(PasswordField password, PasswordField passwordConfirm, Alert alert) {
+        try {
+            if(password.getText().equals(CurrentUser.getCurrentUser().getPassword())) {
+                alert.setContentText("Пароль не может быть изменён на текущий!");
+                return false;
+            }
+            if (VerificationService.passwordVerification(password, alert) &&
+                    VerificationService.passwordConfirm(password, passwordConfirm, alert)) {
+                alert.setContentText("Успешно!");
+                User modifiedUser = connection.editPassword(CurrentUser.getCurrentUser(), password.getText());
+                CurrentUser.setCurrentUser(modifiedUser);
+                return true;
+            }
+            return false;
+        }
+        catch (Exception ignored) { return false; }
     }
 }

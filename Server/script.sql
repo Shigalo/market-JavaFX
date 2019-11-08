@@ -10,3 +10,10 @@ CREATE TABLE user
     password varchar(45) NOT NULL,
     access int NOT NULL
 );
+
+CREATE TABLE product
+(
+    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    name varchar(45),
+    firm varchar(45)
+);

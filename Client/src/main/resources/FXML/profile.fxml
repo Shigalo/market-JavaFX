@@ -14,7 +14,7 @@
     <MenuBar>
         <Menu mnemonicParsing="false" text="Данные">
             <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
-            <MenuItem fx:id="hardwareMenu" mnemonicParsing="false" text="Техника" />
+            <MenuItem fx:id="productMenu" mnemonicParsing="false" text="Продукция" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
             <MenuItem mnemonicParsing="false" text="Delete" />
@@ -36,7 +36,6 @@
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
             <Label prefHeight="45.0" prefWidth="141.0" text="Логин" GridPane.rowIndex="1" />
@@ -44,7 +43,7 @@
             <Label prefHeight="53.0" prefWidth="211.0" text="Имя" />
             <Label fx:id="name" GridPane.columnIndex="1" />
             <Button fx:id="use" mnemonicParsing="false" prefHeight="19.0" prefWidth="122.0" text="Изменить имя" GridPane.columnIndex="2" />
-            <Button fx:id="edit" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Изменит пароль" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="edit" mnemonicParsing="false" prefHeight="25.0" prefWidth="122.0" text="Изменит пароль" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         </children>
     </GridPane>
     <Label fx:id="user" alignment="CENTER" contentDisplay="CENTER" layoutX="122.0" layoutY="98.0" prefHeight="30.0" prefWidth="158.0" textAlignment="CENTER" />

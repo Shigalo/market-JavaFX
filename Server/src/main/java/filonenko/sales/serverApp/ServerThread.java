@@ -1,6 +1,7 @@
 package filonenko.sales.serverApp;
 
 import filonenko.sales.entities.User;
+import filonenko.sales.services.ProductService;
 import filonenko.sales.services.UserService;
 
 import java.io.*;
@@ -39,12 +40,28 @@ public class ServerThread extends Thread {
                     case "login": login(); break;
                     case "registration": registration(); break;
                     case "editName": editName();
+                    case "editPassword": editPassword();
+                    case "getAllProducts": getAllProducts(); break;
                 }
             }
         } catch (IOException e) {
             System.out.println("Lost connection");} catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally { disconnect(); }
+    }
+
+    private void getAllProducts() throws IOException {
+        objectOutputStream.writeObject(ProductService.getAllProducts());
+    }
+
+    private void editPassword() throws IOException, ClassNotFoundException {
+        User user = (User)objectInputStream.readObject();
+        String newPassword = inputStream.readLine();
+        System.out.println("New password: " + newPassword);
+        user = UserService.editPassword(user, newPassword);
+        if (user != null) System.out.println("Successful modification");
+        else System.out.println("Failed modification");
+        objectOutputStream.writeObject(user);
     }
 
     private void editName() throws IOException, ClassNotFoundException {
@@ -79,7 +96,7 @@ public class ServerThread extends Thread {
         objectOutputStream.writeObject(UserService.getAllUsers());
     }
 
-    public void disconnect() {
+    private void disconnect() {
         try {
             System.out.println( "User " + ConnectionNumber + " disconnected: " + addr.getHostName());
             System.out.println("Number of connections " + --numberOfConnections);
