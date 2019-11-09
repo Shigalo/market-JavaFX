@@ -50,23 +50,20 @@ public class Users {
     }
 
     private void thisEventHandlers() {
-        table.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                for (Node n : table.lookupAll("TableRow")) {
-                    if (n instanceof TableRow) {
-                        TableRow row = (TableRow) n;
-                        if (row.getStyle() != ("-fx-background-color: rgb(152, 251, 152);")) {
-                            row.setStyle("-fx-background-color: white;");
-                        }
-                        if (row.getIndex() == table.getSelectionModel().getFocusedIndex()) {
-                            if (!selected.get(row.getIndex())) {
-                                selected.set(row.getIndex(), !selected.get(row.getIndex()));
-                                row.setStyle("-fx-background-color: rgb(152, 251, 152);");
-                            } else {
-                                selected.set(row.getIndex(), !selected.get(row.getIndex()));
-                                row.setStyle("-fx-background-color: rgb(135, 206, 235);");
-                            }
+        table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            for (Node n : table.lookupAll("TableRow")) {
+                if (n instanceof TableRow) {
+                    TableRow row = (TableRow) n;
+                    if (row.getStyle() != ("-fx-background-color: rgb(152, 251, 152);")) {
+                        row.setStyle("-fx-background-color: white;");
+                    }
+                    if (row.getIndex() == table.getSelectionModel().getFocusedIndex()) {
+                        if (!selected.get(row.getIndex())) {
+                            selected.set(row.getIndex(), !selected.get(row.getIndex()));
+                            row.setStyle("-fx-background-color: rgb(152, 251, 152);");
+                        } else {
+                            selected.set(row.getIndex(), !selected.get(row.getIndex()));
+                            row.setStyle("-fx-background-color: rgb(135, 206, 235);");
                         }
                     }
                 }

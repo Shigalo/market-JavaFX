@@ -2,6 +2,7 @@ package filonenko.sales.dao;
 
 import filonenko.sales.connect.HibernateConnect;
 import filonenko.sales.entities.Product;
+import filonenko.sales.entities.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -12,6 +13,20 @@ import java.util.Optional;
 
 //Класс взаимодействия класса-сущности Product и запросов в БД
 public class ProductDAO implements DAOInterface<Product> {
+
+    public Product editProduct(Integer id, String newName, String newFirm) {
+        try {
+            Session session = HibernateConnect.getSessionFactory().openSession();
+            Transaction tx1 = session.beginTransaction();
+            Product product = findById(id).get();
+            product.setName(newName);
+            product.setFirm(newFirm);
+            session.update(product);
+            tx1.commit();
+            session.close();
+            return product;
+        } catch (Exception e) { return null; }
+    }
 
     private final static class SingletonHolder {    //объект класса единственный для всего проекта
         private final static ProductDAO INSTANCE = new ProductDAO();

@@ -38,7 +38,6 @@ public class UserDAO implements DAOInterface<User> {
         return newUser;
     }
 
-
     public User editName(Integer id, String newName) {
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();

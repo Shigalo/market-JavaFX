@@ -65,4 +65,18 @@ public class Connection {
         printStream.println("getAllProducts");
         return (List<Product>)objectInputStream.readObject();
     }
+
+    public Product editProduct(Product selectedProduct, String name, String firm) throws IOException, ClassNotFoundException {
+        printStream.println("editProduct");
+        objectOutputStream.writeObject(selectedProduct);
+        printStream.println(name);
+        printStream.println(firm);
+        selectedProduct = (Product)objectInputStream.readObject();
+        return selectedProduct;
+    }
+
+    public void deleteProduct(Product selectedProduct) throws IOException {
+        printStream.println("deleteProduct");
+        objectOutputStream.writeObject(selectedProduct);
+    }
 }

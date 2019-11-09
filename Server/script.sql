@@ -14,6 +14,6 @@ CREATE TABLE user
 CREATE TABLE product
 (
     id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    name varchar(45),
+    name UNIQUE INDEX varchar(45),
     firm varchar(45)
 );

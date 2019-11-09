@@ -1,5 +1,6 @@
 package filonenko.sales.serverApp;
 
+import filonenko.sales.entities.Product;
 import filonenko.sales.entities.User;
 import filonenko.sales.services.ProductService;
 import filonenko.sales.services.UserService;
@@ -42,12 +43,34 @@ public class ServerThread extends Thread {
                     case "editName": editName();
                     case "editPassword": editPassword();
                     case "getAllProducts": getAllProducts(); break;
+                    case "editProduct": editProduct(); break;
+                    case "deleteProduct": deleteProduct(); break;
                 }
             }
         } catch (IOException e) {
             System.out.println("Lost connection");} catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally { disconnect(); }
+    }
+
+    private void deleteProduct() throws IOException, ClassNotFoundException {
+        Product product = (Product)objectInputStream.readObject();
+        System.out.println(product);
+        ProductService.deleteProduct(product);
+        System.out.println("Successful delete");
+        System.out.println("Failed delete");
+    }
+
+    private void editProduct() throws IOException, ClassNotFoundException {
+        Product product = (Product)objectInputStream.readObject();
+        String newName = inputStream.readLine();
+        System.out.println("New name: " + newName);
+        String newFirm = inputStream.readLine();
+        System.out.println("New firm: " + newFirm);
+        product = ProductService.editProduct(product, newName, newFirm);
+        if (product != null) System.out.println("Successful modification");
+        else System.out.println("Failed modification");
+        objectOutputStream.writeObject(product);
     }
 
     private void getAllProducts() throws IOException {
