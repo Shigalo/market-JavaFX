@@ -18,12 +18,12 @@ public class VerificationService {
                 " Длинна 4-16 символов\n" + (char)187 +
                 " Содержит только цифры и буквы латинского алфавита\n" + (char)187 +
                 " Начинаутся с буквы");
-        login.setText("");
+        login.requestFocus();
         return false;
 
     }
 
-    public static boolean passwordVerification(PasswordField password, Alert alert) {
+    static boolean passwordVerification(PasswordField password, Alert alert) {
         Pattern p = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]{7,15}");
         Matcher m = p.matcher(password.getText());
         if(m.matches()) return true;
@@ -31,9 +31,8 @@ public class VerificationService {
                 "Требования к паролю:\n" + (char)187 +
                 " Длинна 8-16 символов\n" + (char)187 +
                 " Содержит только цифры и буквы латинского алфавита");
+        password.requestFocus();
         return false;
-
-
     }
 
     private static boolean nameVerification(TextField name, Alert alert) {
@@ -44,14 +43,14 @@ public class VerificationService {
                 "Требования к имени:\n" + (char)187 +
                 " Длинна 2-10 символов\n" + (char)187 +
                 " Содержат только буквы латинского алфавита");
-        name.setText("");
+        name.requestFocus();
         return false;
     }
 
-    public static boolean passwordConfirm(PasswordField password, PasswordField passwordConfirm, Alert alert) {
+    static boolean passwordConfirm(PasswordField password, PasswordField passwordConfirm, Alert alert) {
         if (password.getText().equals(passwordConfirm.getText())) return true;
         alert.setContentText("Ошибка подтверждения пароля!");
-        passwordConfirm.setText("");
+        passwordConfirm.requestFocus();
         return false;
     }
 

@@ -19,14 +19,16 @@ public class Product implements Serializable {
     //Остальные поля таблицы (String ~ varchar; Integer ~ int)
     private String name;
     private String firm;
+    private Double unit_price;
     //хз какие хар-ки.....
 
 
     public Product() {
     }
 
-    public Product(String name, String firm) {
+    public Product(String name, String firm, Double unit_price) {
         this.name = name;
         this.firm = firm;
+        this.unit_price = unit_price;
     }
 }

@@ -63,4 +63,12 @@ public class UserService {
         }
         catch (Exception ignored) { return false; }
     }
+
+    public static void remove() {
+        try {
+            User user = CurrentUser.getCurrentUser();
+            connection.remove(user);
+            CurrentUser.setCurrentUser(null);
+        } catch (Exception e) { e.printStackTrace(); }
+    }
 }

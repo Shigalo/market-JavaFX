@@ -22,4 +22,10 @@ public class ProductService {
     public static void deleteProduct(Product product) {
         dao.delete(product);
     }
+
+    public static Product addProduct(Product newProduct) {
+        dao.create(newProduct);
+        System.out.println(newProduct.getId());
+        return dao.findById(newProduct.getId()).get();
+    }
 }

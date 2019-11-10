@@ -6,26 +6,14 @@ import filonenko.sales.entities.Product;
 import filonenko.sales.services.ProductService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static javafx.scene.input.MouseButton.PRIMARY;
 
 public class Products {
     public MenuItem usersMenu;
@@ -35,7 +23,9 @@ public class Products {
 
     public TableColumn<Product, String> name;
     public TableColumn<Product, String> firm;
+    public TableColumn<Product, Double> unit_price;
     public TableView<Product> table;
+    public Button add;
     private ObservableList<Product> products = FXCollections.observableArrayList();
     private List<Boolean> selected = new ArrayList<>();
 
@@ -44,17 +34,14 @@ public class Products {
         MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, profile);
         name.setSortable(false);
         firm.setSortable(false);
+        unit_price.setSortable(false);
         thisEventHandlers();
-
-        List<Product> productList = ProductService.getAllProducts();
         name.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
         firm.setCellValueFactory(new PropertyValueFactory<Product, String>("Firm"));
-        products.addAll(productList);
-        table.setItems(products);
-        table.setPrefHeight(25+productList.size()*25);
+        unit_price.setCellValueFactory(new PropertyValueFactory<Product, Double>("Unit_price"));
         table.setMaxHeight(200);
-        for(Product ignored : productList)
-            selected.add(false);
+        tableUpdate();
+
     }
 
     private void thisEventHandlers() {
@@ -62,28 +49,23 @@ public class Products {
         MenuItem edit = new MenuItem("Изменить");
         edit.setOnAction(contextEvent -> {
             ProductService.editProduct(table.getSelectionModel().getSelectedItem());
-            List<Product> productList = null;
-            try {
-                productList = ProductService.getAllProducts();
-            } catch (Exception ignored) {
-            }
-            products.setAll(productList);
-            table.setItems(products);
+            tableUpdate();
         });
         MenuItem delete = new MenuItem("Удалить");
         delete.setOnAction(contextEvent -> {
             ProductService.deleteProduct(table.getSelectionModel().getSelectedItem());
-            List<Product> productList = null;
-            try {
-                productList = ProductService.getAllProducts();
-            } catch (Exception ignored) {
-            }
-            products.setAll(productList);
-            table.setPrefHeight(25 + products.size() * 25);
-            table.setItems(products);
+            tableUpdate();
         });
-        if(CurrentUser.getCurrentUser() != null) { contextMenu.getItems().addAll(edit, delete); }
 
+        add.setVisible(false);
+        if(CurrentUser.getCurrentUser() != null) {
+            contextMenu.getItems().addAll(edit, delete);
+            if(CurrentUser.getCurrentUser().getAccess() == 1) { add.setVisible(true);
+                add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    ProductService.addProduct();
+                    tableUpdate();
+                }); }
+        }
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             contextMenu.hide();
             switch (event.getButton()) {
@@ -113,5 +95,23 @@ public class Products {
                 }
             }
         });
+    }
+
+    private void tableUpdate() {
+        try {
+            List<Product> productList = ProductService.getAllProducts();
+            products.setAll(productList);
+            table.setItems(products);
+            table.setPrefHeight(25+productList.size()*25);
+            selected.clear();
+            for(Product ignored : productList)
+                selected.add(false);
+            for (Node n : table.lookupAll("TableRow")) {
+                if (n instanceof TableRow) {
+                    TableRow row = (TableRow) n;
+                    row.setStyle("-fx-background-color: white;");
+                }
+            }
+        } catch (Exception ignored) { }
     }
 }

@@ -31,4 +31,8 @@ public class UserService {
     public static User editPassword(User user, String newPassword) {
         return dao.editPassword(user.getId(), newPassword);
     }
+
+    public static void remove(User user) {
+        dao.delete(user);
+    }
 }

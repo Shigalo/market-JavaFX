@@ -23,10 +23,12 @@
     </MenuBar>
     <Button fx:id="log" layoutX="550.0" mnemonicParsing="false" />
     <Button fx:id="profile" layoutX="468.0" mnemonicParsing="false" text="Профиль" />
-    <TableView fx:id="table" layoutX="125.0" layoutY="100.0" prefHeight="200.0" prefWidth="310.0">
+    <TableView fx:id="table" layoutX="125.0" layoutY="100.0" prefHeight="200.0" prefWidth="387.0">
         <columns>
             <TableColumn fx:id="name" prefWidth="154.0" text="Наименование" />
-            <TableColumn fx:id="firm" prefWidth="141.0" text="Фирма-производитель" />
+            <TableColumn fx:id="firm" prefWidth="106.0" text="Фирма" />
+            <TableColumn fx:id="unit_price" prefWidth="110.0" text="Цена за единицу" />
         </columns>
     </TableView>
+    <Button fx:id="add" layoutX="146.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Добавить" />
 </AnchorPane>

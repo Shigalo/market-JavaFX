@@ -11,14 +11,16 @@ public class Product implements Serializable {
 
     private String name;
     private String firm;
-    //хз какие хар-ки.....
+    private Double unit_price;
+//хз какие хар-ки.....
 
 
     public Product() {
     }
 
-    public Product(String name, String firm) {
+    public Product(String name, String firm, Double unit_price) {
         this.name = name;
         this.firm = firm;
+        this.unit_price = unit_price;
     }
 }

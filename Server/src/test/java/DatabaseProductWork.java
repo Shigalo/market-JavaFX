@@ -28,13 +28,13 @@ public class DatabaseProductWork {
         String name = scanner.next();
         System.out.println("firm: ");
         String firm = scanner.next();
-        Product Product = new Product(name, firm);
+        Product Product = new Product(name, firm, 1.0);
         ProductdataDao.create(Product);
     }
 
     @Test
     public void createTest() {
-        Product test_Product = new Product("test_Product", "test_firm");
+        Product test_Product = new Product("test_Product", "test_firm", 1.0);
         ProductdataDao.create(test_Product);
     }
 

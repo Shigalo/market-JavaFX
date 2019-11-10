@@ -29,7 +29,7 @@ public class MenuEventsHandler {
 
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                 Parent root = null;
-                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
 //                stage = new Stage();
 //                stage.initModality(Modality.APPLICATION_MODAL);
 //                stage.setTitle("Окно пользователей");

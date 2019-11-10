@@ -17,3 +17,5 @@ CREATE TABLE product
     name UNIQUE INDEX varchar(45),
     firm varchar(45)
 );
+
+ALTER TABLE product ADD `unit_price` double NULL;

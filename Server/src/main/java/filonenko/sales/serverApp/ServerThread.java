@@ -1,9 +1,7 @@
 package filonenko.sales.serverApp;
 
-import filonenko.sales.entities.Product;
-import filonenko.sales.entities.User;
-import filonenko.sales.services.ProductService;
-import filonenko.sales.services.UserService;
+import filonenko.sales.entities.*;
+import filonenko.sales.services.*;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -45,6 +43,8 @@ public class ServerThread extends Thread {
                     case "getAllProducts": getAllProducts(); break;
                     case "editProduct": editProduct(); break;
                     case "deleteProduct": deleteProduct(); break;
+                    case "addProduct": addProduct(); break;
+                    case "remove": remove(); break;
                 }
             }
         } catch (IOException e) {
@@ -53,6 +53,13 @@ public class ServerThread extends Thread {
         } finally { disconnect(); }
     }
 
+    private void addProduct() throws IOException, ClassNotFoundException {
+        Product newProduct = (Product)objectInputStream.readObject();
+        newProduct = ProductService.addProduct(newProduct);
+        if (newProduct != null) System.out.println("successful addition ");
+        else System.out.println("Failed addition");
+        objectOutputStream.writeObject(newProduct);
+    }
     private void deleteProduct() throws IOException, ClassNotFoundException {
         Product product = (Product)objectInputStream.readObject();
         System.out.println(product);
@@ -60,7 +67,6 @@ public class ServerThread extends Thread {
         System.out.println("Successful delete");
         System.out.println("Failed delete");
     }
-
     private void editProduct() throws IOException, ClassNotFoundException {
         Product product = (Product)objectInputStream.readObject();
         String newName = inputStream.readLine();
@@ -72,7 +78,6 @@ public class ServerThread extends Thread {
         else System.out.println("Failed modification");
         objectOutputStream.writeObject(product);
     }
-
     private void getAllProducts() throws IOException {
         objectOutputStream.writeObject(ProductService.getAllProducts());
     }
@@ -86,7 +91,6 @@ public class ServerThread extends Thread {
         else System.out.println("Failed modification");
         objectOutputStream.writeObject(user);
     }
-
     private void editName() throws IOException, ClassNotFoundException {
         User user = (User)objectInputStream.readObject();
         String newName = inputStream.readLine();
@@ -96,7 +100,6 @@ public class ServerThread extends Thread {
         else System.out.println("Failed modification");
         objectOutputStream.writeObject(user);
     }
-
     private void registration() throws IOException, ClassNotFoundException {
         User user = (User)objectInputStream.readObject();
         System.out.println("User login: " + user.getLogin());
@@ -105,7 +108,6 @@ public class ServerThread extends Thread {
         else System.out.println("Failed registration");
         objectOutputStream.writeObject(user);
     }
-
     private void login() throws IOException, ClassNotFoundException {
         User user = (User)objectInputStream.readObject();
         System.out.println("User login: " + user.getLogin());
@@ -114,11 +116,15 @@ public class ServerThread extends Thread {
         else System.out.println("Failed login");
         objectOutputStream.writeObject(user);
     }
-
     private void getAllUsers() throws IOException {
         objectOutputStream.writeObject(UserService.getAllUsers());
     }
-
+    private void remove() throws IOException, ClassNotFoundException {
+        User user = (User)objectInputStream.readObject();
+        System.out.println(user);
+        UserService.remove(user);
+        System.out.println(user + " was removed");
+    }
     private void disconnect() {
         try {
             System.out.println( "User " + ConnectionNumber + " disconnected: " + addr.getHostName());

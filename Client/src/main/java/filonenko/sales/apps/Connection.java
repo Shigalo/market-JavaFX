@@ -60,12 +60,15 @@ public class Connection {
         printStream.println(newPassword);
         return (User)objectInputStream.readObject();
     }
+    public void remove(User user) throws IOException {
+        printStream.println("remove");
+        objectOutputStream.writeObject(user);
+    }
 
     public List<Product> getProductList() throws IOException, ClassNotFoundException {
         printStream.println("getAllProducts");
         return (List<Product>)objectInputStream.readObject();
     }
-
     public Product editProduct(Product selectedProduct, String name, String firm) throws IOException, ClassNotFoundException {
         printStream.println("editProduct");
         objectOutputStream.writeObject(selectedProduct);
@@ -74,9 +77,15 @@ public class Connection {
         selectedProduct = (Product)objectInputStream.readObject();
         return selectedProduct;
     }
-
     public void deleteProduct(Product selectedProduct) throws IOException {
         printStream.println("deleteProduct");
         objectOutputStream.writeObject(selectedProduct);
     }
+    public Product addProduct(Product product) throws IOException, ClassNotFoundException {
+        printStream.println("addProduct");
+        objectOutputStream.writeObject(product);
+        return (Product)objectInputStream.readObject();
+    }
+
+
 }

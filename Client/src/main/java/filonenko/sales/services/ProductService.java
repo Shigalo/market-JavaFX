@@ -1,7 +1,10 @@
 package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
+import filonenko.sales.apps.MaskField;
 import filonenko.sales.entities.Product;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -78,6 +81,72 @@ public class ProductService {
         if (result.get() == ButtonType.OK){
             try { connection.deleteProduct(selectedProduct); } catch (IOException ignored) { }
         }
+    }
+
+    public static void addProduct() {
+        try {
+            Dialog<Product> dialog = new Dialog<>();
+            dialog.setTitle("Добавление родукта");
+
+            ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButtonType = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, cancelButtonType);
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 150, 10, 10));
+
+            TextField name = new TextField();
+            TextField firm = new TextField();
+
+            TextField price = new TextField();
+            price.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*\\.?\\d{0,2}")) {
+                    price.setText(newValue.replaceAll("[^\\d.]", ""));
+                }
+                else {
+                    if (!newValue.matches("\\d+\\.?\\d*")) {
+                        String text = price.getText();
+                        price.setText("0" + text);
+                    }
+                }
+                if (newValue.matches("\\d*\\.{1,2}\\d{3,}")) {
+                    String text = price.getText();
+                    price.setText(text.substring(0, text.length() - 2) + text.substring(text.length() - 1));
+                }
+                if(oldValue.contains(".") && newValue.replaceFirst("\\.", "").contains(".")) {
+                    price.setText(oldValue);
+                }
+            });
+
+            grid.add(new Label("Наименование:"), 0, 0);
+            grid.add(name, 1, 0);
+            grid.add(new Label("Фирма:"), 0, 1);
+            grid.add(firm, 1, 1);
+            grid.add(new Label("Фирма:"), 0, 1);
+            grid.add(price, 1, 2);
+            dialog.getDialogPane().setContent(grid);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Результат добавления");
+            alert.setHeaderText(null);
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == saveButtonType) {
+                    try {
+                        Product product = new Product(name.getText(), firm.getText(), Double.parseDouble(price.getText()));
+                        product = connection.addProduct(product);
+                        if(product != null) alert.setContentText("Успешно");
+                        else alert.setContentText("Продукт с таким наименованием уже есть в базе");
+                        alert.showAndWait();
+                        return product;
+                    } catch (Exception ignored) {}
+                }
+                return null;
+            });
+            dialog.showAndWait();
+        }
+        catch (Exception ignored) { }
     }
 
 
