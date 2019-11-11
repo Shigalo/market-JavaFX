@@ -19,3 +19,11 @@ CREATE TABLE product
 );
 
 ALTER TABLE product ADD `unit_price` double NULL;
+
+CREATE TABLE sale
+(
+    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    product_id int NOT NULL,
+    date date NOT NULL,
+    CONSTRAINT sales_product_id_fk FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE ON UPDATE CASCADE
+);

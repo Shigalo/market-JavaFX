@@ -22,17 +22,6 @@ public class DatabaseProductWork {
     }
 
     @Test
-    public void createAdmin() { //права доступа ещё не настроены
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("name: ");
-        String name = scanner.next();
-        System.out.println("firm: ");
-        String firm = scanner.next();
-        Product Product = new Product(name, firm, 1.0);
-        ProductdataDao.create(Product);
-    }
-
-    @Test
     public void createTest() {
         Product test_Product = new Product("test_Product", "test_firm", 1.0);
         ProductdataDao.create(test_Product);

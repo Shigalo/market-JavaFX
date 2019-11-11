@@ -15,5 +15,6 @@
         <!--Классы, выступаюзие в роли сущностей (таблиц) в базе данных-->
         <mapping class="filonenko.sales.entities.User"/>
         <mapping class="filonenko.sales.entities.Product"/>
+        <mapping class="filonenko.sales.entities.Sale"/>
     </session-factory>
 </hibernate-configuration>
