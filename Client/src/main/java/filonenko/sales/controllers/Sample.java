@@ -25,10 +25,11 @@ public class Sample {
     public PasswordField password;
     public Button loginButton;
     public Button registration;
+    public MenuItem salesMenu;
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
         thisEventHandlers();
     }
 

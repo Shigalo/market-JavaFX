@@ -45,12 +45,17 @@ public class ServerThread extends Thread {
                     case "deleteProduct": deleteProduct(); break;
                     case "addProduct": addProduct(); break;
                     case "remove": remove(); break;
+                    case "getAllSales": getAllSales(); break;
                 }
             }
         } catch (IOException e) {
             System.out.println("Lost connection");} catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally { disconnect(); }
+    }
+
+    private void getAllSales() throws IOException {
+        objectOutputStream.writeObject(SaleService.getAllSales());
     }
 
     private void addProduct() throws IOException, ClassNotFoundException {

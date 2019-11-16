@@ -1,6 +1,7 @@
 package filonenko.sales.apps;
 
 import filonenko.sales.entities.Product;
+import filonenko.sales.entities.Sale;
 import filonenko.sales.entities.User;
 import javafx.scene.control.PasswordField;
 
@@ -87,5 +88,8 @@ public class Connection {
         return (Product)objectInputStream.readObject();
     }
 
-
+    public List<Sale> getSalesList() throws IOException, ClassNotFoundException {
+        printStream.println("getAllSales");
+        return (List<Sale>)objectInputStream.readObject();
+    }
 }

@@ -26,10 +26,11 @@ public class Registration {
     public Button registration;
     public Button log;
     public Button cancel;
+    public MenuItem salesMenu;
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, new Button());
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, new Button());
         thisEventHandlers();
     }
 

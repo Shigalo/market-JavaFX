@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.Products">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.Sales">
     <MenuBar>
         <Menu mnemonicParsing="false" text="Данные">
             <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
@@ -26,9 +26,9 @@
     <Button fx:id="profile" layoutX="468.0" mnemonicParsing="false" text="Профиль" />
     <TableView fx:id="table" layoutX="125.0" layoutY="100.0" prefHeight="200.0" prefWidth="387.0">
         <columns>
-            <TableColumn fx:id="name" prefWidth="154.0" text="Наименование" />
-            <TableColumn fx:id="firm" prefWidth="106.0" text="Фирма" />
-            <TableColumn fx:id="unit_price" prefWidth="110.0" text="Цена за единицу" />
+            <TableColumn fx:id="date" prefWidth="154.0" text="Дата" />
+            <TableColumn fx:id="product" prefWidth="106.0" text="Товар" />
+            <TableColumn fx:id="quantity" prefWidth="110.0" text="Количество" />
         </columns>
     </TableView>
     <Button fx:id="add" layoutX="146.0" layoutY="53.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Добавить" />

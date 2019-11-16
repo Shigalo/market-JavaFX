@@ -25,12 +25,13 @@ public class Users {
     public TableColumn<User, String> name;
     public TableColumn<User, String> access;
     public TableView<User> table;
+    public MenuItem salesMenu;
     private ObservableList<User> users = FXCollections.observableArrayList();
     private List<Boolean> selected = new ArrayList<>();
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
         login.setSortable(false);
         name.setSortable(false);
         access.setSortable(false);

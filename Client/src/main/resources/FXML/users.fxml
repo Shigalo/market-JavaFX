@@ -13,6 +13,7 @@
         <Menu mnemonicParsing="false" text="Данные">
             <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
             <MenuItem fx:id="productMenu" mnemonicParsing="false" text="Продукция" />
+            <MenuItem fx:id="salesMenu" mnemonicParsing="false" text="Продажи" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
             <MenuItem mnemonicParsing="false" text="Delete" />

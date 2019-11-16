@@ -32,7 +32,7 @@ public class DatabaseSalesWork {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         Product prod = ProductService.getAllProducts().get(0);
         LocalDate localDate = LocalDate.parse("10-10-2010", formatter);
-        Sale sale = new Sale(localDate);
+        Sale sale = new Sale(localDate, 1, prod);
         sale.setProduct(prod);
         saledataDao.create(sale);
     }

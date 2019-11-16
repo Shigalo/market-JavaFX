@@ -33,10 +33,11 @@ public class Profile {
     public Label name;
     public Button edit;
     public Button remove;
+    public MenuItem salesMenu;
 
     @FXML
     private void initialize() {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
 
         login.setText(CurrentUser.getCurrentUser().getLogin());
         name.setText(CurrentUser.getCurrentUser().getName());

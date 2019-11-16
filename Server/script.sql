@@ -27,3 +27,5 @@ CREATE TABLE sale
     date date NOT NULL,
     CONSTRAINT sales_product_id_fk FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+ALTER TABLE sale ADD `quantity` int NOT NULL;
