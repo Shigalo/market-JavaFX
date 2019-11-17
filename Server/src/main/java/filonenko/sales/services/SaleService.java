@@ -15,10 +15,6 @@ public class SaleService {
         return saleList;
     }
 
-    /*public static Sale editSale(Sale Sale, String newName, String newFirm) {
-        return dao.editSale(Sale.getId(), newName, newFirm);
-    }*/
-
     public static void deleteSale(Sale Sale) {
         dao.delete(Sale);
     }

@@ -27,7 +27,16 @@ public class SaleService {
     private static Connection connection = Connection.getInstance();
 
     public static List<Sale> getAllSales() throws IOException, ClassNotFoundException {
-        return connection.getSalesList();
+        System.out.println("!");
+        List<Sale> list = connection.getSalesList();
+        System.out.println(list.getClass());
+        for(Sale sale : list) {
+            System.out.println("@");
+            System.out.println(sale);
+        }
+        System.out.println("!");
+
+        return list;
     }
 
     public static void deleteSale(Sale selectedSale) {
@@ -91,7 +100,7 @@ public class SaleService {
                         LocalDate localDate = LocalDate.parse(date.getEditor().getText(), formatter);
                         Integer quantityInt = Integer.parseInt(quantity.getText());
                         Product selectedProduct = (Product)product.getSelectionModel().getSelectedItem();
-                        Sale sale = new Sale( localDate, quantityInt, selectedProduct);
+                        Sale sale = new Sale(localDate, localDate, quantityInt, selectedProduct);
                         connection.addSale(sale);
                     } catch (Exception ignored) {}
                 }

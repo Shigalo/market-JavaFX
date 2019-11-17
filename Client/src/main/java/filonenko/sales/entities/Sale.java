@@ -15,7 +15,6 @@ public class Sale implements Serializable {
     private Product product;
     //хз какие хар-ки.....
 
-
     public Sale() {
     }
 

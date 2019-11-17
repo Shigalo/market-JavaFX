@@ -29,23 +29,3 @@ CREATE TABLE sale
 );
 
 ALTER TABLE sale ADD `quantity` int NOT NULL;
-
-CREATE TABLE status
-(
-    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    type varchar(45)
-);
-
-CREATE TABLE guarantee
-(
-    id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    sale_id int NOT NULL,
-    status_id int NOT NULL,
-    CONSTRAINT status_fk FOREIGN KEY (status_id) REFERENCES status (id),
-    CONSTRAINT sale_fk FOREIGN KEY (sale_id) REFERENCES sale (id)
-);
-
-INSERT INTO `filonenko5`.`status` (`type`) VALUES ('ACTS');
-INSERT INTO `filonenko5`.`status` (`type`) VALUES ('ENDED');
-INSERT INTO `filonenko5`.`status` (`type`) VALUES ('REPAIR');
-INSERT INTO `filonenko5`.`status` (`type`) VALUES ('REPLACEMENT');
