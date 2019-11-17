@@ -15,8 +15,8 @@ public class ProductService {
         return productList;
     }
 
-    public static Product editProduct(Product product, String newName, String newFirm) {
-        return dao.editProduct(product.getId(), newName, newFirm);
+    public static Product editProduct(Product product, String newName, String newFirm, Double newCost) {
+        return dao.editProduct(product.getId(), newName, newFirm, newCost);
     }
 
     public static void deleteProduct(Product product) {

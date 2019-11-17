@@ -1,10 +1,7 @@
 package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
-import filonenko.sales.apps.MaskField;
 import filonenko.sales.entities.Product;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -28,7 +25,7 @@ public class ProductService {
     public static void editProduct(Product selectedProduct) {
         try {
             Dialog<Product> dialog = new Dialog<>();
-            dialog.setTitle("Изменение родукта");
+            dialog.setTitle("Изменение продукта");
 
             ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelButtonType = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -43,11 +40,16 @@ public class ProductService {
             name.setText(selectedProduct.getName());
             TextField firm = new TextField();
             firm.setText(selectedProduct.getFirm());
+            TextField price = new TextField();
+            price.setText(String.valueOf(selectedProduct.getUnit_price()));
+            VerificationService.doubleVerification(price);
 
             grid.add(new Label("Наименование:"), 0, 0);
             grid.add(name, 1, 0);
             grid.add(new Label("Фирма:"), 0, 1);
             grid.add(firm, 1, 1);
+            grid.add(new Label("Цена за ед.:"), 0, 2);
+            grid.add(price, 1, 2);
             dialog.getDialogPane().setContent(grid);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -56,7 +58,7 @@ public class ProductService {
             dialog.setResultConverter(dialogButton -> {
                 if (dialogButton == saveButtonType) {
                     try {
-                        Product product = connection.editProduct(selectedProduct, name.getText(), firm.getText());
+                        Product product = connection.editProduct(selectedProduct, name.getText(), firm.getText(), price.getText());
                         if(product != null) alert.setContentText("Успешно");
                         else alert.setContentText("Продукт с таким наименованием уже есть в базе");
                         alert.showAndWait();
@@ -91,6 +93,7 @@ public class ProductService {
             ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelButtonType = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
             dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, cancelButtonType);
+            dialog.getDialogPane().lookupButton(saveButtonType).setDisable(true);
 
             GridPane grid = new GridPane();
             grid.setHgap(10);
@@ -99,32 +102,18 @@ public class ProductService {
 
             TextField name = new TextField();
             TextField firm = new TextField();
-
             TextField price = new TextField();
-            price.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (!newValue.matches("\\d*\\.?\\d{0,2}")) {
-                    price.setText(newValue.replaceAll("[^\\d.]", ""));
-                }
-                else {
-                    if (!newValue.matches("\\d+\\.?\\d*")) {
-                        String text = price.getText();
-                        price.setText("0" + text);
-                    }
-                }
-                if (newValue.matches("\\d*\\.{1,2}\\d{3,}")) {
-                    String text = price.getText();
-                    price.setText(text.substring(0, text.length() - 2) + text.substring(text.length() - 1));
-                }
-                if(oldValue.contains(".") && newValue.replaceFirst("\\.", "").contains(".")) {
-                    price.setText(oldValue);
-                }
-            });
+            VerificationService.doubleVerification(price);
+
+            name.textProperty().addListener((ob, o, n) -> dialog.getDialogPane().lookupButton(saveButtonType).setDisable(name.getText().isEmpty() || firm.getText().isEmpty()|| price.getText().isEmpty()));
+            firm.textProperty().addListener((ob, o, n) -> dialog.getDialogPane().lookupButton(saveButtonType).setDisable(name.getText().isEmpty() || firm.getText().isEmpty()|| price.getText().isEmpty()));
+            price.textProperty().addListener((ob, o, n) -> dialog.getDialogPane().lookupButton(saveButtonType).setDisable(name.getText().isEmpty() || firm.getText().isEmpty()|| price.getText().isEmpty()));
 
             grid.add(new Label("Наименование:"), 0, 0);
             grid.add(name, 1, 0);
             grid.add(new Label("Фирма:"), 0, 1);
             grid.add(firm, 1, 1);
-            grid.add(new Label("Фирма:"), 0, 1);
+            grid.add(new Label("Цена за ед.:"), 0, 2);
             grid.add(price, 1, 2);
             dialog.getDialogPane().setContent(grid);
 

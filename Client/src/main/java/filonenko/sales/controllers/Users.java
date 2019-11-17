@@ -35,7 +35,7 @@ public class Users {
         login.setSortable(false);
         name.setSortable(false);
         access.setSortable(false);
-        thisEventHandlers();
+//        thisEventHandlers();
 
         List<User> userList = UserService.getAllUsers();
         login.setCellValueFactory(new PropertyValueFactory<User, String>("Login"));
@@ -49,7 +49,7 @@ public class Users {
             selected.add(false);
     }
 
-    private void thisEventHandlers() {
+    /*private void thisEventHandlers() {
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             for (Node n : table.lookupAll("TableRow")) {
                 if (n instanceof TableRow) {
@@ -69,5 +69,5 @@ public class Users {
                 }
             }
         });
-    }
+    }*/
 }

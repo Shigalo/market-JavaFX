@@ -14,13 +14,14 @@ import java.util.Optional;
 //Класс взаимодействия класса-сущности Product и запросов в БД
 public class ProductDAO implements DAOInterface<Product> {
 
-    public Product editProduct(Integer id, String newName, String newFirm) {
+    public Product editProduct(Integer id, String newName, String newFirm, Double newCost) {
         try {
             Session session = HibernateConnect.getSessionFactory().openSession();
             Transaction tx1 = session.beginTransaction();
             Product product = findById(id).get();
             product.setName(newName);
             product.setFirm(newFirm);
+            product.setUnit_price(newCost);
             session.update(product);
             tx1.commit();
             session.close();

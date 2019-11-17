@@ -46,6 +46,8 @@ public class ServerThread extends Thread {
                     case "addProduct": addProduct(); break;
                     case "remove": remove(); break;
                     case "getAllSales": getAllSales(); break;
+                    case "addSale": addSale(); break;
+                    case "deleteSale": deleteSale(); break;
                 }
             }
         } catch (IOException e) {
@@ -54,6 +56,20 @@ public class ServerThread extends Thread {
         } finally { disconnect(); }
     }
 
+    private void deleteSale() throws IOException, ClassNotFoundException {
+        Sale sale = (Sale)objectInputStream.readObject();
+        System.out.println(sale);
+        SaleService.deleteSale(sale);
+        System.out.println("Successful delete");
+        System.out.println("Failed delete");
+    }
+    private void addSale() throws IOException, ClassNotFoundException {
+        Sale newSale = (Sale)objectInputStream.readObject();
+        newSale = SaleService.addSale(newSale);
+        if (newSale != null) System.out.println("successful addition ");
+        else System.out.println("Failed addition");
+        objectOutputStream.writeObject(newSale);
+    }
     private void getAllSales() throws IOException {
         objectOutputStream.writeObject(SaleService.getAllSales());
     }
@@ -78,7 +94,9 @@ public class ServerThread extends Thread {
         System.out.println("New name: " + newName);
         String newFirm = inputStream.readLine();
         System.out.println("New firm: " + newFirm);
-        product = ProductService.editProduct(product, newName, newFirm);
+        Double newCost = Double.parseDouble(inputStream.readLine());
+        System.out.println("New cost: " + newCost);
+        product = ProductService.editProduct(product, newName, newFirm, newCost);
         if (product != null) System.out.println("Successful modification");
         else System.out.println("Failed modification");
         objectOutputStream.writeObject(product);

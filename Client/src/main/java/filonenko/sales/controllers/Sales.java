@@ -25,9 +25,6 @@ public class Sales {
     public Button log;
     public Button profile;
 
-    //    public TableColumn<Product, String> name;
-//    public TableColumn<Product, String> firm;
-//    public TableColumn<Product, Double> unit_price;
     public TableView<Sale> table;
     public TableColumn<Sale, LocalDate> date;
     public TableColumn<Sale, String> product;
@@ -47,34 +44,25 @@ public class Sales {
         thisEventHandlers();
         date.setCellValueFactory(new PropertyValueFactory<>("Date"));
         product.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getProduct().getName()));
-
-
-
         quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         table.setMaxHeight(200);
         tableUpdate();
-
     }
 
     private void thisEventHandlers() {
         ContextMenu contextMenu = new ContextMenu();
-        MenuItem edit = new MenuItem("Изменить");
-        edit.setOnAction(contextEvent -> {
-//            ProductService.editProduct(table.getSelectionModel().getSelectedItem());
-            tableUpdate();
-        });
         MenuItem delete = new MenuItem("Удалить");
         delete.setOnAction(contextEvent -> {
-//            ProductService.deleteProduct(table.getSelectionModel().getSelectedItem());
+            SaleService.deleteSale(table.getSelectionModel().getSelectedItem());
             tableUpdate();
         });
 
         add.setVisible(false);
         if(CurrentUser.getCurrentUser() != null) {
-            contextMenu.getItems().addAll(edit, delete);
+            contextMenu.getItems().addAll(delete);
             if(CurrentUser.getCurrentUser().getAccess() == 1) { add.setVisible(true);
                 add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//                    ProductService.addProduct();
+                    SaleService.addSale();
                     tableUpdate();
                 }); }
         }

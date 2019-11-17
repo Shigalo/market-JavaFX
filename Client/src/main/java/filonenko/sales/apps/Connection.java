@@ -3,7 +3,6 @@ package filonenko.sales.apps;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
 import filonenko.sales.entities.User;
-import javafx.scene.control.PasswordField;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -70,11 +69,12 @@ public class Connection {
         printStream.println("getAllProducts");
         return (List<Product>)objectInputStream.readObject();
     }
-    public Product editProduct(Product selectedProduct, String name, String firm) throws IOException, ClassNotFoundException {
+    public Product editProduct(Product selectedProduct, String name, String firm, String cost) throws IOException, ClassNotFoundException {
         printStream.println("editProduct");
         objectOutputStream.writeObject(selectedProduct);
         printStream.println(name);
         printStream.println(firm);
+        printStream.println(cost);
         selectedProduct = (Product)objectInputStream.readObject();
         return selectedProduct;
     }
@@ -91,5 +91,14 @@ public class Connection {
     public List<Sale> getSalesList() throws IOException, ClassNotFoundException {
         printStream.println("getAllSales");
         return (List<Sale>)objectInputStream.readObject();
+    }
+    public void addSale(Sale sale) throws IOException, ClassNotFoundException {
+        printStream.println("addSale");
+        objectOutputStream.writeObject(sale);
+        objectInputStream.readObject();
+    }
+    public void deleteSale(Sale selectedSale) throws IOException {
+        printStream.println("deleteSale");
+        objectOutputStream.writeObject(selectedSale);
     }
 }

@@ -29,4 +29,6 @@ public class Sale implements Serializable {
         this.date = date;
         this.quantity = quantity;
     }
+
+
 }

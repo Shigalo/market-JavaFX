@@ -60,4 +60,25 @@ public class VerificationService {
                 passwordVerification(password, alert) &&
                 passwordConfirm(password, passwordConfirm, alert);
     }
+
+    public static void doubleVerification(TextField field) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*\\.?\\d{0,2}")) {
+                field.setText(newValue.replaceAll("[^\\d.]", ""));
+            }
+            else {
+                if (!newValue.matches("\\d+\\.?\\d*")) {
+                    String text = field.getText();
+                    field.setText("0" + text);
+                }
+            }
+            if (newValue.matches("\\d*\\.{1,2}\\d{3,}")) {
+                String text = field.getText();
+                field.setText(text.substring(0, text.length() - 2) + text.substring(text.length() - 1));
+            }
+            if(oldValue.contains(".") && newValue.replaceFirst("\\.", "").contains(".")) {
+                field.setText(oldValue);
+            }
+        });
+    }
 }
