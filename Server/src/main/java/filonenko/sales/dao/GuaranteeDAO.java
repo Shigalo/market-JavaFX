@@ -1,0 +1,68 @@
+package filonenko.sales.dao;
+
+import filonenko.sales.connect.HibernateConnect;
+import filonenko.sales.entities.Guarantee;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import java.util.List;
+import java.util.Optional;
+
+//Класс взаимодействия класса-сущности Product и запросов в БД
+public class GuaranteeDAO implements DAOInterface<Guarantee> {
+    public void deleteByID(Integer id) {
+        Guarantee guarantee = findById(id).get();
+        delete(guarantee);
+    }
+
+    private final static class SingletonHolder {    //объект класса единственный для всего проекта
+        private final static GuaranteeDAO INSTANCE = new GuaranteeDAO();
+    }
+
+    public static GuaranteeDAO getInstance() {   //Получение доступа к классу
+        return SingletonHolder.INSTANCE;
+    }
+
+    public List<Guarantee> findAll() {   //метод получения всех данных из таблицы
+        Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
+        List<Guarantee> guaranteedata = session.createQuery("from Guarantee").list();  //Получение списка всех данных
+        session.close();    //Закрытие сесии
+        return guaranteedata;
+    }
+
+    public Optional<Guarantee> findById(int id) {    //Получение объекта по его ID
+        Session session = HibernateConnect.getSessionFactory().openSession();
+        Optional<Guarantee> guaranteedata = Optional.of(session.get(Guarantee.class, id));
+        session.close();
+        return guaranteedata;
+    }
+
+    public void create(Guarantee guaranteedata) { //Создание нового объекта (строки данных в таблице)
+        Session session = HibernateConnect.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();   //Открытие транзакции (обхязательно при изменениях в БД)
+        session.save(guaranteedata);
+        tx1.commit();   //Сохранение состояния и закрытие транзакции
+        session.close();
+    }
+
+    public void delete(Guarantee guaranteedata) { //Метод удаления строки из таблицы
+        Transaction tx = null;
+        try (Session session = HibernateConnect.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.delete(guaranteedata);
+            tx.commit();
+        } catch (HibernateException e) {    //Если такой элемент не найден
+            if (tx != null) tx.rollback();  //Откат к состоянию системы до начала транзакии
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Guarantee guaranteedata) { //Изменение строки таблицы
+        Session session = HibernateConnect.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.update(guaranteedata);
+        tx1.commit();
+        session.close();
+    }
+}

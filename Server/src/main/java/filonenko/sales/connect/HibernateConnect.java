@@ -1,8 +1,6 @@
 package filonenko.sales.connect;
 
-import filonenko.sales.entities.Product;
-import filonenko.sales.entities.Sale;
-import filonenko.sales.entities.User;
+import filonenko.sales.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -22,6 +20,9 @@ public class HibernateConnect{  //Класс для получения подк�
                 configuration.addAnnotatedClass(User.class);    //Определение классов - сущностей
                 configuration.addAnnotatedClass(Product.class);    //Определение классов - сущностей
                 configuration.addAnnotatedClass(Sale.class);    //Определение классов - сущностей
+                configuration.addAnnotatedClass(Status.class);    //Определение классов - сущностей
+                configuration.addAnnotatedClass(Guarantee.class);    //Определение классов - сущностей
+                configuration.addAnnotatedClass(Warehouse.class);    //Определение классов - сущностей
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()); //Применениие параметров подключения
                 sessionFactory = configuration.buildSessionFactory(builder.build());    //Настройка подключения
             } catch (Exception e) {

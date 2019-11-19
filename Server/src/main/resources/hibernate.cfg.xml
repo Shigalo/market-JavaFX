@@ -16,5 +16,8 @@
         <mapping class="filonenko.sales.entities.User"/>
         <mapping class="filonenko.sales.entities.Product"/>
         <mapping class="filonenko.sales.entities.Sale"/>
+        <mapping class="filonenko.sales.entities.Status"/>
+        <mapping class="filonenko.sales.entities.Warehouse"/>
+        <mapping class="filonenko.sales.entities.Guarantee"/>
     </session-factory>
 </hibernate-configuration>
