@@ -2,6 +2,7 @@ package filonenko.sales.apps;
 
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
+import filonenko.sales.entities.Storage;
 import filonenko.sales.entities.User;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Connection {
@@ -100,5 +102,10 @@ public class Connection {
     public void deleteSale(Sale selectedSale) throws IOException {
         printStream.println("deleteSale");
         objectOutputStream.writeObject(selectedSale);
+    }
+
+    public List<Storage> getStorage() throws IOException, ClassNotFoundException {
+        printStream.println("getStorage");
+        return (List<Storage>)objectInputStream.readObject();
     }
 }

@@ -2,7 +2,6 @@ package filonenko.sales.dao;
 
 import filonenko.sales.connect.HibernateConnect;
 import filonenko.sales.entities.Product;
-import filonenko.sales.entities.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -62,31 +61,31 @@ public class ProductDAO implements DAOInterface<Product> {
 
     public List<Product> findAll() {   //метод получения всех данных из таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
-        List<Product> productdata = session.createQuery("from Product").list();  //Получение списка всех данных
+        List<Product> productData = session.createQuery("from Product").list();  //Получение списка всех данных
         session.close();    //Закрытие сесии
-        return productdata;
+        return productData;
     }
 
     public Optional<Product> findById(int id) {    //Получение объекта по его ID
         Session session = HibernateConnect.getSessionFactory().openSession();
-        Optional<Product> productdata = Optional.of(session.get(Product.class, id));
+        Optional<Product> productData = Optional.of(session.get(Product.class, id));
         session.close();
-        return productdata;
+        return productData;
     }
 
-    public void create(Product productdata) { //Создание нового объекта (строки данных в таблице)
+    public void create(Product productData) { //Создание нового объекта (строки данных в таблице)
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();   //Открытие транзакции (обхязательно при изменениях в БД)
-        session.save(productdata);
+        session.save(productData);
         tx1.commit();   //Сохранение состояния и закрытие транзакции
         session.close();
     }
 
-    public void delete(Product productdata) { //Метод удаления строки из таблицы
+    public void delete(Product productData) { //Метод удаления строки из таблицы
         Transaction tx = null;
         try (Session session = HibernateConnect.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            session.delete(productdata);
+            session.delete(productData);
             tx.commit();
         } catch (HibernateException e) {    //Если такой элемент не найден
             if (tx != null) tx.rollback();  //Откат к состоянию системы до начала транзакии
@@ -94,10 +93,10 @@ public class ProductDAO implements DAOInterface<Product> {
         }
     }
 
-    public void update(Product productdata) { //Изменение строки таблицы
+    public void update(Product productData) { //Изменение строки таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(productdata);
+        session.update(productData);
         tx1.commit();
         session.close();
     }

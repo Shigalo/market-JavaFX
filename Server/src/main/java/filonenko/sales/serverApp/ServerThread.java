@@ -1,11 +1,18 @@
 package filonenko.sales.serverApp;
 
-import filonenko.sales.entities.*;
-import filonenko.sales.services.*;
+import filonenko.sales.entities.Product;
+import filonenko.sales.entities.Sale;
+import filonenko.sales.entities.Storage;
+import filonenko.sales.entities.User;
+import filonenko.sales.services.ProductService;
+import filonenko.sales.services.SaleService;
+import filonenko.sales.services.StorageService;
+import filonenko.sales.services.UserService;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.List;
 
 public class ServerThread extends Thread {
     private static int numberOfConnections = 0;
@@ -48,12 +55,19 @@ public class ServerThread extends Thread {
                     case "getAllSales": getAllSales(); break;
                     case "addSale": addSale(); break;
                     case "deleteSale": deleteSale(); break;
+                    case "getStorage": getStorage(); break;
                 }
             }
         } catch (IOException e) {
             System.out.println("Lost connection");} catch (ClassNotFoundException e) {
             e.printStackTrace();
         } finally { disconnect(); }
+    }
+
+    private void getStorage() throws IOException {
+        List<Storage> list = StorageService.getStorage();
+        for (Storage s : list) System.out.println(s);
+        objectOutputStream.writeObject(list);
     }
 
     private void deleteSale() throws IOException, ClassNotFoundException {

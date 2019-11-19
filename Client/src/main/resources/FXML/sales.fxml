@@ -14,6 +14,7 @@
             <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
             <MenuItem fx:id="productMenu" mnemonicParsing="false" text="Продукция" />
             <MenuItem fx:id="salesMenu" mnemonicParsing="false" text="Продажи" />
+            <MenuItem fx:id="storageMenu" mnemonicParsing="false" text="Склад" />
         </Menu>
         <Menu mnemonicParsing="false" text="Edit">
             <MenuItem mnemonicParsing="false" text="Delete" />

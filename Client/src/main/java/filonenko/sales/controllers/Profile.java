@@ -25,6 +25,8 @@ public class Profile {
     public Button log;
     public MenuItem usersMenu;
     public MenuItem productMenu;
+    public MenuItem salesMenu;
+    public MenuItem storageMenu;
     public Button profile;
 
     public Label login;
@@ -33,11 +35,10 @@ public class Profile {
     public Label name;
     public Button edit;
     public Button remove;
-    public MenuItem salesMenu;
 
     @FXML
     private void initialize() {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
 
         login.setText(CurrentUser.getCurrentUser().getLogin());
         name.setText(CurrentUser.getCurrentUser().getName());

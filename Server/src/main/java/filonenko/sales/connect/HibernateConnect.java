@@ -22,7 +22,7 @@ public class HibernateConnect{  //Класс для получения подк�
                 configuration.addAnnotatedClass(Sale.class);    //Определение классов - сущностей
                 configuration.addAnnotatedClass(Status.class);    //Определение классов - сущностей
                 configuration.addAnnotatedClass(Guarantee.class);    //Определение классов - сущностей
-                configuration.addAnnotatedClass(Warehouse.class);    //Определение классов - сущностей
+                configuration.addAnnotatedClass(Storage.class);    //Определение классов - сущностей
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()); //Применениие параметров подключения
                 sessionFactory = configuration.buildSessionFactory(builder.build());    //Настройка подключения
             } catch (Exception e) {

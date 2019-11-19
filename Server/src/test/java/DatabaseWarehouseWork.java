@@ -1,5 +1,5 @@
-import filonenko.sales.dao.WarehouseDAO;
-import filonenko.sales.entities.Warehouse;
+import filonenko.sales.dao.StorageDAO;
+import filonenko.sales.entities.Storage;
 import filonenko.sales.services.ProductService;
 import org.junit.After;
 import org.junit.Before;
@@ -7,28 +7,28 @@ import org.junit.Test;
 
 public class DatabaseWarehouseWork {
 
-    private WarehouseDAO warehouseDAO = null;
+    private StorageDAO warehouseDAO = null;
 
 
     @Before
-    public void getDAO() { warehouseDAO = WarehouseDAO.getInstance(); }
+    public void getDAO() { warehouseDAO = StorageDAO.getInstance(); }
 
     @After
     public void getList() {
-        for (Warehouse Warehouse : warehouseDAO.findAll()) {
+        for (Storage Warehouse : warehouseDAO.findAll()) {
             System.out.println(Warehouse);
         }
     }
 
     @Test
     public void createTest() {
-        Warehouse test_Warehouse = new Warehouse(ProductService.getAllProducts().get(0), 10);
+        Storage test_Warehouse = new Storage(ProductService.getAllProducts().get(0), 10);
         warehouseDAO.create(test_Warehouse);
     }
 
     @Test
     public void deleteTest() {
-        Warehouse warehouse = warehouseDAO.findAll().get(0);
+        Storage warehouse = warehouseDAO.findAll().get(0);
         warehouseDAO.delete(warehouse);
     }
 

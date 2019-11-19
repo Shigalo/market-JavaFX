@@ -22,6 +22,8 @@ import java.util.List;
 public class Sales {
     public MenuItem usersMenu;
     public MenuItem productMenu;
+    public MenuItem salesMenu;
+    public MenuItem storageMenu;
     public Button log;
     public Button profile;
 
@@ -29,15 +31,14 @@ public class Sales {
     public TableColumn<Sale, LocalDate> date;
     public TableColumn<Sale, String> product;
     public TableColumn<Sale, Integer> quantity;
+    private ObservableList<Sale> sales = FXCollections.observableArrayList();
 
     public Button add;
-    public MenuItem salesMenu;
-    private ObservableList<Sale> sales = FXCollections.observableArrayList();
     private List<Boolean> selected = new ArrayList<>();
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
         date.setSortable(false);
         product.setSortable(false);
         quantity.setSortable(false);

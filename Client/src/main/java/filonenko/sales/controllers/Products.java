@@ -18,28 +18,29 @@ import java.util.List;
 public class Products {
     public MenuItem usersMenu;
     public MenuItem productMenu;
+    public MenuItem salesMenu;
+    public MenuItem storageMenu;
     public Button log;
     public Button profile;
 
+    public TableView<Product> table;
     public TableColumn<Product, String> name;
     public TableColumn<Product, String> firm;
     public TableColumn<Product, Double> unit_price;
-    public TableView<Product> table;
     public Button add;
-    public MenuItem salesMenu;
     private ObservableList<Product> products = FXCollections.observableArrayList();
     private List<Boolean> selected = new ArrayList<>();
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
         name.setSortable(false);
         firm.setSortable(false);
         unit_price.setSortable(false);
         thisEventHandlers();
-        name.setCellValueFactory(new PropertyValueFactory<Product, String>("Name"));
-        firm.setCellValueFactory(new PropertyValueFactory<Product, String>("Firm"));
-        unit_price.setCellValueFactory(new PropertyValueFactory<Product, Double>("Unit_price"));
+        name.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        firm.setCellValueFactory(new PropertyValueFactory<>("Firm"));
+        unit_price.setCellValueFactory(new PropertyValueFactory<>("Unit_price"));
         table.setMaxHeight(200);
         tableUpdate();
 

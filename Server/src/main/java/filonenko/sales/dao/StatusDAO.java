@@ -39,31 +39,31 @@ public class StatusDAO implements DAOInterface<Status> {
 
     public List<Status> findAll() {   //метод получения всех данных из таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
-        List<Status> statusdata = session.createQuery("from Status").list();  //Получение списка всех данных
+        List<Status> statusData = session.createQuery("from Status").list();  //Получение списка всех данных
         session.close();    //Закрытие сесии
-        return statusdata;
+        return statusData;
     }
 
     public Optional<Status> findById(int id) {    //Получение объекта по его ID
         Session session = HibernateConnect.getSessionFactory().openSession();
-        Optional<Status> statusdata = Optional.of(session.get(Status.class, id));
+        Optional<Status> statusData = Optional.of(session.get(Status.class, id));
         session.close();
-        return statusdata;
+        return statusData;
     }
 
-    public void create(Status statusdata) { //Создание нового объекта (строки данных в таблице)
+    public void create(Status statusData) { //Создание нового объекта (строки данных в таблице)
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();   //Открытие транзакции (обхязательно при изменениях в БД)
-        session.save(statusdata);
+        session.save(statusData);
         tx1.commit();   //Сохранение состояния и закрытие транзакции
         session.close();
     }
 
-    public void delete(Status statusdata) { //Метод удаления строки из таблицы
+    public void delete(Status statusData) { //Метод удаления строки из таблицы
         Transaction tx = null;
         try (Session session = HibernateConnect.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            session.delete(statusdata);
+            session.delete(statusData);
             tx.commit();
         } catch (HibernateException e) {    //Если такой элемент не найден
             if (tx != null) tx.rollback();  //Откат к состоянию системы до начала транзакии
@@ -71,10 +71,10 @@ public class StatusDAO implements DAOInterface<Status> {
         }
     }
 
-    public void update(Status statusdata) { //Изменение строки таблицы
+    public void update(Status statusData) { //Изменение строки таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(statusdata);
+        session.update(statusData);
         tx1.commit();
         session.close();
     }

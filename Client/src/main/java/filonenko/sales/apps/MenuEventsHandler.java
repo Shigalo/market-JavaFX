@@ -17,22 +17,16 @@ public class MenuEventsHandler {
 
     static Button log = null;
 
-    public static void eventHandlers(MenuItem usersMenu, MenuItem productMenu, MenuItem salesMenu, Button log, Button profile) {
+    public static void eventHandlers(MenuItem usersMenu, MenuItem productMenu, MenuItem salesMenu, MenuItem storageMenu, Button log, Button profile) {
         MenuEventsHandler.log = log;
 
         usersMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                MenuEventsHandler.log.getScene();
                 Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
-//                stage.close();
-
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-//                stage = new Stage();
-//                stage.initModality(Modality.APPLICATION_MODAL);
-//                stage.setTitle("Окно пользователей");
                 stage.setScene(new Scene(root));
                 stage.show();
             }
@@ -55,6 +49,18 @@ public class MenuEventsHandler {
             public void handle(ActionEvent event) {
                 Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sales.fxml"));
+                Parent root = null;
+                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                stage.setScene(new Scene(root));
+                stage.show();
+            }
+        });
+
+        storageMenu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Stage stage = (Stage)MenuEventsHandler.log.getScene().getWindow();
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/storage.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException ignored){}
                 stage.setScene(new Scene(root));

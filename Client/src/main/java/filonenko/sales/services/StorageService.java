@@ -1,33 +1,24 @@
 package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
-import filonenko.sales.entities.Product;
-import filonenko.sales.entities.Sale;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import filonenko.sales.entities.Storage;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 
 @Getter @Setter
-public class SaleService {
+public class StorageService {
 
-    private static List<Sale> saleList;
+    private static List<Storage> storageList;
     private static Connection connection = Connection.getInstance();
 
-    public static List<Sale> getAllSales() throws IOException, ClassNotFoundException {
-        return connection.getSalesList();
+    public static List<Storage> getStorage() throws IOException, ClassNotFoundException {
+        return connection.getStorage();
     }
 
-    public static void deleteSale(Sale selectedSale) {
+    /*public static void deleteSale(Sale selectedSale) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Подтверждение удаления");
         alert.setHeaderText(null);
@@ -88,7 +79,7 @@ public class SaleService {
                         LocalDate localDate = LocalDate.parse(date.getEditor().getText(), formatter);
                         Integer quantityInt = Integer.parseInt(quantity.getText());
                         Product selectedProduct = (Product)product.getSelectionModel().getSelectedItem();
-                        Sale sale = new Sale(localDate, quantityInt, selectedProduct);
+                        Sale sale = new Sale(localDate, localDate, quantityInt, selectedProduct);
                         connection.addSale(sale);
                     } catch (Exception ignored) {}
                 }
@@ -97,5 +88,5 @@ public class SaleService {
             dialog.showAndWait();
         }
         catch (Exception ignored) { }
-    }
+    }*/
 }

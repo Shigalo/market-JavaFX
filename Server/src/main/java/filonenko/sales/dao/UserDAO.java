@@ -62,31 +62,31 @@ public class UserDAO implements DAOInterface<User> {
 
     public List<User> findAll() {   //метод получения всех данных из таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
-        List<User> userdata = session.createQuery("from User").list();  //Получение списка всех данных
+        List<User> userData = session.createQuery("from User").list();  //Получение списка всех данных
         session.close();    //Закрытие сесии
-        return userdata;
+        return userData;
     }
 
     public Optional<User> findById(int id) {    //Получение объекта по его ID
         Session session = HibernateConnect.getSessionFactory().openSession();
-        Optional<User> userdata = Optional.of(session.get(User.class, id));
+        Optional<User> userData = Optional.of(session.get(User.class, id));
         session.close();
-        return userdata;
+        return userData;
     }
 
-    public void create(User userdata) { //Создание нового объекта (строки данных в таблице)
+    public void create(User userData) { //Создание нового объекта (строки данных в таблице)
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();   //Открытие транзакции (обхязательно при изменениях в БД)
-        session.save(userdata);
+        session.save(userData);
         tx1.commit();   //Сохранение состояния и закрытие транзакции
         session.close();
     }
 
-    public void delete(User userdata) { //Метод удаления строки из таблицы
+    public void delete(User userData) { //Метод удаления строки из таблицы
         Transaction tx = null;
         try (Session session = HibernateConnect.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            session.delete(userdata);
+            session.delete(userData);
             tx.commit();
         } catch (HibernateException e) {    //Если такой элемент не найден
             if (tx != null) tx.rollback();  //Откат к состоянию системы до начала транзакии
@@ -94,10 +94,10 @@ public class UserDAO implements DAOInterface<User> {
         }
     }
 
-    public void update(User userdata) { //Изменение строки таблицы
+    public void update(User userData) { //Изменение строки таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(userdata);
+        session.update(userData);
         tx1.commit();
         session.close();
     }

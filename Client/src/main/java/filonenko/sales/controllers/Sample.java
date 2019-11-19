@@ -16,20 +16,20 @@ import java.io.IOException;
 
 public class Sample {
 
-    public Button log;
     public MenuItem usersMenu;
     public MenuItem productMenu;
+    public MenuItem salesMenu;
+    public MenuItem storageMenu;
+    public Button log;
     public Button profile;
 
     public TextField login;
     public PasswordField password;
     public Button loginButton;
     public Button registration;
-    public MenuItem salesMenu;
-
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, profile);
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
         thisEventHandlers();
     }
 

@@ -19,6 +19,9 @@ public class Registration {
 
     public MenuItem usersMenu;
     public MenuItem productMenu;
+    public MenuItem salesMenu;
+    public MenuItem storageMenu;
+
     public TextField name;
     public TextField login;
     public PasswordField password;
@@ -26,11 +29,10 @@ public class Registration {
     public Button registration;
     public Button log;
     public Button cancel;
-    public MenuItem salesMenu;
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, log, new Button());
+        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, new Button());
         thisEventHandlers();
     }
 

@@ -3,11 +3,12 @@ package filonenko.sales.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Data
 //Автоматическая генерация get и set методов для всех полей класса (плагин Lombok), некоторых конструкторов, методов toString(), equals(), hashCode()
 @Entity //Аннотация для hibernate - класс является сущностью
-public class Warehouse {
+public class Storage implements Serializable {
 
     @Id //Аннотация hibernate - поле является первичным ключом
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +21,11 @@ public class Warehouse {
 
     private Integer quantity;
 
-    public Warehouse(Product product, Integer quantity) {
+    public Storage(Product product, Integer quantity) {
         this.product = product;
         this.quantity = quantity;
     }
 
-    public Warehouse() {
+    public Storage() {
     }
 }

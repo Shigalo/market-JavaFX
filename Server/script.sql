@@ -60,4 +60,4 @@ CREATE TABLE warehouse
     quantity int NOT NULL,
     CONSTRAINT product_fk FOREIGN KEY (product_id) REFERENCES product (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE UNIQUE INDEX warehouse_product_id_uindex ON warehouse (product_id);
+CREATE UNIQUE INDEX warehouse_product_id_uindex ON storage (product_id);

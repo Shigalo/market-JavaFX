@@ -24,8 +24,8 @@ public class Product implements Serializable {
         this.unit_price = unit_price;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return name;
-    }
+    }*/
 }

@@ -26,31 +26,31 @@ public class GuaranteeDAO implements DAOInterface<Guarantee> {
 
     public List<Guarantee> findAll() {   //метод получения всех данных из таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
-        List<Guarantee> guaranteedata = session.createQuery("from Guarantee").list();  //Получение списка всех данных
+        List<Guarantee> guaranteeData = session.createQuery("from Guarantee").list();  //Получение списка всех данных
         session.close();    //Закрытие сесии
-        return guaranteedata;
+        return guaranteeData;
     }
 
     public Optional<Guarantee> findById(int id) {    //Получение объекта по его ID
         Session session = HibernateConnect.getSessionFactory().openSession();
-        Optional<Guarantee> guaranteedata = Optional.of(session.get(Guarantee.class, id));
+        Optional<Guarantee> guaranteeData = Optional.of(session.get(Guarantee.class, id));
         session.close();
-        return guaranteedata;
+        return guaranteeData;
     }
 
-    public void create(Guarantee guaranteedata) { //Создание нового объекта (строки данных в таблице)
+    public void create(Guarantee guaranteeData) { //Создание нового объекта (строки данных в таблице)
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();   //Открытие транзакции (обхязательно при изменениях в БД)
-        session.save(guaranteedata);
+        session.save(guaranteeData);
         tx1.commit();   //Сохранение состояния и закрытие транзакции
         session.close();
     }
 
-    public void delete(Guarantee guaranteedata) { //Метод удаления строки из таблицы
+    public void delete(Guarantee guaranteeData) { //Метод удаления строки из таблицы
         Transaction tx = null;
         try (Session session = HibernateConnect.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            session.delete(guaranteedata);
+            session.delete(guaranteeData);
             tx.commit();
         } catch (HibernateException e) {    //Если такой элемент не найден
             if (tx != null) tx.rollback();  //Откат к состоянию системы до начала транзакии
@@ -58,10 +58,10 @@ public class GuaranteeDAO implements DAOInterface<Guarantee> {
         }
     }
 
-    public void update(Guarantee guaranteedata) { //Изменение строки таблицы
+    public void update(Guarantee guaranteeData) { //Изменение строки таблицы
         Session session = HibernateConnect.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
-        session.update(guaranteedata);
+        session.update(guaranteeData);
         tx1.commit();
         session.close();
     }
