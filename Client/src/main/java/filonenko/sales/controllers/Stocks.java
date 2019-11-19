@@ -4,6 +4,8 @@ import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.entities.Storage;
 import filonenko.sales.services.StorageService;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Stocks {
@@ -27,6 +30,7 @@ public class Stocks {
     public TableView<Storage> table;
     public TableColumn<Storage, String> product;
     public TableColumn<Storage, Integer> quantity;
+    public TableColumn<Storage, Double> cost;
     private ObservableList<Storage> storage = FXCollections.observableArrayList();
 
     @FXML
@@ -36,6 +40,11 @@ public class Stocks {
         quantity.setSortable(false);
         //        thisEventHandlers();
         product.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getProduct().getName()));
+        cost.setCellValueFactory(data -> {
+            double costValuse = data.getValue().getProduct().getUnit_price() * data.getValue().getQuantity();
+            costValuse = Double.parseDouble(String.format("%.2f", costValuse).replace(",", "."));
+            return new SimpleDoubleProperty(costValuse).asObject();
+        });
         quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         table.setMaxHeight(200);
         tableUpdate();

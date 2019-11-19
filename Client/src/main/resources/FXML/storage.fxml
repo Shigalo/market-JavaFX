@@ -25,10 +25,11 @@
     </MenuBar>
     <Button fx:id="log" layoutX="550.0" mnemonicParsing="false" />
     <Button fx:id="profile" layoutX="468.0" mnemonicParsing="false" text="Профиль" />
-    <TableView fx:id="table" layoutX="125.0" layoutY="100.0" prefHeight="200.0" prefWidth="227.0">
+    <TableView fx:id="table" layoutX="125.0" layoutY="100.0" prefHeight="200.0" prefWidth="289.0">
         <columns>
             <TableColumn fx:id="product" prefWidth="75.0" text="Продукт" />
             <TableColumn fx:id="quantity" prefWidth="75.0" text="Запас" />
+            <TableColumn fx:id="cost" prefWidth="123.0" text="Потенциальная" />
         </columns>
     </TableView>
 </AnchorPane>
