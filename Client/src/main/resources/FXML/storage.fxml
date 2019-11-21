@@ -29,7 +29,7 @@
         <columns>
             <TableColumn fx:id="product" prefWidth="75.0" text="Продукт" />
             <TableColumn fx:id="quantity" prefWidth="75.0" text="Запас" />
-            <TableColumn fx:id="cost" prefWidth="123.0" text="Потенциальная" />
+            <TableColumn fx:id="cost" prefWidth="123.0" text="Стоимость" />
         </columns>
     </TableView>
 </AnchorPane>

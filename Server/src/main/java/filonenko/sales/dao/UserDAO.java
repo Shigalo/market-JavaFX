@@ -106,7 +106,9 @@ public class UserDAO implements DAOInterface<User> {
         Session session = HibernateConnect.getSessionFactory().openSession();
         Query query = session.createQuery("from User where name = :name "); //Написание строки запроса (выбрать все из таблицы User, где имя = параметру)
         query.setParameter("name", new_name);    //Определение параметра, использованного в запросе
-        return query.list();    //Выполнение запроса
+        List<User> list = query.list();
+        session.close();
+        return list;//Выполнение запроса
     }
 
     public User findByLogin(String login) {  //Поиск записи по имени

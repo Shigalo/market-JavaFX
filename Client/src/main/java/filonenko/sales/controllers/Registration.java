@@ -57,8 +57,7 @@ public class Registration {
                         Parent root = null;
                         try {
                             root = fxmlLoader.load();
-                        } catch (IOException ignored) {
-                        }
+                        } catch (IOException e) { e.printStackTrace(); }
                         stage.setScene(new Scene(root));
                         stage.show();
                     } else {
@@ -79,8 +78,7 @@ public class Registration {
                 Parent root = null;
                 try {
                     root = fxmlLoader.load();
-                } catch (IOException ignored) {
-                }
+                } catch (IOException e) { e.printStackTrace(); }
                 stage.setScene(new Scene(root));
                 stage.show();
             }

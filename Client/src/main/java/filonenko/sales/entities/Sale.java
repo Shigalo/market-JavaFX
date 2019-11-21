@@ -13,14 +13,16 @@ public class Sale implements Serializable {
     private LocalDate date;
     private Integer quantity;
     private Product product;
-    //хз какие хар-ки.....
+    private User user;
+//хз какие хар-ки.....
 
     public Sale() {
     }
 
-    public Sale(LocalDate date, Integer quantity, Product product) {
+    public Sale(LocalDate date, Integer quantity, Product product, User user) {
         this.date = date;
         this.quantity = quantity;
+        this.user = user;
         this.product = product;
     }
 

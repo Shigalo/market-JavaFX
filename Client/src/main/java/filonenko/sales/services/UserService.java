@@ -23,11 +23,12 @@ public class UserService {
 
     public static void login(String login, String password) {
         try {
-            User user = new User("", login, password, 0);
+            User user = new User("a", login, password, 0);
+            user.setId(1);
             user = connection.login(user);
             if (user == null) return;
             CurrentUser.setCurrentUser(user);
-        } catch (Exception ignored) {}
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     public static void registration(String login, String password, String name) {
@@ -36,14 +37,14 @@ public class UserService {
             user = connection.registration(user);
             if (user == null) return;
             CurrentUser.setCurrentUser(user);
-        } catch (Exception ignored) {}
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     public static void editName(String newName) {
         try {
             User modifiedUser = connection.editName(CurrentUser.getCurrentUser(), newName);
             CurrentUser.setCurrentUser(modifiedUser);
-        } catch (Exception ignored) {}
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     public static boolean editPassword(PasswordField password, PasswordField passwordConfirm, Alert alert) {
@@ -61,7 +62,8 @@ public class UserService {
             }
             return false;
         }
-        catch (Exception ignored) { return false; }
+        catch (Exception e) { e.printStackTrace();
+        return false; }
     }
 
     public static void remove() {

@@ -2,6 +2,7 @@ package filonenko.sales.services;
 
 import filonenko.sales.dao.GuaranteeDAO;
 import filonenko.sales.entities.Guarantee;
+import filonenko.sales.entities.Sale;
 
 import java.util.ArrayList;
 
@@ -27,5 +28,9 @@ public class GuaranteeService {
         dao.create(newGuarantee);
         System.out.println(newGuarantee.getId());
         return dao.findById(newGuarantee.getId()).get();
+    }
+
+    public static Guarantee getGuarantee(Sale sale) {
+        return dao.getGuaranteeBySale(sale);
     }
 }

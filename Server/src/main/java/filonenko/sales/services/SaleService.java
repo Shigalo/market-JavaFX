@@ -1,6 +1,7 @@
 package filonenko.sales.services;
 
 import filonenko.sales.dao.SaleDAO;
+import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Sale;
 
 import java.util.ArrayList;
@@ -21,7 +22,10 @@ public class SaleService {
 
     public static Sale addSale(Sale newSale) {
         dao.create(newSale);
-        System.out.println(newSale.getId());
+        Guarantee guarantee = new Guarantee(newSale.getDate().plusYears(2));
+        guarantee.setStatus(StatusService.getAllStatuses().get(0));
+        guarantee.setSale(newSale);
+        GuaranteeService.addGuarantee(guarantee);
         return dao.findById(newSale.getId()).get();
     }
 }

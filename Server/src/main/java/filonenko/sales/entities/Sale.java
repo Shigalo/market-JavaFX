@@ -23,16 +23,21 @@ public class Sale implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "seller_id")
+    private User user;
     //хз какие хар-ки.....
 
 
     public Sale() {
     }
 
-    public Sale(LocalDate date, Integer quantity, Product product) {
+    public Sale(LocalDate date, Integer quantity, Product product, User user) {
         this.date = date;
         this.quantity = quantity;
         this.product = product;
+        this.user = user;
     }
 
     public Sale(LocalDate date, Integer quantity) {

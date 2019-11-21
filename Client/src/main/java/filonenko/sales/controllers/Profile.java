@@ -76,7 +76,7 @@ public class Profile {
                 Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
                 Parent root = null;
-                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                try { root = fxmlLoader.load(); } catch (IOException e) { e.printStackTrace(); }
                 stage.setScene(new Scene(root));
                 stage.show();
             }

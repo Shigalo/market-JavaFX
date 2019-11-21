@@ -27,6 +27,7 @@ public class Sample {
     public PasswordField password;
     public Button loginButton;
     public Button registration;
+
     @FXML
     private void initialize() throws Exception {
         MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
@@ -49,7 +50,7 @@ public class Sample {
                     Stage stage = (Stage)log.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                     Parent root = null;
-                    try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                    try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
                     stage.setScene(new Scene(root));
                     stage.show();
                 }
@@ -68,7 +69,7 @@ public class Sample {
                 Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/registration.fxml"));
                 Parent root = null;
-                try { root = fxmlLoader.load(); } catch (IOException ignored){}
+                try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
                 stage.setScene(new Scene(root));
                 stage.show();
             }

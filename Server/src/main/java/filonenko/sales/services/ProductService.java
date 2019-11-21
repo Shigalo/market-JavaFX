@@ -2,6 +2,7 @@ package filonenko.sales.services;
 
 import filonenko.sales.dao.ProductDAO;
 import filonenko.sales.entities.Product;
+import filonenko.sales.entities.Storage;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class ProductService {
 
     public static Product addProduct(Product newProduct) {
         dao.create(newProduct);
-        System.out.println(newProduct.getId());
+        StorageService.addStorage(new Storage(newProduct, 0));
         return dao.findById(newProduct.getId()).get();
     }
 }

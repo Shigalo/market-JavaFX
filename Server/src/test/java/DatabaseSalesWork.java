@@ -1,16 +1,16 @@
 import filonenko.sales.dao.SaleDAO;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
-import filonenko.sales.entities.Sale;
+import filonenko.sales.entities.User;
 import filonenko.sales.services.ProductService;
 import filonenko.sales.services.SaleService;
+import filonenko.sales.services.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class DatabaseSalesWork {
 
@@ -31,8 +31,9 @@ public class DatabaseSalesWork {
     public void createTest() { //права доступа ещё не настроены
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         Product prod = ProductService.getAllProducts().get(0);
+        User user = UserService.getAllUsers().get(0);
         LocalDate localDate = LocalDate.parse("10-10-2010", formatter);
-        Sale sale = new Sale(localDate, 1, prod);
+        Sale sale = new Sale(localDate, 1, prod, user);
         sale.setProduct(prod);
         saledataDao.create(sale);
     }

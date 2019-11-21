@@ -63,13 +63,13 @@ public class ProductService {
                         else alert.setContentText("Продукт с таким наименованием уже есть в базе");
                         alert.showAndWait();
                         return product;
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { e.printStackTrace();}
                 }
                 return null;
             });
             dialog.showAndWait();
         }
-        catch (Exception ignored) { }
+        catch (Exception e) { e.printStackTrace(); }
 
     }
 
@@ -81,7 +81,7 @@ public class ProductService {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            try { connection.deleteProduct(selectedProduct); } catch (IOException ignored) { }
+            try { connection.deleteProduct(selectedProduct); } catch (IOException e) { e.printStackTrace(); }
         }
     }
 
@@ -129,22 +129,12 @@ public class ProductService {
                         else alert.setContentText("Продукт с таким наименованием уже есть в базе");
                         alert.showAndWait();
                         return product;
-                    } catch (Exception ignored) {}
+                    } catch (Exception e) { e.printStackTrace(); }
                 }
                 return null;
             });
             dialog.showAndWait();
         }
-        catch (Exception ignored) { }
+        catch (Exception e) { e.printStackTrace(); }
     }
-
-
-   /* public static void addNewProduct(String login, String password, String name) {
-        try {
-            Product Product = new Product(name, login, password, 0);
-            Product = connection.registration(Product);
-            if (Product == null) return;
-            CurrentProduct.setCurrentProduct(Product);
-        } catch (Exception ignored) {}
-    }*/
 }

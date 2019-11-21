@@ -4,15 +4,11 @@ import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
 import filonenko.sales.entities.Storage;
 import filonenko.sales.entities.User;
-import filonenko.sales.services.ProductService;
-import filonenko.sales.services.SaleService;
-import filonenko.sales.services.StorageService;
-import filonenko.sales.services.UserService;
+import filonenko.sales.services.*;
 
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.List;
 
 public class ServerThread extends Thread {
     private static int numberOfConnections = 0;
@@ -56,18 +52,34 @@ public class ServerThread extends Thread {
                     case "addSale": addSale(); break;
                     case "deleteSale": deleteSale(); break;
                     case "getStorage": getStorage(); break;
+                    case "replenish": replenish(); break;
+                    case "getGuarantee": getGuarantee(); break;
                 }
             }
         } catch (IOException e) {
-            System.out.println("Lost connection");} catch (ClassNotFoundException e) {
+            System.out.println("Lost connection");
+        }
+        catch (Exception e) {
             e.printStackTrace();
         } finally { disconnect(); }
     }
 
+    private void getGuarantee() throws IOException, ClassNotFoundException {
+        Sale sale = (Sale)objectInputStream.readObject();
+        objectOutputStream.writeObject(GuaranteeService.getGuarantee(sale));
+    }
+
+    private void replenish() throws IOException, ClassNotFoundException {
+        Storage storage = (Storage)objectInputStream.readObject();
+        System.out.println(storage);
+        int quantity = Integer.parseInt(inputStream.readLine());
+        System.out.println("Replenish by " + quantity);
+        StorageService.replenish(storage, quantity);
+        System.out.println("Successful replenish");
+        System.out.println("Failed replenish");
+    }
     private void getStorage() throws IOException {
-        List<Storage> list = StorageService.getStorage();
-        for (Storage s : list) System.out.println(s);
-        objectOutputStream.writeObject(list);
+        objectOutputStream.writeObject(StorageService.getStorage());
     }
 
     private void deleteSale() throws IOException, ClassNotFoundException {
@@ -105,12 +117,10 @@ public class ServerThread extends Thread {
     private void editProduct() throws IOException, ClassNotFoundException {
         Product product = (Product)objectInputStream.readObject();
         String newName = inputStream.readLine();
-        System.out.println("New name: " + newName);
         String newFirm = inputStream.readLine();
-        System.out.println("New firm: " + newFirm);
         Double newCost = Double.parseDouble(inputStream.readLine());
-        System.out.println("New cost: " + newCost);
         product = ProductService.editProduct(product, newName, newFirm, newCost);
+        System.out.println("New data: " + product);
         if (product != null) System.out.println("Successful modification");
         else System.out.println("Failed modification");
         objectOutputStream.writeObject(product);

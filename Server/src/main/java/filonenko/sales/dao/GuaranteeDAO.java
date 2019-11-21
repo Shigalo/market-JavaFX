@@ -2,9 +2,11 @@ package filonenko.sales.dao;
 
 import filonenko.sales.connect.HibernateConnect;
 import filonenko.sales.entities.Guarantee;
+import filonenko.sales.entities.Sale;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,16 @@ public class GuaranteeDAO implements DAOInterface<Guarantee> {
         Guarantee guarantee = findById(id).get();
         delete(guarantee);
     }
+
+    public Guarantee getGuaranteeBySale(Sale sale) {
+        Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
+        Query query = session.createQuery("from Guarantee where sale = :sale "); //Написание строки запроса (выбрать все из таблицы User, где имя = параметру)
+        query.setParameter("sale", sale);    //Определение параметра, использованного в запросе
+        Guarantee guarantee = (Guarantee)query.getSingleResult();
+        session.close();    //Закрытие сесии
+        return guarantee;
+
+        }
 
     private final static class SingletonHolder {    //объект класса единственный для всего проекта
         private final static GuaranteeDAO INSTANCE = new GuaranteeDAO();

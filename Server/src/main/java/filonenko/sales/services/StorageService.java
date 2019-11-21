@@ -24,4 +24,9 @@ public class StorageService {
         storageList = new ArrayList<>(dao.findAll());
         return storageList;
     }
+
+    public static void replenish(Storage storage, int quantity) {
+        storage.setQuantity(storage.getQuantity() + quantity);
+        dao.update(storage);
+    }
 }

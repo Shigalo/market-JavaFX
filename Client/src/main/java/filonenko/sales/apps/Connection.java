@@ -1,9 +1,6 @@
 package filonenko.sales.apps;
 
-import filonenko.sales.entities.Product;
-import filonenko.sales.entities.Sale;
-import filonenko.sales.entities.Storage;
-import filonenko.sales.entities.User;
+import filonenko.sales.entities.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -40,10 +37,15 @@ public class Connection {
         printStream.println("getAllUsers");
         return (List<User>)objectInputStream.readObject();
     }
-    public User login(User user) throws IOException, ClassNotFoundException {
-        printStream.println("login");
-        objectOutputStream.writeObject(user);
-        return (User)objectInputStream.readObject();
+    public User login(User user) {
+        try {
+            printStream.println("login");
+            objectOutputStream.writeObject(user);
+            System.out.println(user);
+            user = (User) objectInputStream.readObject();
+            System.out.println(user);
+            return user;
+        } catch (Exception e) { e.printStackTrace(); return null; }
     }
     public User registration(User user) throws IOException, ClassNotFoundException {
         printStream.println("registration");
@@ -73,10 +75,15 @@ public class Connection {
     }
     public Product editProduct(Product selectedProduct, String name, String firm, String cost) throws IOException, ClassNotFoundException {
         printStream.println("editProduct");
+        System.out.println(selectedProduct);
         objectOutputStream.writeObject(selectedProduct);
+        System.out.println(name);
         printStream.println(name);
+        System.out.println(firm);
         printStream.println(firm);
+        System.out.println(cost);
         printStream.println(cost);
+        System.out.println(4);
         selectedProduct = (Product)objectInputStream.readObject();
         return selectedProduct;
     }
@@ -96,6 +103,7 @@ public class Connection {
     }
     public void addSale(Sale sale) throws IOException, ClassNotFoundException {
         printStream.println("addSale");
+        System.out.println(sale);
         objectOutputStream.writeObject(sale);
         objectInputStream.readObject();
     }
@@ -107,5 +115,19 @@ public class Connection {
     public List<Storage> getStorage() throws IOException, ClassNotFoundException {
         printStream.println("getStorage");
         return (List<Storage>)objectInputStream.readObject();
+    }
+
+    public void replenish(Storage storage, String quantity) throws IOException {
+        printStream.println("replenish");
+        System.out.println(storage);
+        objectOutputStream.writeObject(storage);
+        printStream.println(quantity);
+    }
+
+    public Guarantee getGuarantee(Sale sale) throws IOException, ClassNotFoundException {
+        printStream.println("getGuarantee");
+        System.out.println(sale);
+        objectOutputStream.writeObject(sale);
+        return (Guarantee)objectInputStream.readObject();
     }
 }

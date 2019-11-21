@@ -31,6 +31,7 @@ public class Sales {
     public TableColumn<Sale, LocalDate> date;
     public TableColumn<Sale, String> product;
     public TableColumn<Sale, Integer> quantity;
+    public TableColumn<Sale, String>  seller;
     private ObservableList<Sale> sales = FXCollections.observableArrayList();
 
     public Button add;
@@ -42,9 +43,11 @@ public class Sales {
         date.setSortable(false);
         product.setSortable(false);
         quantity.setSortable(false);
+        seller.setSortable(false);
         thisEventHandlers();
         date.setCellValueFactory(new PropertyValueFactory<>("Date"));
         product.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getProduct().getName()));
+        seller.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getUser().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         table.setMaxHeight(200);
         tableUpdate();
@@ -54,18 +57,31 @@ public class Sales {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem delete = new MenuItem("Удалить");
         delete.setOnAction(contextEvent -> {
-            SaleService.deleteSale(table.getSelectionModel().getSelectedItem());
+            if( CurrentUser.getCurrentUser().equals(table.getSelectionModel().getSelectedItem().getUser()) || CurrentUser.getCurrentUser().getAccess() == 1)
+                SaleService.deleteSale(table.getSelectionModel().getSelectedItem());
+            else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ошибка");
+                alert.setHeaderText(null);
+                alert.setContentText("Невозможно удалить данные\nпродаж другого пользователя");
+                alert.showAndWait();
+            }
             tableUpdate();
         });
+        MenuItem info = new MenuItem("Подробнее");
+        info.setOnAction(contextEvent -> {
+            SaleService.getInfo(table.getSelectionModel().getSelectedItem());
+            tableUpdate();
+        });
+        contextMenu.getItems().addAll(info);
 
-        add.setVisible(false);
         if(CurrentUser.getCurrentUser() != null) {
+            add.setVisible(true);
             contextMenu.getItems().addAll(delete);
-            if(CurrentUser.getCurrentUser().getAccess() == 1) { add.setVisible(true);
-                add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    SaleService.addSale();
-                    tableUpdate();
-                }); }
+            add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                SaleService.addSale();
+                tableUpdate();
+            });
         }
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             contextMenu.hide();
@@ -113,6 +129,6 @@ public class Sales {
                     row.setStyle("-fx-background-color: white;");
                 }
             }
-        } catch (Exception ignored) { }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 }

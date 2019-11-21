@@ -60,13 +60,13 @@ public class Products {
         });
 
         add.setVisible(false);
-        if(CurrentUser.getCurrentUser() != null) {
+        if(CurrentUser.getCurrentUser() != null && CurrentUser.getCurrentUser().getAccess() == 1) {
             contextMenu.getItems().addAll(edit, delete);
-            if(CurrentUser.getCurrentUser().getAccess() == 1) { add.setVisible(true);
-                add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                    ProductService.addProduct();
-                    tableUpdate();
-                }); }
+            add.setVisible(true);
+            add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                ProductService.addProduct();
+                tableUpdate();
+            });
         }
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             contextMenu.hide();
@@ -114,6 +114,6 @@ public class Products {
                     row.setStyle("-fx-background-color: white;");
                 }
             }
-        } catch (Exception ignored) { }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 }
