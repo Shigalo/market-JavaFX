@@ -68,6 +68,11 @@ public class Sales {
             }
             tableUpdate();
         });
+        /*MenuItem update = new MenuItem("Гарантия");
+        delete.setOnAction(contextEvent -> {
+            SaleService.updateSale(table.getSelectionModel().getSelectedItem());
+            tableUpdate();
+        });*/
         MenuItem info = new MenuItem("Подробнее");
         info.setOnAction(contextEvent -> {
             SaleService.getInfo(table.getSelectionModel().getSelectedItem());

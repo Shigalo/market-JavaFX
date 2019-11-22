@@ -32,6 +32,7 @@ public class Users {
 
     @FXML
     private void initialize() throws Exception {
+        System.out.println("us");
         MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
         login.setSortable(false);
         name.setSortable(false);

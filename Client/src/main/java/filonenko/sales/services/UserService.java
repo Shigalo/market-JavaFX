@@ -23,11 +23,11 @@ public class UserService {
 
     public static void login(String login, String password) {
         try {
-            User user = new User("a", login, password, 0);
-            user.setId(1);
+            User user = new User("", login, password, 1);
             user = connection.login(user);
             if (user == null) return;
             CurrentUser.setCurrentUser(user);
+            System.out.println(CurrentUser.getCurrentUser() + "cu");
         } catch (Exception e) { e.printStackTrace(); }
     }
 

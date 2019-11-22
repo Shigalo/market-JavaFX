@@ -9,19 +9,18 @@ import filonenko.sales.services.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ServerThread extends Thread {
     private static int numberOfConnections = 0;
     private static int totalConnections = 0;
     private int ConnectionNumber;
 
-    private BufferedReader inputStream;
     private InetAddress addr;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream; //Поток получения объектов
 
     ServerThread(Socket socket, InetAddress addr) throws IOException {   //Конструктор, для инициализации
-        inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));    //Входной поток (принимает сообщение от клиента)
         objectOutputStream = new ObjectOutputStream(socket.getOutputStream());  //Выходной поток передачи объектов клиенту
         objectInputStream = new ObjectInputStream(socket.getInputStream());
         this.addr = addr;   //Адресс подключения
@@ -34,7 +33,7 @@ public class ServerThread extends Thread {
         System.out.println("Number of connections " + ++numberOfConnections);
         try {
             while(true) {
-                String requestString = inputStream.readLine();
+                String requestString = String.valueOf(objectInputStream.readObject());
                 System.out.println("User " + ConnectionNumber + ") Command: " + requestString);
                 switch (requestString) {
 //                    case "0":  objectOutputStream.writeObject(UserDAO.getInstance().findAll().get(0)); break; //для теста
@@ -56,12 +55,13 @@ public class ServerThread extends Thread {
                     case "getGuarantee": getGuarantee(); break;
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Lost connection");
-        }
-        catch (Exception e) {
+        } catch (SocketException e) {
             e.printStackTrace();
-        } finally { disconnect(); }
+            System.out.println("Lost connection");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally { disconnect(); }
     }
 
     private void getGuarantee() throws IOException, ClassNotFoundException {
@@ -72,7 +72,7 @@ public class ServerThread extends Thread {
     private void replenish() throws IOException, ClassNotFoundException {
         Storage storage = (Storage)objectInputStream.readObject();
         System.out.println(storage);
-        int quantity = Integer.parseInt(inputStream.readLine());
+        int quantity = Integer.parseInt(String.valueOf(objectInputStream.readObject()));
         System.out.println("Replenish by " + quantity);
         StorageService.replenish(storage, quantity);
         System.out.println("Successful replenish");
@@ -87,7 +87,6 @@ public class ServerThread extends Thread {
         System.out.println(sale);
         SaleService.deleteSale(sale);
         System.out.println("Successful delete");
-        System.out.println("Failed delete");
     }
     private void addSale() throws IOException, ClassNotFoundException {
         Sale newSale = (Sale)objectInputStream.readObject();
@@ -116,9 +115,9 @@ public class ServerThread extends Thread {
     }
     private void editProduct() throws IOException, ClassNotFoundException {
         Product product = (Product)objectInputStream.readObject();
-        String newName = inputStream.readLine();
-        String newFirm = inputStream.readLine();
-        Double newCost = Double.parseDouble(inputStream.readLine());
+        String newName = String.valueOf(objectInputStream.readObject());
+        String newFirm = String.valueOf(objectInputStream.readObject());
+        Double newCost = Double.parseDouble(String.valueOf(objectInputStream.readObject()));
         product = ProductService.editProduct(product, newName, newFirm, newCost);
         System.out.println("New data: " + product);
         if (product != null) System.out.println("Successful modification");
@@ -131,7 +130,7 @@ public class ServerThread extends Thread {
 
     private void editPassword() throws IOException, ClassNotFoundException {
         User user = (User)objectInputStream.readObject();
-        String newPassword = inputStream.readLine();
+        String newPassword = String.valueOf(objectInputStream.readObject());
         System.out.println("New password: " + newPassword);
         user = UserService.editPassword(user, newPassword);
         if (user != null) System.out.println("Successful modification");
@@ -140,7 +139,7 @@ public class ServerThread extends Thread {
     }
     private void editName() throws IOException, ClassNotFoundException {
         User user = (User)objectInputStream.readObject();
-        String newName = inputStream.readLine();
+        String newName = String.valueOf(objectInputStream.readObject());
         System.out.println("New name: " + newName);
         user = UserService.editName(user, newName);
         if (user != null) System.out.println("Successful modification");
@@ -155,13 +154,18 @@ public class ServerThread extends Thread {
         else System.out.println("Failed registration");
         objectOutputStream.writeObject(user);
     }
-    private void login() throws IOException, ClassNotFoundException {
-        User user = (User)objectInputStream.readObject();
-        System.out.println("User login: " + user.getLogin());
-        user = UserService.login(user);
-        if (user != null) System.out.println("Successful login");
-        else System.out.println("Failed login");
-        objectOutputStream.writeObject(user);
+    private void login() throws Exception {
+        try {
+            User user = (User) objectInputStream.readObject();;
+            System.out.println("User login: " + user.getLogin());
+            user = UserService.login(user);
+            if (user != null) System.out.println("Successful login");
+            else System.out.println("Failed login");
+            objectOutputStream.writeObject(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            objectOutputStream.writeObject(null);
+        }
     }
     private void getAllUsers() throws IOException {
         objectOutputStream.writeObject(UserService.getAllUsers());
@@ -178,7 +182,7 @@ public class ServerThread extends Thread {
             System.out.println("Number of connections " + --numberOfConnections);
             //Закрытие потоков передачи сообщений
             objectOutputStream.close(); //Поток, отправки объектов
-            inputStream.close();    //Поток принятия команд
+            objectInputStream.close(); //Поток, отправки объектов
         } catch (IOException e) { e.printStackTrace(); }
         finally { this.interrupt(); }
     }

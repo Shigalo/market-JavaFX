@@ -2,10 +2,7 @@ package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
 import filonenko.sales.apps.CurrentUser;
-import filonenko.sales.entities.Guarantee;
-import filonenko.sales.entities.Product;
-import filonenko.sales.entities.Sale;
-import filonenko.sales.entities.User;
+import filonenko.sales.entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -168,4 +165,55 @@ public class SaleService {
         }
         catch (Exception e) { e.printStackTrace(); }
     }
+
+   /* public static void updateSale(Sale selectedItem) {
+        try {
+            Dialog<Sale> dialog = new Dialog<>();
+            dialog.setTitle("Обновление информации");
+
+            ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
+            ButtonType cancelButtonType = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
+            dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, cancelButtonType);
+            dialog.getDialogPane().lookupButton(saveButtonType).setDisable(true);
+
+            GridPane grid = new GridPane();
+            grid.setHgap(10);
+            grid.setVgap(10);
+            grid.setPadding(new Insets(20, 150, 10, 10));
+
+            ObservableList<Guarantee> guaranties = FXCollections.observableArrayList();
+            List<Guarantee> guaranteeList = GuaranteeService.getGuaranties();
+            guaranties.setAll(guaranteeList);
+
+            ChoiceBox guarantee = new ChoiceBox(guaranties);
+            guarantee.setConverter(new StringConverter<Guarantee>() {
+                @Override public String toString(Guarantee object) { return object.getStatus().getName(); }
+                @Override public Guarantee fromString(String string) { return null; }
+            });
+            Guarantee selectedGuarantee = GuaranteeService.getGuarantee(selectedItem);
+            guarantee.setValue(selectedGuarantee);
+
+            Label sale = new Label(selectedItem.getId().toString());
+
+            grid.add(new Label("id сделки:"), 0, 0);
+            grid.add(sale, 1, 0);
+            grid.add(new Label("Гарантия:"), 0, 1);
+            grid.add(guarantee, 1, 1);
+            dialog.getDialogPane().setContent(grid);
+
+            dialog.setResultConverter(dialogButton -> {
+                if (dialogButton == saveButtonType) {
+                    try {
+
+                        if((Status)guarantee.getSelectionModel().getSelectedItem())
+                        selectedGuarantee.getStatus().setName();
+//                        connection.addSale(sale);
+                    } catch (Exception e) { e.printStackTrace(); }
+                }
+                return null;
+            });
+            dialog.showAndWait();
+        }
+        catch (Exception e) { e.printStackTrace(); }
+    }*/
 }

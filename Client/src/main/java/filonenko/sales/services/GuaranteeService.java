@@ -22,4 +22,8 @@ public class GuaranteeService {
     public static Guarantee getGuarantee(Sale sale) throws IOException, ClassNotFoundException {
         return connection.getGuarantee(sale);
     }
+/*
+    public static List<Guarantee> getGuaranties() {
+        return connection.getGuarantee(sale);
+    }*/
 }
