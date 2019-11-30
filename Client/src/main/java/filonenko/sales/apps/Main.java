@@ -20,22 +20,3 @@ public class Main extends Application {
         primaryStage.show();
     }
 }
-
-/*FXMLLoader loader = new FXMLLoader();
-                        loader.setLocation(Controller.class.getResource("/FXML/browse.fxml"));
-                        Pane page = (Pane) loader.load();
-                        Stage dialogStage = new Stage();
-                        dialogStage.initModality(Modality.WINDOW_MODAL);
-                        dialogStage.setScene(new Scene(page));
-                        Browse controller = loader.getController();
-                        controller.setDialogStage(dialogStage, str, list);
-                        dialogStage.show();*/
-
-/*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Ошибка");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Данные не выбраны!");
-                        alert.showAndWait();*/
-
-//                passwordConfirm.setPromptText("pass");
-//        passwordField.textProperty().addListener((observable, oldValue, newValue) -> saveButton.setDisable(newValue.trim().isEmpty()));

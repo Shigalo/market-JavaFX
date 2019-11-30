@@ -74,7 +74,7 @@ public class GuaranteeService {
                         try {
                             Guarantee value = connection.guaranteeUpdate(guarantee, status.getSelectionModel().getSelectedIndex());
                             if(value != null) alert.setContentText("Успешно");
-                            else alert.setContentText("Произошла ошибка!");
+                            else alert.setContentText("Недостаточно продукции на складе!");
                             alert.showAndWait();
                         } catch (Exception e) {
                             alert.setContentText("Произошла ошибка!");

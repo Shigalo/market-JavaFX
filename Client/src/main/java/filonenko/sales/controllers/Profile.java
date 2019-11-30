@@ -48,6 +48,7 @@ public class Profile {
     }
 
     private void thisEventHandlers() {
+        remove.setVisible(CurrentUser.getCurrentUser().getAccess() != 1);
         use.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Изменение имени");
