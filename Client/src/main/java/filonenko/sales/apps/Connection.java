@@ -30,7 +30,6 @@ public class Connection {
     }
 
     public List<User> getUserList() throws IOException, ClassNotFoundException {
-        System.out.println("getUserList");
         objectOutputStream.writeObject("getAllUsers");
         return (List<User>)objectInputStream.readObject();
     }
@@ -39,7 +38,6 @@ public class Connection {
             objectOutputStream.writeObject("login");
             objectOutputStream.writeObject(user);
             user = (User) objectInputStream.readObject();
-            System.out.println(user);
             return user;
         } catch (Exception e) { e.printStackTrace(); return null; }
     }
@@ -71,17 +69,11 @@ public class Connection {
     }
     public Product editProduct(Product selectedProduct, String name, String firm, String cost) throws IOException, ClassNotFoundException {
         objectOutputStream.writeObject("editProduct");
-        System.out.println(selectedProduct);
         objectOutputStream.writeObject(selectedProduct);
-        System.out.println(name);
         objectOutputStream.writeObject(name);
-        System.out.println(firm);
         objectOutputStream.writeObject(firm);
-        System.out.println(cost);
         objectOutputStream.writeObject(cost);
-        System.out.println(4);
-        selectedProduct = (Product)objectInputStream.readObject();
-        return selectedProduct;
+        return (Product)objectInputStream.readObject();
     }
     public void deleteProduct(Product selectedProduct) throws IOException {
         objectOutputStream.writeObject("deleteProduct");
@@ -97,11 +89,10 @@ public class Connection {
         objectOutputStream.writeObject("getAllSales");
         return (List<Sale>)objectInputStream.readObject();
     }
-    public void addSale(Sale sale) throws IOException, ClassNotFoundException {
+    public Sale addSale(Sale sale) throws IOException, ClassNotFoundException {
         objectOutputStream.writeObject("addSale");
-        System.out.println(sale);
         objectOutputStream.writeObject(sale);
-        objectInputStream.readObject();
+        return (Sale)objectInputStream.readObject();
     }
     public void deleteSale(Sale selectedSale) throws IOException {
         objectOutputStream.writeObject("deleteSale");
@@ -115,14 +106,12 @@ public class Connection {
 
     public void replenish(Storage storage, String quantity) throws IOException {
         objectOutputStream.writeObject("replenish");
-        System.out.println(storage);
         objectOutputStream.writeObject(storage);
         objectOutputStream.writeObject(quantity);
     }
 
     public Guarantee getGuarantee(Sale sale) throws IOException, ClassNotFoundException {
         objectOutputStream.writeObject("getGuarantee");
-        System.out.println(sale);
         objectOutputStream.writeObject(sale);
         return (Guarantee)objectInputStream.readObject();
     }

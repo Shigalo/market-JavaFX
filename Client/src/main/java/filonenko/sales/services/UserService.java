@@ -27,7 +27,6 @@ public class UserService {
             user = connection.login(user);
             if (user == null) return;
             CurrentUser.setCurrentUser(user);
-            System.out.println(CurrentUser.getCurrentUser() + "cu");
         } catch (Exception e) { e.printStackTrace(); }
     }
 

@@ -66,7 +66,7 @@ public class SaleService {
                 @Override public Product fromString(String string) { return null; }
             });
             product.setValue(productList.get(0));
-            DatePicker date = new DatePicker();
+            DatePicker date = new DatePicker(LocalDate.now());
             TextField quantity = new TextField();
 
             quantity.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -96,7 +96,14 @@ public class SaleService {
                         Product selectedProduct = (Product)product.getSelectionModel().getSelectedItem();
                         User user = CurrentUser.getCurrentUser();
                         Sale sale = new Sale(localDate, quantityInt, selectedProduct, user);
-                        connection.addSale(sale);
+                        sale = connection.addSale(sale);
+                        if(sale == null) {
+                            Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                            alert2.setTitle("Ошибка");
+                            alert2.setHeaderText(null);
+                            alert2.setContentText("Недостаточно продукции на складе!");
+                            alert2.showAndWait();
+                        }
                     } catch (Exception e) { e.printStackTrace(); }
                 }
                 return null;

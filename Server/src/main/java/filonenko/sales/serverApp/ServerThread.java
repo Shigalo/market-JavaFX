@@ -36,7 +36,6 @@ public class ServerThread extends Thread {
                 String requestString = String.valueOf(objectInputStream.readObject());
                 System.out.println("User " + ConnectionNumber + ") Command: " + requestString);
                 switch (requestString) {
-//                    case "0":  objectOutputStream.writeObject(UserDAO.getInstance().findAll().get(0)); break; //для теста
                     case "getAllUsers": getAllUsers(); break;
                     case "login": login(); break;
                     case "registration": registration(); break;
@@ -56,7 +55,7 @@ public class ServerThread extends Thread {
                 }
             }
         } catch (SocketException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             System.out.println("Lost connection");
         } catch (Exception e) {
             e.printStackTrace();

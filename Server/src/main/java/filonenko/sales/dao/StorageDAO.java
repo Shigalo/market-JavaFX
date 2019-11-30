@@ -1,23 +1,33 @@
 package filonenko.sales.dao;
 
 import filonenko.sales.connect.HibernateConnect;
+import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Storage;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.util.List;
 import java.util.Optional;
 
 //Класс взаимодействия класса-сущности Product и запросов в БД
 public class StorageDAO implements DAOInterface<Storage> {
-
     private final static class SingletonHolder {    //объект класса единственный для всего проекта
         private final static StorageDAO INSTANCE = new StorageDAO();
     }
 
     public static StorageDAO getInstance() {   //Получение доступа к классу
         return SingletonHolder.INSTANCE;
+    }
+
+    public Storage getByProduct(Product product) {
+        Session session = HibernateConnect.getSessionFactory().openSession();   //Получение сессии (возможность обращения к БД)
+        Query query = session.createQuery("from Storage where product = :product ");
+        query.setParameter("product", product);
+        Storage storage = (Storage)query.getSingleResult();
+        session.close();    //Закрытие сесии
+        return storage;
     }
 
     public List<Storage> findAll() {   //метод получения всех данных из таблицы

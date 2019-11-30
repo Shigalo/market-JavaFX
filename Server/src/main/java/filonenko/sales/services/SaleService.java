@@ -21,11 +21,14 @@ public class SaleService {
     }
 
     public static Sale addSale(Sale newSale) {
-        dao.create(newSale);
-        Guarantee guarantee = new Guarantee(newSale.getDate().plusYears(2));
-        guarantee.setStatus(StatusService.getAllStatuses().get(0));
-        guarantee.setSale(newSale);
-        GuaranteeService.addGuarantee(guarantee);
-        return dao.findById(newSale.getId()).get();
+        if (StorageService.useProduct(newSale)) {
+            dao.create(newSale);
+            Guarantee guarantee = new Guarantee(newSale.getDate().plusYears(2));
+            guarantee.setStatus(StatusService.getAllStatuses().get(0));
+            guarantee.setSale(newSale);
+            GuaranteeService.addGuarantee(guarantee);
+            return dao.findById(newSale.getId()).get();
+        }
+        return null;
     }
 }

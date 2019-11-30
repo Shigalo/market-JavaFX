@@ -42,8 +42,8 @@ CREATE TABLE guarantee
     sale_id int NOT NULL,
     status_id int NOT NULL,
     date date NOT NULL,
-    CONSTRAINT status_fk FOREIGN KEY (status_id) REFERENCES status (id),
-    CONSTRAINT sale_fk FOREIGN KEY (sale_id) REFERENCES sale (id)
+    CONSTRAINT status_fk FOREIGN KEY (status_id) REFERENCES status (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT sale_fk FOREIGN KEY (sale_id) REFERENCES sale (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 INSERT INTO `filonenko5`.`status` (name) VALUES ('Действует');
