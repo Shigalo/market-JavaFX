@@ -1,6 +1,7 @@
 package filonenko.sales.controllers;
 
 import filonenko.sales.apps.CurrentUser;
+import filonenko.sales.apps.Main;
 import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.services.UserService;
 import filonenko.sales.services.VerificationService;
@@ -52,14 +53,13 @@ public class Registration {
                                 "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
                         alert.showAndWait();
 
-                        Stage stage = (Stage) registration.getScene().getWindow();
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                         Parent root = null;
                         try {
                             root = fxmlLoader.load();
                         } catch (IOException e) { e.printStackTrace(); }
-                        stage.setScene(new Scene(root));
-                        stage.show();
+                        Main.primaryStage.getScene().setRoot(root);
+                        Main.primaryStage.show();
                     } else {
                         alert.setContentText("Логин не доступен!");
                         login.setText("");
@@ -73,14 +73,13 @@ public class Registration {
         cancel.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Stage stage = (Stage) registration.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
                 Parent root = null;
                 try {
                     root = fxmlLoader.load();
                 } catch (IOException e) { e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
     }

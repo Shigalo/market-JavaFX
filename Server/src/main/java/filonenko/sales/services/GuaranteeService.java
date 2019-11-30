@@ -11,14 +11,6 @@ public class GuaranteeService {
 
     private static GuaranteeDAO dao = GuaranteeDAO.getInstance();
 
-    public static List<Guarantee> getAllGuarantees() {
-        return dao.findAll();
-    }
-
-  /*  public static Guarantee editGuarantee(Guarantee Guarantee, String newName, String newFirm, Double newCost) {
-        return dao.editGuarantee(Guarantee.getId(), newName, newFirm, newCost);
-    }*/
-
     public static Guarantee addGuarantee(Guarantee newGuarantee) {
         dao.create(newGuarantee);
         System.out.println(newGuarantee.getId());

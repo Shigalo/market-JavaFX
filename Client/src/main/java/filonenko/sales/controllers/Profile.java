@@ -1,6 +1,7 @@
 package filonenko.sales.controllers;
 
 import filonenko.sales.apps.CurrentUser;
+import filonenko.sales.apps.Main;
 import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.services.UserService;
 import filonenko.sales.services.VerificationService;
@@ -74,12 +75,11 @@ public class Profile {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 UserService.remove();
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e) { e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
     }

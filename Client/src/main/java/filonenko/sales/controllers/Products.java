@@ -43,7 +43,6 @@ public class Products {
         unit_price.setCellValueFactory(new PropertyValueFactory<>("Unit_price"));
         table.setMaxHeight(200);
         tableUpdate();
-
     }
 
     private void thisEventHandlers() {

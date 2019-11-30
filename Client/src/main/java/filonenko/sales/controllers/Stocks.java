@@ -65,7 +65,7 @@ public class Stocks {
                 tableUpdate();
             });
 
-            if (CurrentUser.getCurrentUser() != null || CurrentUser.getCurrentUser().getAccess() == 1) {
+            if (CurrentUser.getCurrentUser() != null) {
                 contextMenu.getItems().addAll(replenish);
             }
             table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

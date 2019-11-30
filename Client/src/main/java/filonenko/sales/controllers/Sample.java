@@ -1,6 +1,7 @@
 package filonenko.sales.controllers;
 
 import filonenko.sales.apps.CurrentUser;
+import filonenko.sales.apps.Main;
 import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.services.UserService;
 import javafx.event.EventHandler;
@@ -47,12 +48,11 @@ public class Sample {
                     alert.setContentText("Добро пожаловать " + CurrentUser.getCurrentUser().getName());
                     alert.showAndWait();
 
-                    Stage stage = (Stage)log.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                     Parent root = null;
                     try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                    stage.setScene(new Scene(root));
-                    stage.show();
+                    Main.primaryStage.getScene().setRoot(root);
+                    Main.primaryStage.show();
                 }
                 else {
                     alert.setContentText("Пользователь не найден!\n" +
@@ -66,12 +66,11 @@ public class Sample {
         registration.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/registration.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
     }

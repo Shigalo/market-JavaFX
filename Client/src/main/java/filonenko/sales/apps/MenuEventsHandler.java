@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -21,48 +22,44 @@ public class MenuEventsHandler {
         usersMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
 
         productMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/products.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
 
         salesMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sales.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
 
         storageMenu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/storage.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
 
@@ -77,12 +74,11 @@ public class MenuEventsHandler {
             profile.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    Stage stage = (Stage)log.getScene().getWindow();
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/profile.fxml"));
                     Parent root = null;
                     try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                    stage.setScene(new Scene(root));
-                    stage.show();
+                    Main.primaryStage.getScene().setRoot(root);
+                    Main.primaryStage.show();
                 }
             });
         }
@@ -91,13 +87,11 @@ public class MenuEventsHandler {
             @Override
             public void handle(MouseEvent event) {
                 if(CurrentUser.getCurrentUser() != null)  CurrentUser.setCurrentUser(null);
-
-                Stage stage = (Stage)log.getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-                stage.setScene(new Scene(root));
-                stage.show();
+                Main.primaryStage.getScene().setRoot(root);
+                Main.primaryStage.show();
             }
         });
     }
