@@ -67,14 +67,22 @@ public class SaleService {
             });
             product.setValue(productList.get(0));
             DatePicker date = new DatePicker(LocalDate.now());
+            date.setDayCellFactory(picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) > 0 );
+                }
+            });
             TextField quantity = new TextField();
 
             quantity.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("\\d*")) { quantity.setText(newValue.replaceAll("[^\\d]", "")); }
-                dialog.getDialogPane().lookupButton(saveButtonType).setDisable(quantity.getText().isEmpty() || date.getEditor().getText().isEmpty());
+                dialog.getDialogPane().lookupButton(saveButtonType).setDisable(ready(quantity, date));
             });
 
-            date.setOnAction(event -> dialog.getDialogPane().lookupButton(saveButtonType).setDisable(quantity.getText().isEmpty() || date.getEditor().getText().isEmpty()));
+            date.setOnAction(event -> dialog.getDialogPane().lookupButton(saveButtonType).setDisable(ready(quantity, date)));
 
             grid.add(new Label("Продукт:"), 0, 0);
             grid.add(product, 1, 0);
@@ -113,6 +121,10 @@ public class SaleService {
         catch (Exception e) { e.printStackTrace(); }
     }
 
+    private static boolean ready(TextField quantity, DatePicker date) {
+        return quantity.getText().isEmpty() || date.getEditor().getText().isEmpty();
+    }
+
     public static void getInfo(Sale selectedSale) {
         try {
             Dialog<Product> dialog = new Dialog<>();
@@ -123,25 +135,17 @@ public class SaleService {
             grid.setVgap(10);
             grid.setPadding(new Insets(20, 150, 10, 10));
 
-            Label product = new Label();
-            product.setText(selectedSale.getProduct().getName());
-            Label firm = new Label();
-            firm.setText(selectedSale.getProduct().getFirm());
-            Label unit_price = new Label();
-            unit_price.setText(String.valueOf(selectedSale.getProduct().getUnit_price()));
-            Label quantity = new Label();
-            quantity.setText(String.valueOf(selectedSale.getQuantity()));
-            Label cost = new Label();
-            cost.setText(String.valueOf(selectedSale.getQuantity() * selectedSale.getProduct().getUnit_price()));
-            Label date = new Label();
-            date.setText(String.valueOf(selectedSale.getDate()));
+            Label product = new Label(selectedSale.getProduct().getName());
+            Label firm = new Label(selectedSale.getProduct().getFirm());
+            Label unit_price = new Label(String.valueOf(selectedSale.getProduct().getUnit_price()));
+            Label quantity = new Label(String.valueOf(selectedSale.getQuantity()));
+            Label cost = new Label(String.valueOf(selectedSale.getQuantity() * selectedSale.getProduct().getUnit_price()));
+            Label date = new Label(String.valueOf(selectedSale.getDate()));
             Label user = new Label(selectedSale.getUser().getName());
 
             Guarantee guarantee = GuaranteeService.getGuarantee(selectedSale);
-            Label status = new Label();
-            status.setText(guarantee.getStatus().getName());
-            Label dateStatus = new Label();
-            dateStatus.setText(String.valueOf(guarantee.getDate()));
+            Label status = new Label(guarantee.getStatus().getName());
+            Label dateStatus = new Label(String.valueOf(guarantee.getDate()));
 
             grid.add(new Label("Продукт:"), 0, 0);
             grid.add(product, 1, 0);

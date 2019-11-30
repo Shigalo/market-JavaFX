@@ -1,16 +1,15 @@
 package filonenko.sales.serverApp;
 
-import filonenko.sales.entities.Product;
-import filonenko.sales.entities.Sale;
-import filonenko.sales.entities.Storage;
-import filonenko.sales.entities.User;
+import filonenko.sales.entities.*;
 import filonenko.sales.services.*;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.time.LocalDate;
+import java.util.Date;
 
 public class ServerThread extends Thread {
     private static int numberOfConnections = 0;
@@ -36,7 +35,7 @@ public class ServerThread extends Thread {
             while(true) {
                 String requestString = String.valueOf(objectInputStream.readObject());
                 GuaranteeService.update();
-                System.out.println(LocalDate.now() + " : User " + ConnectionNumber + ") Command: " + requestString);
+                System.out.println(new Date() + " : User " + ConnectionNumber + ") Command: " + requestString);
                 switch (requestString) {
                     case "getAllUsers": getAllUsers(); break;
                     case "login": login(); break;
@@ -54,6 +53,7 @@ public class ServerThread extends Thread {
                     case "getStorage": getStorage(); break;
                     case "replenish": replenish(); break;
                     case "getGuarantee": getGuarantee(); break;
+                    case "guaranteeUpdate": guaranteeUpdate(); break;
                 }
             }
         } catch (SocketException e) {
@@ -65,6 +65,11 @@ public class ServerThread extends Thread {
         finally { disconnect(); }
     }
 
+    private void guaranteeUpdate() throws IOException, ClassNotFoundException {
+        Guarantee guarantee = (Guarantee)objectInputStream.readObject();
+        String status = String.valueOf(objectInputStream.readObject());
+        objectOutputStream.writeObject(GuaranteeService.guaranteeUpdate(guarantee, status));
+    }
     private void getGuarantee() throws IOException, ClassNotFoundException {
         Sale sale = (Sale)objectInputStream.readObject();
         objectOutputStream.writeObject(GuaranteeService.getGuarantee(sale));

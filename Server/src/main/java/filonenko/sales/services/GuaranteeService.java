@@ -39,4 +39,12 @@ public class GuaranteeService {
             }
         }
     }
+
+    public static Guarantee guaranteeUpdate(Guarantee guarantee, String status) {
+        guarantee.setStatus(StatusService.getAllStatuses().get(Integer.valueOf(status)));
+        guarantee.setDate(LocalDate.now());
+        dao.update(guarantee);
+        SaleService.addSale(guarantee.getSale());
+        return guarantee;
+    }
 }

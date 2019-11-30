@@ -115,4 +115,11 @@ public class Connection {
         objectOutputStream.writeObject(sale);
         return (Guarantee)objectInputStream.readObject();
     }
+
+    public Guarantee guaranteeUpdate(Guarantee guarantee, int selectedIndex) throws IOException, ClassNotFoundException {
+        objectOutputStream.writeObject("guaranteeUpdate");
+        objectOutputStream.writeObject(guarantee);
+        objectOutputStream.writeObject(String.valueOf(selectedIndex+2));
+        return (Guarantee)objectInputStream.readObject();
+    }
 }

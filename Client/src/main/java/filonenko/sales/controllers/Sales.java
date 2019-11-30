@@ -2,8 +2,10 @@ package filonenko.sales.controllers;
 
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MenuEventsHandler;
+import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
+import filonenko.sales.services.GuaranteeService;
 import filonenko.sales.services.ProductService;
 import filonenko.sales.services.SaleService;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -56,6 +58,7 @@ public class Sales {
     private void thisEventHandlers() {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem delete = new MenuItem("Удалить");
+        MenuItem change = new MenuItem("Обращение по гарантии");
         delete.setOnAction(contextEvent -> {
             if( CurrentUser.getCurrentUser().equals(table.getSelectionModel().getSelectedItem().getUser()) || CurrentUser.getCurrentUser().getAccess() == 1)
                 SaleService.deleteSale(table.getSelectionModel().getSelectedItem());
@@ -68,6 +71,11 @@ public class Sales {
             }
             tableUpdate();
         });
+        change.setOnAction(contextEvent -> {
+            Guarantee guarantee = GuaranteeService.getGuarantee(table.getSelectionModel().getSelectedItem());
+            GuaranteeService.update(guarantee);
+            tableUpdate();
+        });
         MenuItem info = new MenuItem("Подробнее");
         info.setOnAction(contextEvent -> {
             SaleService.getInfo(table.getSelectionModel().getSelectedItem());
@@ -77,7 +85,7 @@ public class Sales {
 
         if(CurrentUser.getCurrentUser() != null) {
             add.setVisible(true);
-            contextMenu.getItems().addAll(delete);
+            contextMenu.getItems().addAll(delete, change);
             add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 SaleService.addSale();
                 tableUpdate();
