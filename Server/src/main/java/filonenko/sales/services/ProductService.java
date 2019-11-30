@@ -4,16 +4,14 @@ import filonenko.sales.dao.ProductDAO;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Storage;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProductService {
 
-    private static ArrayList<Product> productList;
     private static ProductDAO dao = ProductDAO.getInstance();
 
-    public static ArrayList<Product> getAllProducts() {
-        productList = new ArrayList<>(dao.findAll());
-        return productList;
+    public static List<Product> getAllProducts() {
+        return dao.findAll();
     }
 
     public static Product editProduct(Product product, String newName, String newFirm, Double newCost) {
@@ -25,8 +23,10 @@ public class ProductService {
     }
 
     public static Product addProduct(Product newProduct) {
-        dao.create(newProduct);
-        StorageService.addStorage(new Storage(newProduct, 0));
-        return dao.findById(newProduct.getId()).get();
+        try {
+            dao.create(newProduct);
+            StorageService.addStorage(new Storage(newProduct, 0));
+            return dao.findById(newProduct.getId()).get();
+        } catch (Exception ignored) { return null; }
     }
 }

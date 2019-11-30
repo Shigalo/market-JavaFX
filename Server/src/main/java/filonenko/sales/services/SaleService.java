@@ -4,16 +4,14 @@ import filonenko.sales.dao.SaleDAO;
 import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Sale;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SaleService {
 
-    private static ArrayList<Sale> saleList;
     private static SaleDAO dao = SaleDAO.getInstance();
 
-    public static ArrayList<Sale> getAllSales() {
-        saleList = new ArrayList<>(dao.findAll());
-        return saleList;
+    public static List<Sale> getAllSales() {
+        return dao.findAll();
     }
 
     public static void deleteSale(Sale Sale) {

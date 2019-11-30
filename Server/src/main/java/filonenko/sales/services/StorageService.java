@@ -4,11 +4,10 @@ import filonenko.sales.dao.StorageDAO;
 import filonenko.sales.entities.Sale;
 import filonenko.sales.entities.Storage;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class StorageService {
 
-    private static ArrayList<Storage> storageList;
     private static StorageDAO dao = StorageDAO.getInstance();
 
     public static Storage addStorage(Storage newStorage) {
@@ -17,9 +16,8 @@ public class StorageService {
         return dao.findById(newStorage.getId()).get();
     }
 
-    public static ArrayList<Storage> getStorage() {
-        storageList = new ArrayList<>(dao.findAll());
-        return storageList;
+    public static List<Storage> getStorage() {
+        return dao.findAll();
     }
 
     public static void replenish(Storage storage, int quantity) {

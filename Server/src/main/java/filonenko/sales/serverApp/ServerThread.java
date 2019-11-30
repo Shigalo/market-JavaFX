@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.time.LocalDate;
 
 public class ServerThread extends Thread {
     private static int numberOfConnections = 0;
@@ -34,7 +35,8 @@ public class ServerThread extends Thread {
         try {
             while(true) {
                 String requestString = String.valueOf(objectInputStream.readObject());
-                System.out.println("User " + ConnectionNumber + ") Command: " + requestString);
+                GuaranteeService.update();
+                System.out.println(LocalDate.now() + " : User " + ConnectionNumber + ") Command: " + requestString);
                 switch (requestString) {
                     case "getAllUsers": getAllUsers(); break;
                     case "login": login(); break;

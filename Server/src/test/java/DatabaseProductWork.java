@@ -27,10 +27,9 @@ public class DatabaseProductWork {
 
     @Test
     public void updateTest() {
-        for(Product test_Product : productdataDao.findByName("test_Product")) {
-            test_Product.setFirm("update_firm_test");
-            productdataDao.update(test_Product);
-        }
+        Product test_Product = productdataDao.findByName("test_Product");
+        test_Product.setFirm("update_firm_test");
+        productdataDao.update(test_Product);
     }
 
     @Test

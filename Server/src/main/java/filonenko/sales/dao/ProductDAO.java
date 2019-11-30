@@ -36,11 +36,11 @@ public class ProductDAO implements DAOInterface<Product> {
         return SingletonHolder.INSTANCE;
     }
 
-    public List<Product> findByName(String new_name) {  //Поиск записи по имени
+    public Product findByName(String new_name) {  //Поиск записи по имени
         Session session = HibernateConnect.getSessionFactory().openSession();
         Query query = session.createQuery("from Product where name = :name "); //Написание строки запроса (выбрать все из таблицы User, где имя = параметру)
         query.setParameter("name", new_name);    //Определение параметра, использованного в запросе
-        return query.list();    //Выполнение запроса
+        return (Product)query.getSingleResult();    //Выполнение запроса
     }
 
     public void deleteByName(String name) { //Удаление по имени
