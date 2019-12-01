@@ -1,14 +1,10 @@
-package filonenko.sales.controllers;
+package filonenko.sales.controllers.dataTables;
 
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MenuEventsHandler;
-import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Product;
-import filonenko.sales.entities.Sale;
-import filonenko.sales.services.GuaranteeService;
 import filonenko.sales.services.ProductService;
 import filonenko.sales.services.SaleService;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,11 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sales {
+public class Products {
     public MenuItem usersMenu;
     public MenuItem productMenu;
     public MenuItem salesMenu;
@@ -29,72 +24,60 @@ public class Sales {
     public Button log;
     public Button profile;
 
-    public TableView<Sale> table;
-    public TableColumn<Sale, LocalDate> date;
-    public TableColumn<Sale, String> product;
-    public TableColumn<Sale, Integer> quantity;
-    public TableColumn<Sale, String>  seller;
-    private ObservableList<Sale> sales = FXCollections.observableArrayList();
-
+    public TableView<Product> table;
+    public TableColumn<Product, String> name;
+    public TableColumn<Product, String> firm;
+    public TableColumn<Product, Double> unit_price;
     public Button add;
+    private ObservableList<Product> products = FXCollections.observableArrayList();
     private List<Boolean> selected = new ArrayList<>();
 
     @FXML
     private void initialize() throws Exception {
         MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
-        date.setSortable(false);
-        product.setSortable(false);
-        quantity.setSortable(false);
-        seller.setSortable(false);
+        name.setSortable(false);
+        firm.setSortable(false);
+        unit_price.setSortable(false);
         thisEventHandlers();
-        date.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        product.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getProduct().getName()));
-        seller.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getUser().getName()));
-        quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        name.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        firm.setCellValueFactory(new PropertyValueFactory<>("Firm"));
+        unit_price.setCellValueFactory(new PropertyValueFactory<>("Unit_price"));
         table.setMaxHeight(200);
         tableUpdate();
     }
 
     private void thisEventHandlers() {
         ContextMenu contextMenu = new ContextMenu();
+        MenuItem edit = new MenuItem("Изменить");
+        edit.setOnAction(contextEvent -> {
+            ProductService.editProduct(table.getSelectionModel().getSelectedItem());
+            tableUpdate();
+        });
         MenuItem delete = new MenuItem("Удалить");
-        MenuItem change = new MenuItem("Обращение по гарантии");
         delete.setOnAction(contextEvent -> {
-            if( CurrentUser.getCurrentUser().equals(table.getSelectionModel().getSelectedItem().getUser()) || CurrentUser.getCurrentUser().getAccess() == 1)
-                SaleService.deleteSale(table.getSelectionModel().getSelectedItem());
-            else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Ошибка");
-                alert.setHeaderText(null);
-                alert.setContentText("Невозможно удалить данные\nпродаж другого пользователя");
-                alert.showAndWait();
+            ProductService.deleteProduct(table.getSelectionModel().getSelectedItem());
+            tableUpdate();
+        });
+        MenuItem statistic = new MenuItem("Продажи");
+        statistic.setOnAction(contextEvent -> {
+            SaleService.productStatistic(table.getSelectionModel().getSelectedItem());
+            tableUpdate();
+        });
+            if(CurrentUser.getCurrentUser()!= null) {
+            contextMenu.getItems().addAll(statistic);
+            if(CurrentUser.getCurrentUser().getAccess() == 1) {
+                contextMenu.getItems().addAll(edit, delete);
+                add.setVisible(true);
+                add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    ProductService.addProduct();
+                    tableUpdate();
+                });
             }
-            tableUpdate();
-        });
-        change.setOnAction(contextEvent -> {
-            Guarantee guarantee = GuaranteeService.getGuarantee(table.getSelectionModel().getSelectedItem());
-            GuaranteeService.update(guarantee);
-            tableUpdate();
-        });
-        MenuItem info = new MenuItem("Подробнее");
-        info.setOnAction(contextEvent -> {
-            SaleService.getInfo(table.getSelectionModel().getSelectedItem());
-            tableUpdate();
-        });
-        contextMenu.getItems().addAll(info);
-
-        if(CurrentUser.getCurrentUser() != null) {
-            add.setVisible(true);
-            contextMenu.getItems().addAll(delete, change);
-            add.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                SaleService.addSale();
-                tableUpdate();
-            });
         }
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             contextMenu.hide();
             switch (event.getButton()) {
-                case PRIMARY: {
+                /*case PRIMARY: {
                     for (Node n : table.lookupAll("TableRow")) {
                         if (n instanceof TableRow) {
                             TableRow row = (TableRow) n;
@@ -113,7 +96,7 @@ public class Sales {
                         }
                     }
                     break;
-                }
+                }*/
                 case SECONDARY: {
                     table.setOnContextMenuRequested(contextEvent -> contextMenu.show(table, event.getScreenX(), event.getScreenY()));
                     break;
@@ -124,19 +107,19 @@ public class Sales {
 
     private void tableUpdate() {
         try {
-            List<Sale> saleList = SaleService.getAllSales();
-            sales.setAll(saleList);
-            table.setItems(sales);
-            table.setPrefHeight(25+saleList.size()*25);
+            List<Product> productList = ProductService.getAllProducts();
+            products.setAll(productList);
+            table.setItems(products);
+            table.setPrefHeight(25+productList.size()*25);
             selected.clear();
-            for(Sale ignored : saleList)
+            /*for(Product ignored : productList)
                 selected.add(false);
             for (Node n : table.lookupAll("TableRow")) {
                 if (n instanceof TableRow) {
                     TableRow row = (TableRow) n;
                     row.setStyle("-fx-background-color: white;");
                 }
-            }
+            }*/
         } catch (Exception e) { e.printStackTrace(); }
     }
 }

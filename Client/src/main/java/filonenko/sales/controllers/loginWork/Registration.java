@@ -1,4 +1,4 @@
-package filonenko.sales.controllers;
+package filonenko.sales.controllers.loginWork;
 
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.Main;
@@ -8,11 +8,9 @@ import filonenko.sales.services.VerificationService;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -53,7 +51,7 @@ public class Registration {
                                 "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
                         alert.showAndWait();
 
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/users.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/dataTables/users.fxml"));
                         Parent root = null;
                         try {
                             root = fxmlLoader.load();
@@ -73,7 +71,7 @@ public class Registration {
         cancel.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/loginWork/sample.fxml"));
                 Parent root = null;
                 try {
                     root = fxmlLoader.load();

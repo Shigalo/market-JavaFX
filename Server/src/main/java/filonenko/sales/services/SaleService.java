@@ -2,6 +2,7 @@ package filonenko.sales.services;
 
 import filonenko.sales.dao.SaleDAO;
 import filonenko.sales.entities.Guarantee;
+import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
 
 import java.util.List;
@@ -28,5 +29,9 @@ public class SaleService {
             return dao.findById(newSale.getId()).get();
         }
         return null;
+    }
+
+    public static List<Sale> getProductSales(Product product) {
+        return dao.getByProduct(product);
     }
 }

@@ -2,11 +2,15 @@ package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
 import filonenko.sales.apps.CurrentUser;
+import filonenko.sales.apps.Main;
+import filonenko.sales.controllers.statistic.ProductSales;
 import filonenko.sales.entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
@@ -177,54 +181,27 @@ public class SaleService {
         catch (Exception e) { e.printStackTrace(); }
     }
 
-   /* public static void updateSale(Sale selectedItem) {
+    public static List<Sale> getSales(Product product) throws IOException, ClassNotFoundException {
+        return connection.getProductSales(product);
+    }
+
+    public static void productStatistic(Product product) {
+
         try {
-            Dialog<Sale> dialog = new Dialog<>();
-            dialog.setTitle("Обновление информации");
-
-            ButtonType saveButtonType = new ButtonType("Сохранить", ButtonBar.ButtonData.OK_DONE);
-            ButtonType cancelButtonType = new ButtonType("Отмена", ButtonBar.ButtonData.CANCEL_CLOSE);
-            dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, cancelButtonType);
-            dialog.getDialogPane().lookupButton(saveButtonType).setDisable(true);
-
-            GridPane grid = new GridPane();
-            grid.setHgap(10);
-            grid.setVgap(10);
-            grid.setPadding(new Insets(20, 150, 10, 10));
-
-            ObservableList<Guarantee> guaranties = FXCollections.observableArrayList();
-            List<Guarantee> guaranteeList = GuaranteeService.getGuaranties();
-            guaranties.setAll(guaranteeList);
-
-            ChoiceBox guarantee = new ChoiceBox(guaranties);
-            guarantee.setConverter(new StringConverter<Guarantee>() {
-                @Override public String toString(Guarantee object) { return object.getStatus().getName(); }
-                @Override public Guarantee fromString(String string) { return null; }
-            });
-            Guarantee selectedGuarantee = GuaranteeService.getGuarantee(selectedItem);
-            guarantee.setValue(selectedGuarantee);
-
-            Label sale = new Label(selectedItem.getId().toString());
-
-            grid.add(new Label("id сделки:"), 0, 0);
-            grid.add(sale, 1, 0);
-            grid.add(new Label("Гарантия:"), 0, 1);
-            grid.add(guarantee, 1, 1);
-            dialog.getDialogPane().setContent(grid);
-
-            dialog.setResultConverter(dialogButton -> {
-                if (dialogButton == saveButtonType) {
-                    try {
-
-                        if((Status)guarantee.getSelectionModel().getSelectedItem())
-                        selectedGuarantee.getStatus().setName();
-//                        connection.addSale(sale);
-                    } catch (Exception e) { e.printStackTrace(); }
-                }
-                return null;
-            });
-            dialog.showAndWait();
+            if(SaleService.getSales(product).isEmpty()) throw new Exception();
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Предупреждение");
+            alert.setHeaderText(null);
+            alert.setContentText("Записи отсутствуют");
+            alert.showAndWait();
+            return;
         }
-        catch (Exception e) { e.printStackTrace(); }
-    }*/
+        FXMLLoader fxmlLoader = new FXMLLoader(SaleService.class.getResource("/FXML/statistic/productSales.fxml"));
+        ProductSales.selectedProduct = product;
+        Parent root = null;
+        try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
+        Main.primaryStage.getScene().setRoot(root);
+        Main.primaryStage.show();
+    }
 }

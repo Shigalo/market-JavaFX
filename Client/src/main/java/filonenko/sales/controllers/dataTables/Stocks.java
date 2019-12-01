@@ -1,4 +1,4 @@
-package filonenko.sales.controllers;
+package filonenko.sales.controllers.dataTables;
 
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MenuEventsHandler;

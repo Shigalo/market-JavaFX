@@ -1,13 +1,11 @@
 package filonenko.sales.apps;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -20,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/FXML/loginWork/sample.fxml"));
         primaryStage.setTitle("Продажи компьютерной техники");
         primaryStage.setScene(new Scene(root));
         primaryStage.getIcons().add(new Image("file:src/main/resources/images/icon.png"));

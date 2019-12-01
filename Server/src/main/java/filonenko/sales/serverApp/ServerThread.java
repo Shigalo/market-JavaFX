@@ -54,6 +54,7 @@ public class ServerThread extends Thread {
                     case "replenish": replenish(); break;
                     case "getGuarantee": getGuarantee(); break;
                     case "guaranteeUpdate": guaranteeUpdate(); break;
+                    case "getProductSales": getProductSales(); break;
                 }
             }
         } catch (SocketException e) {
@@ -63,6 +64,11 @@ public class ServerThread extends Thread {
             e.printStackTrace();
         }
         finally { disconnect(); }
+    }
+
+    private void getProductSales() throws IOException, ClassNotFoundException {
+        Product product = (Product)objectInputStream.readObject();
+        objectOutputStream.writeObject(SaleService.getProductSales(product));
     }
 
     private void guaranteeUpdate() throws IOException, ClassNotFoundException {

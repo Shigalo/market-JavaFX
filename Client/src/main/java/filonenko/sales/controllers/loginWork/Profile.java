@@ -1,20 +1,16 @@
-package filonenko.sales.controllers;
+package filonenko.sales.controllers.loginWork;
 
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.Main;
 import filonenko.sales.apps.MenuEventsHandler;
 import filonenko.sales.services.UserService;
-import filonenko.sales.services.VerificationService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -75,7 +71,7 @@ public class Profile {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 UserService.remove();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/sample.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/loginWork/sample.fxml"));
                 Parent root = null;
                 try { root = fxmlLoader.load(); } catch (IOException e) { e.printStackTrace(); }
                 Main.primaryStage.getScene().setRoot(root);
