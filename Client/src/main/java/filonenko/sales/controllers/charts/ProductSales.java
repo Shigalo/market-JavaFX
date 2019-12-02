@@ -28,12 +28,10 @@ import java.util.function.UnaryOperator;
 import static filonenko.sales.controllers.statistic.ProductSales.selectedProduct;
 
 public class ProductSales {
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
     public Button log;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public Label product;
     public LineChart salesLineChart;
@@ -42,10 +40,9 @@ public class ProductSales {
     public RadioButton CSort;
     public CheckBox split;
 
-
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
         thisEventHandlers();
         ToggleGroup group = new ToggleGroup();
         QSort.setToggleGroup(group);

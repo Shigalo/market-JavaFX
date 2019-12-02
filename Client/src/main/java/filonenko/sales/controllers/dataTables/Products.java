@@ -17,24 +17,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Products {
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
+
     public Button log;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public TableView<Product> table;
     public TableColumn<Product, String> name;
     public TableColumn<Product, String> firm;
     public TableColumn<Product, Double> unit_price;
-    public Button add;
     private ObservableList<Product> products = FXCollections.observableArrayList();
-    private List<Boolean> selected = new ArrayList<>();
+    public Button add;
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
         name.setSortable(false);
         firm.setSortable(false);
         unit_price.setSortable(false);
@@ -111,7 +109,7 @@ public class Products {
             products.setAll(productList);
             table.setItems(products);
             table.setPrefHeight(25+productList.size()*25);
-            selected.clear();
+//            selected.clear();
             /*for(Product ignored : productList)
                 selected.add(false);
             for (Node n : table.lookupAll("TableRow")) {

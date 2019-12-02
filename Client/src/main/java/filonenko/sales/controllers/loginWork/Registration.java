@@ -16,22 +16,20 @@ import java.io.IOException;
 
 public class Registration {
 
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
+    public Button log;
+    public Button cancel;
+    public Menu data;
+    public Menu charts;
 
     public TextField name;
     public TextField login;
     public PasswordField password;
     public PasswordField passwordConfirm;
     public Button registration;
-    public Button log;
-    public Button cancel;
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, new Button());
+        MenuEventsHandler.eventHandlers(data, charts, log, new Button());
         thisEventHandlers();
     }
 

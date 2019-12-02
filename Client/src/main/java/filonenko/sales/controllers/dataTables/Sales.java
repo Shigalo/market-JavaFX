@@ -22,12 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sales {
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
     public Button log;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public TableView<Sale> table;
     public TableColumn<Sale, LocalDate> date;
@@ -41,7 +39,7 @@ public class Sales {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
         date.setSortable(false);
         product.setSortable(false);
         quantity.setSortable(false);

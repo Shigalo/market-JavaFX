@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.statistic.ProductSales">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.statistic.UsersSales">
     <MenuBar>
         <Menu fx:id="data" mnemonicParsing="false" />
         <Menu fx:id="charts" mnemonicParsing="false" />
@@ -19,11 +19,18 @@
     </MenuBar>
     <Button fx:id="log" layoutX="550.0" mnemonicParsing="false" />
     <Button fx:id="profile" layoutX="468.0" mnemonicParsing="false" text="Профиль" />
-    <TableView fx:id="table" layoutX="57.0" layoutY="142.0" prefHeight="200.0" prefWidth="393.0">
+    <TableView fx:id="table" layoutX="57.0" layoutY="142.0" prefHeight="200.0" prefWidth="502.0">
         <columns>
-            <TableColumn fx:id="date" prefWidth="154.0" text="Дата" />
-            <TableColumn fx:id="quantity" prefWidth="110.0" text="Количество" />
-            <TableColumn fx:id="seller" prefWidth="110.0" text="Продавец" />
+            <TableColumn fx:id="seller" prefWidth="82.0" text="Продавец" />
+            <TableColumn prefWidth="348.0" text="Количество сделок">
+                <columns>
+                    <TableColumn fx:id="selling" text="Всего" />
+                    <TableColumn fx:id="refund" text="     Было&#10;возвращено" />
+                    <TableColumn fx:id="reselling" text="Совершено&#10;    замен" />
+                    <TableColumn fx:id="repairs" text="Проведено&#10; ремонтов" />
+                </columns>
+            </TableColumn>
+            <TableColumn fx:id="cost" minWidth="0.0" prefWidth="81.0" text="Суммарная&#10;  выручка" />
         </columns>
     </TableView>
     <Button fx:id="back" layoutX="258.0" layoutY="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" text="Назад" />

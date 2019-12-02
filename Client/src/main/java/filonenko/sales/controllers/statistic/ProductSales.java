@@ -21,19 +21,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ProductSales {
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
+
     public Button log;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public TableView<Sale> table;
     public TableColumn<Sale, LocalDate> date;
     public TableColumn<Sale, Integer> quantity;
     public TableColumn<Sale, String>  seller;
     public Label product;
-    public LineChart salesLineChart;
     private ObservableList<Sale> sales = FXCollections.observableArrayList();
     public Button chart;
     public Button back;
@@ -42,7 +40,7 @@ public class ProductSales {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
         date.setSortable(false);
         quantity.setSortable(false);
         seller.setSortable(false);

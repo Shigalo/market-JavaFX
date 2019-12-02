@@ -3,25 +3,12 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.charts.ProductSales">
     <MenuBar>
-        <Menu mnemonicParsing="false" text="Данные">
-            <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
-            <MenuItem fx:id="productMenu" mnemonicParsing="false" text="Продукция" />
-            <MenuItem fx:id="salesMenu" mnemonicParsing="false" text="Продажи" />
-            <MenuItem fx:id="storageMenu" mnemonicParsing="false" text="Склад" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Delete" />
+        <Menu fx:id="data" mnemonicParsing="false" />
+        <Menu fx:id="charts" mnemonicParsing="false" >
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About" />

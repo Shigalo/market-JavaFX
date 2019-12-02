@@ -15,12 +15,10 @@ import java.io.IOException;
 
 public class Sample {
 
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
     public Button log;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public TextField login;
     public PasswordField password;
@@ -29,7 +27,7 @@ public class Sample {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
         thisEventHandlers();
     }
 

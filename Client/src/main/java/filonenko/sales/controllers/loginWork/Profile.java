@@ -20,11 +20,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Profile {
 
     public Button log;
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public Label login;
     public Button use;
@@ -35,7 +33,7 @@ public class Profile {
 
     @FXML
     private void initialize() {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
 
         login.setText(CurrentUser.getCurrentUser().getLogin());
         name.setText(CurrentUser.getCurrentUser().getName());

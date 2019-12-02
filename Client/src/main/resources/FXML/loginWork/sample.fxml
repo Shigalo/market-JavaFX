@@ -14,15 +14,8 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.loginWork.Sample">
     <MenuBar>
-        <Menu mnemonicParsing="false" text="Данные">
-            <MenuItem fx:id="usersMenu" mnemonicParsing="false" text="Пользователи" />
-            <MenuItem fx:id="productMenu" mnemonicParsing="false" text="Продукция" />
-            <MenuItem fx:id="salesMenu" mnemonicParsing="false" text="Продажи" />
-            <MenuItem fx:id="storageMenu" mnemonicParsing="false" text="Склад" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-            <MenuItem mnemonicParsing="false" text="Delete" />
-        </Menu>
+        <Menu fx:id="data" mnemonicParsing="false" />
+        <Menu fx:id="charts" mnemonicParsing="false" />
         <Menu mnemonicParsing="false" text="Help">
             <MenuItem mnemonicParsing="false" text="About" />
         </Menu>

@@ -87,4 +87,13 @@ public class GuaranteeService {
         }
         if(guarantee.getStatus().getId() != 1) alert.showAndWait();
     }
+
+    public static List<Guarantee> getGuaranties() {
+        try {
+            return connection.getGuaranties();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -126,4 +126,9 @@ public class Connection {
         objectOutputStream.writeObject(product);
         return (List<Sale>)objectInputStream.readObject();
     }
+
+    public List<Guarantee> getGuaranties() throws IOException, ClassNotFoundException {
+        objectOutputStream.writeObject("getGuaranties");
+        return (List<Guarantee>)objectInputStream.readObject();
+    }
 }

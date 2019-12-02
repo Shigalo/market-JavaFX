@@ -16,12 +16,10 @@ import java.util.List;
 
 public class Users {
 
-    public MenuItem usersMenu;
-    public MenuItem productMenu;
-    public MenuItem salesMenu;
-    public MenuItem storageMenu;
     public Button log;
     public Button profile;
+    public Menu data;
+    public Menu charts;
 
     public TableColumn<User, String> login;
     public TableColumn<User, String> name;
@@ -32,7 +30,7 @@ public class Users {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(usersMenu, productMenu, salesMenu, storageMenu, log, profile);
+        MenuEventsHandler.eventHandlers(data, charts, log, profile);
         login.setSortable(false);
         name.setSortable(false);
         access.setSortable(false);
