@@ -1,31 +1,25 @@
 package filonenko.sales.controllers.dataTables;
 
 import filonenko.sales.apps.CurrentUser;
-import filonenko.sales.apps.Main;
-import filonenko.sales.apps.MenuEventsHandler;
+import filonenko.sales.apps.MediatorEventsHandler;
 import filonenko.sales.entities.Storage;
-import filonenko.sales.services.SaleService;
 import filonenko.sales.services.StorageService;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Stocks {
 
     public Button log;
     public Button profile;
-    public Menu data;
-    public Menu charts;
+    public MenuBar menuBar;
 
     public TableView<Storage> table;
     public TableColumn<Storage, String> product;
@@ -36,7 +30,7 @@ public class Stocks {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(data, charts, log, profile);
+        MediatorEventsHandler.eventHandlers(menuBar, log, profile);
         product.setSortable(false);
         quantity.setSortable(false);
         thisEventHandlers();
@@ -62,7 +56,7 @@ public class Stocks {
 
     private void thisEventHandlers() {
         try {
-            storageChart.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> toChart());
+            storageChart.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> MediatorEventsHandler.changeScene("charts/storage"));
 
             ContextMenu contextMenu = new ContextMenu();
             MenuItem replenish = new MenuItem("Пополнить");
@@ -78,20 +72,12 @@ public class Stocks {
                 contextMenu.hide();
                 switch (event.getButton()) {
                     case SECONDARY: {
-                        if (CurrentUser.getCurrentUser().getAccess() == 1)
+                        if (CurrentUser.getCurrentUser().getAccess() != 0)
                             table.setOnContextMenuRequested(contextEvent -> contextMenu.show(table, event.getScreenX(), event.getScreenY()));
                         break;
                     }
                 }
             });
         } catch (Exception e) { e.printStackTrace(); }
-    }
-
-    private void toChart() {
-        FXMLLoader fxmlLoader = new FXMLLoader(SaleService.class.getResource("/FXML/charts/storage.fxml"));
-        Parent root = null;
-        try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-        Main.primaryStage.getScene().setRoot(root);
-        Main.primaryStage.show();
     }
 }

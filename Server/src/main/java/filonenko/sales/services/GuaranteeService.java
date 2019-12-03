@@ -1,5 +1,6 @@
 package filonenko.sales.services;
 
+import filonenko.sales.dao.DAOInterface;
 import filonenko.sales.dao.GuaranteeDAO;
 import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Sale;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class GuaranteeService {
 
-    private static GuaranteeDAO dao = GuaranteeDAO.getInstance();
+    private static DAOInterface<Guarantee> dao = GuaranteeDAO.getInstance();
 
     public static Guarantee addGuarantee(Guarantee newGuarantee) {
         dao.create(newGuarantee);
@@ -19,7 +20,7 @@ public class GuaranteeService {
     }
 
     public static Guarantee getGuarantee(Sale sale) {
-        return dao.getGuaranteeBySale(sale);
+        return GuaranteeDAO.getInstance().getGuaranteeBySale(sale);
     }
 
     public static void update() {
@@ -35,7 +36,10 @@ public class GuaranteeService {
 
     public static Guarantee guaranteeUpdate(Guarantee guarantee, String status) {
         Status newStatus =  StatusService.getAllStatuses().get(Integer.valueOf(status));
-        if(newStatus.getId() != 4) { if(SaleService.addSale(guarantee.getSale()) == null) return null; }
+        switch (newStatus.getId()) {
+            case 5: StorageService.replenish(guarantee.getSale());
+            case 3: if(SaleService.addSale(guarantee.getSale()) == null) return null; break;
+        }
         guarantee.setStatus(newStatus);
         guarantee.setDate(LocalDate.now());
         dao.update(guarantee);

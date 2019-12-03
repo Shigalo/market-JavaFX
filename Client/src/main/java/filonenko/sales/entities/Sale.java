@@ -14,10 +14,8 @@ public class Sale implements Serializable {
     private Integer quantity;
     private Product product;
     private User user;
-//хз какие хар-ки.....
 
-    public Sale() {
-    }
+    public Sale() { }
 
     public Sale(LocalDate date, Integer quantity, Product product, User user) {
         this.date = date;

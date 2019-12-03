@@ -1,5 +1,6 @@
 package filonenko.sales.services;
 
+import filonenko.sales.dao.DAOInterface;
 import filonenko.sales.dao.ProductDAO;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Storage;
@@ -8,14 +9,14 @@ import java.util.List;
 
 public class ProductService {
 
-    private static ProductDAO dao = ProductDAO.getInstance();
+    private static DAOInterface<Product> dao = ProductDAO.getInstance();
 
     public static List<Product> getAllProducts() {
         return dao.findAll();
     }
 
     public static Product editProduct(Product product, String newName, String newFirm, Double newCost) {
-        return dao.editProduct(product.getId(), newName, newFirm, newCost);
+        return ProductDAO.getInstance().editProduct(product.getId(), newName, newFirm, newCost);
     }
 
     public static void deleteProduct(Product product) {

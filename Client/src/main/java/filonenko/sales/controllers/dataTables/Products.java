@@ -1,27 +1,24 @@
 package filonenko.sales.controllers.dataTables;
 
 import filonenko.sales.apps.CurrentUser;
-import filonenko.sales.apps.MenuEventsHandler;
+import filonenko.sales.apps.MediatorEventsHandler;
 import filonenko.sales.entities.Product;
 import filonenko.sales.services.ProductService;
 import filonenko.sales.services.SaleService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Products {
 
     public Button log;
     public Button profile;
-    public Menu data;
-    public Menu charts;
+    public MenuBar menuBar;
 
     public TableView<Product> table;
     public TableColumn<Product, String> name;
@@ -32,7 +29,7 @@ public class Products {
 
     @FXML
     private void initialize() throws Exception {
-        MenuEventsHandler.eventHandlers(data, charts, log, profile);
+        MediatorEventsHandler.eventHandlers(menuBar, log, profile);
         name.setSortable(false);
         firm.setSortable(false);
         unit_price.setSortable(false);
@@ -75,26 +72,6 @@ public class Products {
         table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             contextMenu.hide();
             switch (event.getButton()) {
-                /*case PRIMARY: {
-                    for (Node n : table.lookupAll("TableRow")) {
-                        if (n instanceof TableRow) {
-                            TableRow row = (TableRow) n;
-                            if (row.getStyle() != ("-fx-background-color: rgb(152, 251, 152);")) {
-                                row.setStyle("-fx-background-color: white;");
-                            }
-                            if (row.getIndex() == table.getSelectionModel().getFocusedIndex()) {
-                                if (!selected.get(row.getIndex())) {
-                                    selected.set(row.getIndex(), !selected.get(row.getIndex()));
-                                    row.setStyle("-fx-background-color: rgb(152, 251, 152);");
-                                } else {
-                                    selected.set(row.getIndex(), !selected.get(row.getIndex()));
-                                    row.setStyle("-fx-background-color: rgb(135, 206, 235);");
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }*/
                 case SECONDARY: {
                     table.setOnContextMenuRequested(contextEvent -> contextMenu.show(table, event.getScreenX(), event.getScreenY()));
                     break;

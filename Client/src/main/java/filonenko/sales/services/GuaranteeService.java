@@ -1,22 +1,17 @@
 package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
+import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
-import filonenko.sales.entities.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Getter @Setter
 public class GuaranteeService {
@@ -42,6 +37,11 @@ public class GuaranteeService {
             case 4: alert.setContentText("Возвращено по гарантии " + guarantee.getDate()); break;
             case 5: alert.setContentText("Произведён ремонт " + guarantee.getDate()); break;
             case 1: {
+                if(CurrentUser.getCurrentUser().getAccess() == 2) {
+                    alert.setContentText("Гарантия длится до " + guarantee.getDate());
+                    alert.showAndWait();
+                    break;
+                }
                 Dialog<Product> dialog = new Dialog<>();
                 dialog.setTitle("Обращение по гарантии");
 

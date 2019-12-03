@@ -1,19 +1,15 @@
 package filonenko.sales.controllers.loginWork;
 
 import filonenko.sales.apps.CurrentUser;
-import filonenko.sales.apps.Main;
-import filonenko.sales.apps.MenuEventsHandler;
+import filonenko.sales.apps.MediatorEventsHandler;
 import filonenko.sales.services.UserService;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
-import java.io.IOException;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -21,8 +17,7 @@ public class Profile {
 
     public Button log;
     public Button profile;
-    public Menu data;
-    public Menu charts;
+    public MenuBar menuBar;
 
     public Label login;
     public Button use;
@@ -33,11 +28,13 @@ public class Profile {
 
     @FXML
     private void initialize() {
-        MenuEventsHandler.eventHandlers(data, charts, log, profile);
+        MediatorEventsHandler.eventHandlers(menuBar, log, profile);
+
+        String role = (CurrentUser.getCurrentUser().getAccess() == 0) ? "Продавец" : "Администратор";
 
         login.setText(CurrentUser.getCurrentUser().getLogin());
         name.setText(CurrentUser.getCurrentUser().getName());
-        user.setText(CurrentUser.getCurrentUser().getName());
+        user.setText(CurrentUser.getCurrentUser().getName() + "\n("+role+")");
 
         thisEventHandlers();
     }
@@ -67,14 +64,7 @@ public class Profile {
             alert.setContentText("Уверены, что хотите удалить свой акканут?");
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
-                UserService.remove();
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/loginWork/sample.fxml"));
-                Parent root = null;
-                try { root = fxmlLoader.load(); } catch (IOException e) { e.printStackTrace(); }
-                Main.primaryStage.getScene().setRoot(root);
-                Main.primaryStage.show();
-            }
+            if (result.get() == ButtonType.OK) MediatorEventsHandler.changeScene("loginWork/sample");
         });
     }
 

@@ -1,36 +1,45 @@
 package filonenko.sales.services;
 
+import filonenko.sales.dao.DAOInterface;
 import filonenko.sales.dao.UserDAO;
 import filonenko.sales.entities.User;
 
+import java.util.Base64;
 import java.util.List;
 
 public class UserService {
 
-    private static UserDAO dao = UserDAO.getInstance();
+    private static DAOInterface<User> dao = UserDAO.getInstance();
 
     public static List<User> getAllUsers() {
         return dao.findAll();
     }
 
     public static User login(User user) {
-        return dao.login(user.getLogin(), user.getPassword());
+        String password = Base64.getEncoder().encodeToString(user.getPassword().getBytes());
+        return UserDAO.getInstance().login(user.getLogin(), password);
     }
 
     public static User registration(User user) {
-        if(dao.findByLogin(user.getLogin()) != null) return null;
-        return dao.registration(user.getLogin(), user.getPassword(), user.getName());
+        if(UserDAO.getInstance().findByLogin(user.getLogin()) != null) return null;
+        String password = Base64.getEncoder().encodeToString(user.getPassword().getBytes());
+        return UserDAO.getInstance().registration(user.getLogin(), password, user.getName());
     }
 
     public static User editName(User user, String newName) {
-        return dao.editName(user.getId(), newName);
+        return UserDAO.getInstance().editName(user.getId(), newName);
     }
 
     public static User editPassword(User user, String newPassword) {
-        return dao.editPassword(user.getId(), newPassword);
+        String password = Base64.getEncoder().encodeToString(newPassword.getBytes());
+        return UserDAO.getInstance().editPassword(user.getId(), password);
     }
 
     public static void remove(User user) {
         dao.delete(user);
+    }
+
+    public static void setRole(User user) {
+        dao.update(user);
     }
 }

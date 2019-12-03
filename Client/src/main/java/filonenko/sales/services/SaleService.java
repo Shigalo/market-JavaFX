@@ -2,15 +2,15 @@ package filonenko.sales.services;
 
 import filonenko.sales.apps.Connection;
 import filonenko.sales.apps.CurrentUser;
-import filonenko.sales.apps.Main;
-import filonenko.sales.controllers.statistic.ProductSales;
-import filonenko.sales.entities.*;
+import filonenko.sales.apps.MediatorEventsHandler;
+import filonenko.sales.entities.Guarantee;
+import filonenko.sales.entities.Product;
+import filonenko.sales.entities.Sale;
+import filonenko.sales.entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
@@ -197,11 +197,6 @@ public class SaleService {
             alert.showAndWait();
             return;
         }
-        FXMLLoader fxmlLoader = new FXMLLoader(SaleService.class.getResource("/FXML/statistic/productSales.fxml"));
-        ProductSales.selectedProduct = product;
-        Parent root = null;
-        try { root = fxmlLoader.load(); } catch (IOException e){ e.printStackTrace(); }
-        Main.primaryStage.getScene().setRoot(root);
-        Main.primaryStage.show();
+        MediatorEventsHandler.changeScene("statistic/productSales");
     }
 }

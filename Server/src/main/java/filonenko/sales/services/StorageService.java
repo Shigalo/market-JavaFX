@@ -1,5 +1,6 @@
 package filonenko.sales.services;
 
+import filonenko.sales.dao.DAOInterface;
 import filonenko.sales.dao.StorageDAO;
 import filonenko.sales.entities.Sale;
 import filonenko.sales.entities.Storage;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class StorageService {
 
-    private static StorageDAO dao = StorageDAO.getInstance();
+    private static DAOInterface<Storage> dao = StorageDAO.getInstance();
 
     public static Storage addStorage(Storage newStorage) {
         dao.create(newStorage);
@@ -25,8 +26,14 @@ public class StorageService {
         dao.update(storage);
     }
 
+    public static void replenish(Sale sale) {
+        Storage storage = StorageDAO.getInstance().getByProduct(sale.getProduct());
+        storage.setQuantity(storage.getQuantity() + sale.getQuantity());
+        dao.update(storage);
+    }
+
     public static boolean useProduct(Sale sale) {
-        Storage storage = dao.getByProduct(sale.getProduct());
+        Storage storage = StorageDAO.getInstance().getByProduct(sale.getProduct());
         if(storage.getQuantity() > sale.getQuantity()) {
             storage.setQuantity(storage.getQuantity() - sale.getQuantity());
             dao.update(storage);

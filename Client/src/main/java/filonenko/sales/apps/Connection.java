@@ -131,4 +131,10 @@ public class Connection {
         objectOutputStream.writeObject("getGuaranties");
         return (List<Guarantee>)objectInputStream.readObject();
     }
+
+    public void setRole(User user, int selectedIndex) throws IOException {
+        objectOutputStream.writeObject("setRole");
+        user.setAccess(selectedIndex);
+        objectOutputStream.writeObject(user);
+    }
 }

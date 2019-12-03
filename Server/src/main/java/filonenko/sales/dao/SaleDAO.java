@@ -1,7 +1,6 @@
 package filonenko.sales.dao;
 
 import filonenko.sales.connect.HibernateConnect;
-import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
 import org.hibernate.HibernateException;

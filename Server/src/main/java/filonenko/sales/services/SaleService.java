@@ -1,5 +1,6 @@
 package filonenko.sales.services;
 
+import filonenko.sales.dao.DAOInterface;
 import filonenko.sales.dao.SaleDAO;
 import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Product;
@@ -9,7 +10,7 @@ import java.util.List;
 
 public class SaleService {
 
-    private static SaleDAO dao = SaleDAO.getInstance();
+    private static DAOInterface<Sale> dao = SaleDAO.getInstance();
 
     public static List<Sale> getAllSales() {
         return dao.findAll();
@@ -32,6 +33,6 @@ public class SaleService {
     }
 
     public static List<Sale> getProductSales(Product product) {
-        return dao.getByProduct(product);
+        return SaleDAO.getInstance().getByProduct(product);
     }
 }

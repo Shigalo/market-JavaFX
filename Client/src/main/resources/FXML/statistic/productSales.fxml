@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="filonenko.sales.controllers.statistic.ProductSales">
-    <MenuBar>
-        <Menu fx:id="data" mnemonicParsing="false" />
-        <Menu fx:id="charts" mnemonicParsing="false" />
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem mnemonicParsing="false" text="About" />
-        </Menu>
-    </MenuBar>
+    <MenuBar fx:id="menuBar"/>
     <Button fx:id="log" layoutX="550.0" mnemonicParsing="false" />
     <Button fx:id="profile" layoutX="468.0" mnemonicParsing="false" text="Профиль" />
     <TableView fx:id="table" layoutX="57.0" layoutY="142.0" prefHeight="200.0" prefWidth="393.0">
