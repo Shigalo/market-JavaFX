@@ -62,10 +62,10 @@ public class ServerThread extends Thread {
         } catch (SocketException e) {
 //            e.printStackTrace();
             System.out.println("Lost connection");
+            disconnect();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        finally { disconnect(); }
     }
 
     private void setRole() throws IOException, ClassNotFoundException {
