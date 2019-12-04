@@ -41,7 +41,11 @@ public class UsersSales {
         MediatorEventsHandler.eventHandlers(menuBar, log, profile);
         thisEventHandlers();
         seller.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().seller.getName()));
-        cost.setCellValueFactory(data -> new SimpleDoubleProperty(data.getValue().cost).asObject());
+        cost.setCellValueFactory(data -> {
+            double costValue = data.getValue().cost;
+            costValue = Double.parseDouble(String.format("%.2f", costValue).replace(",", "."));
+            return new SimpleDoubleProperty(costValue).asObject();
+        });
         selling.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().selling).asObject());
         refund.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().refund).asObject());
         reselling.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().reselling).asObject());

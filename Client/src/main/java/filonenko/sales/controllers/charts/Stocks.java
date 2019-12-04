@@ -31,8 +31,8 @@ public class Stocks {
 
     private void chartProperties() {
         pieChart.setLabelLineLength(10);
-        pieChart.setLegendSide(Side.LEFT);
-        pieChart.setLegendVisible(false);
+        pieChart.setLegendVisible(true);
+        pieChart.setLabelsVisible(false);
     }
 
     private void thisEventHandlers() {
@@ -43,8 +43,7 @@ public class Stocks {
         try {
             ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
             for(Storage storage : StorageService.getStorage()) {
-                PieChart.Data data = new PieChart.Data(storage.getProduct().getName(), storage.getQuantity());
-                data.setName(storage.getProduct().getName() + " " + storage.getQuantity());
+                PieChart.Data data = new PieChart.Data(storage.getProduct().getFirm(), storage.getQuantity());
                 pieChartData.add(data);
             }
             pieChart.getData().clear();

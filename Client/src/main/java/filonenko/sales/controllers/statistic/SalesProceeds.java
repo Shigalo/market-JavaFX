@@ -2,7 +2,9 @@ package filonenko.sales.controllers.statistic;
 
 import filonenko.sales.apps.MediatorEventsHandler;
 import filonenko.sales.entities.Guarantee;
+import filonenko.sales.entities.Sale;
 import filonenko.sales.services.GuaranteeService;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +40,21 @@ public class SalesProceeds {
         MediatorEventsHandler.eventHandlers(menuBar, log, profile);
         thisEventHandlers();
         date.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().date));
-        income.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().income));
-        losses.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().losses));
-        profit.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().profit));
+        income.setCellValueFactory(data -> {
+            double costValue = data.getValue().income;
+            costValue = Double.parseDouble(String.format("%.2f", costValue).replace(",", "."));
+            return new SimpleDoubleProperty(costValue).asObject();
+        });
+        losses.setCellValueFactory(data -> {
+            double costValue = data.getValue().losses;
+            costValue = Double.parseDouble(String.format("%.2f", costValue).replace(",", "."));
+            return new SimpleDoubleProperty(costValue).asObject();
+        });
+        profit.setCellValueFactory(data -> {
+            double costValue = data.getValue().profit;
+            costValue = Double.parseDouble(String.format("%.2f", costValue).replace(",", "."));
+            return new SimpleDoubleProperty(costValue).asObject();
+        });
         table.setMaxHeight(200);
         tableUpdate();
     }

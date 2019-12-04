@@ -31,8 +31,6 @@ public class Stocks {
     @FXML
     private void initialize() throws Exception {
         MediatorEventsHandler.eventHandlers(menuBar, log, profile);
-        product.setSortable(false);
-        quantity.setSortable(false);
         thisEventHandlers();
         product.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getProduct().getName()));
         cost.setCellValueFactory(data -> {

@@ -4,6 +4,7 @@ import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MediatorEventsHandler;
 import filonenko.sales.entities.User;
 import filonenko.sales.services.UserService;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,15 +31,12 @@ public class Users {
     @FXML
     private void initialize() throws Exception {
         MediatorEventsHandler.eventHandlers(menuBar, log, profile);
-        login.setSortable(false);
-        name.setSortable(false);
-        access.setSortable(false);
         thisEventHandlers();
 
         List<User> userList = UserService.getAllUsers();
         login.setCellValueFactory(new PropertyValueFactory<>("Login"));
         name.setCellValueFactory(new PropertyValueFactory<>("Name"));
-        access.setCellValueFactory(new PropertyValueFactory<>("Access"));
+        access.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getAccess() == 1 ? "Администратор" : "Пользователь"));
         users.addAll(userList);
         table.setItems(users);
         table.setPrefHeight(25+userList.size()*25);
@@ -52,10 +50,9 @@ public class Users {
             ContextMenu contextMenu = new ContextMenu();
             MenuItem setRole = new MenuItem("Изменить доступ");
             setRole.setOnAction(contextEvent -> UserService.setRole(table.getSelectionModel().getSelectedItem()));
-
-            if (CurrentUser.getCurrentUser().getAccess() == 2) {
-                contextMenu.getItems().addAll(setRole);
-            }
+            if(CurrentUser.getCurrentUser() != null)
+                if (CurrentUser.getCurrentUser().getAccess() == 2)
+                    contextMenu.getItems().addAll(setRole);
             table.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 contextMenu.hide();
                 switch (event.getButton()) {

@@ -33,10 +33,6 @@ public class Sales {
     @FXML
     private void initialize() throws Exception {
         MediatorEventsHandler.eventHandlers(menuBar, log, profile);
-        date.setSortable(false);
-        product.setSortable(false);
-        quantity.setSortable(false);
-        seller.setSortable(false);
         thisEventHandlers();
         date.setCellValueFactory(new PropertyValueFactory<>("Date"));
         product.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getProduct().getName()));

@@ -30,9 +30,6 @@ public class Products {
     @FXML
     private void initialize() throws Exception {
         MediatorEventsHandler.eventHandlers(menuBar, log, profile);
-        name.setSortable(false);
-        firm.setSortable(false);
-        unit_price.setSortable(false);
         thisEventHandlers();
         name.setCellValueFactory(new PropertyValueFactory<>("Name"));
         firm.setCellValueFactory(new PropertyValueFactory<>("Firm"));
