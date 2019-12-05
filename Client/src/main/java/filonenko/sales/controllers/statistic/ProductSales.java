@@ -40,6 +40,7 @@ public class ProductSales {
         seller.setCellValueFactory(data -> new ReadOnlyStringWrapper(data.getValue().getUser().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         table.setMaxHeight(200);
+        System.out.println("Список продаж продукта " + selectedProduct.getName() + " : " + selectedProduct.getFirm());
         product.setText("Список продаж продукта " + selectedProduct.getName() + " : " + selectedProduct.getFirm());
         tableUpdate();
     }

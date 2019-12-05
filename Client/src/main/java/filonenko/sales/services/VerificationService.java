@@ -24,7 +24,7 @@ public class VerificationService {
     }
 
     static boolean passwordVerification(PasswordField password, Alert alert) {
-        Pattern p = Pattern.compile("^[a-zA-Z][a-zA-Z0-9]{7,15}");
+        Pattern p = Pattern.compile("^[a-zA-Z0-9]{7,15}");
         Matcher m = p.matcher(password.getText());
         if(m.matches()) return true;
         alert.setContentText("Недопустимый пароль!\n" +
@@ -42,7 +42,7 @@ public class VerificationService {
         alert.setContentText("Недопустимое имя!\n" +
                 "Требования к имени:\n" + (char)187 +
                 " Длинна 2-10 символов\n" + (char)187 +
-                " Содержат только буквы латинского алфавита");
+                " Содержат только буквы");
         name.requestFocus();
         return false;
     }

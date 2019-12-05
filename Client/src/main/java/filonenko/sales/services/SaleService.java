@@ -3,6 +3,7 @@ package filonenko.sales.services;
 import filonenko.sales.apps.Connection;
 import filonenko.sales.apps.CurrentUser;
 import filonenko.sales.apps.MediatorEventsHandler;
+import filonenko.sales.controllers.statistic.ProductSales;
 import filonenko.sales.entities.Guarantee;
 import filonenko.sales.entities.Product;
 import filonenko.sales.entities.Sale;
@@ -189,6 +190,7 @@ public class SaleService {
 
         try {
             if(SaleService.getSales(product).isEmpty()) throw new Exception();
+            ProductSales.selectedProduct = product;
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Предупреждение");

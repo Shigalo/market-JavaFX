@@ -28,29 +28,26 @@ public class Registration {
     }
 
     private void thisEventHandlers() {
-        registration.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Результат регистрации");
-                alert.setHeaderText(null);
+        registration.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Результат регистрации");
+            alert.setHeaderText(null);
 
-                if (VerificationService.fullVerification(login, password, passwordConfirm, name, alert)) {
-                    UserService.registration(login.getText(), password.getText(), name.getText());
-                    if (CurrentUser.getCurrentUser() != null) {
-                        alert.setContentText("Успешная регистрация\n" +
-                                "Вход в систему\n" +
-                                "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
-                        alert.showAndWait();
-                        MediatorEventsHandler.changeScene("dataTables/users");
-                    } else {
-                        alert.setContentText("Логин не доступен!");
-                        login.setText("");
-                        alert.showAndWait();
-                    }
+            if (VerificationService.fullVerification(login, password, passwordConfirm, name, alert)) {
+                UserService.registration(login.getText(), password.getText(), name.getText());
+                if (CurrentUser.getCurrentUser() != null) {
+                    alert.setContentText("Успешная регистрация\n" +
+                            "Вход в систему\n" +
+                            "Добро пожаловать " + CurrentUser.getCurrentUser().getName());
+                    alert.showAndWait();
+                    MediatorEventsHandler.changeScene("dataTables/users");
+                } else {
+                    alert.setContentText("Логин не доступен!");
+                    login.setText("");
+                    alert.showAndWait();
                 }
-                else alert.showAndWait();
             }
+            else alert.showAndWait();
         });
 
         cancel.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> MediatorEventsHandler.changeScene("loginWork/sample"));
