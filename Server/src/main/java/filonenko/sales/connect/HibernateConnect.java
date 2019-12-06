@@ -4,6 +4,7 @@ import filonenko.sales.entities.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.spi.ServiceException;
 
 
 public class HibernateConnect{  //Класс для получения подключения к БД (паттерн Singleton)
@@ -42,9 +43,12 @@ public class HibernateConnect{  //Класс для получения подк�
                 configuration.addAnnotatedClass(Storage.class);    //Определение классов - сущностей
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()); //Применениие параметров подключения
                 sessionFactory = configuration.buildSessionFactory(builder.build());    //Настройка подключения
-            } catch (Exception e) {
-                System.out.println("Cannot connect to DB");
-                e.printStackTrace();
+            } catch (ServiceException e) {
+                System.out.println("Cannot connect to database " + name);
+                System.out.println("User name " + user);
+                System.out.println("Password " + password);
+                System.exit(1);
+//                e.printStackTrace();
             }
         }
         return sessionFactory;  //Получение подключения
